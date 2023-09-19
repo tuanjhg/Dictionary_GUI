@@ -12,6 +12,7 @@ public class DictionaryMap {
     map.put(word, meaning);
   }
 
+
   public static void delete(String word) {
     map.remove(word);
   }
@@ -19,14 +20,6 @@ public class DictionaryMap {
    * In ra toàn bộ những từ trong từ điển.
    * @return
    */
-  public static List<Pair<String, String>> getAll() {
-    List<Pair<String, String>> ret = new ArrayList<>();
-    for (Map.Entry<String, String> pair : map.entrySet()) {
-      Pair<String, String> element = new Pair<>(pair.getKey(), pair.getValue());
-      ret.add(element);
-    }
-    return ret;
-  }
 
   public static String[] getKey() {
     String[] ret = map.keySet().toArray(new String[map.size()]);
@@ -35,12 +28,5 @@ public class DictionaryMap {
 
   public static Boolean exist(String word) {
     return map.containsKey(word);
-  }
-
-  public static String lookUp(String word) {
-    if (!map.containsKey(word)) {
-      return "NotExist";
-    }
-    return map.get(word);
   }
 }

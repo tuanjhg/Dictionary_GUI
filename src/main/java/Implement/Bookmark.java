@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Bookmark {
-  private static List<String> saved = new ArrayList<>();
+  private static final List<String> saved = new ArrayList<>();
   public static void add(String word) {
     saved.add(word);
   }
@@ -16,11 +16,9 @@ public class Bookmark {
 
   public static String[] getList() {
     if (saved.isEmpty()) {
-      String[] ret = new String[]{};
-      return ret;
+      return new String[]{};
     }
     Collections.sort(saved);
-    String[] ret = saved.toArray(new String[saved.size()]);
-    return ret;
+    return saved.toArray(new String[(int)saved.size()]);
   }
 }

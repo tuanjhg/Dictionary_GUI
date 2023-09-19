@@ -3,14 +3,13 @@ package Implement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import Implement.TrieNode;
 
 /**
  * Trie Node.
  */
 
 public class Trie {
-  private static TrieNode root = new TrieNode();
+  private static final TrieNode root = new TrieNode();
   public static void add(String word, String spelling, String type, String meaning) {
     TrieNode cur = root;
     int addition = 1;
@@ -52,7 +51,6 @@ public class Trie {
     int lastPrefix = 0, depth = 0;
     for (char c : word.toCharArray()) {
       if (!cur.child.containsKey(c)) {
-        System.out.println("Khong ton tai tu " + word + " trong tu dien!");
         return;
       }
       cur = cur.child.get(c);
@@ -80,18 +78,16 @@ public class Trie {
     }
   }
 
-  public static String[] getPrefix(String prefix) {
+  public static ArrayList<String> getPrefix(String prefix) {
     TrieNode cur = root;
     ArrayList<String> ret = new ArrayList<>();
-    String[] res = new String[]{};
     for (char c : prefix.toCharArray()) {
       if (!cur.child.containsKey(c)) {
-        return res;
+        return ret;
       }
       cur = cur.child.get(c);
     }
     getWordFromPrefix(cur, ret);
-    res = ret.toArray(new String[ret.size()]);
-    return res;
+    return ret;
   }
 }

@@ -3,10 +3,14 @@ package GUI_App;
 import Implement.AddFromFile;
 import Implement.Bookmark;
 import Implement.DictionaryMap;
+import Implement.MutableBoolean;
+import Implement.OpenAdd;
+import Implement.OpenDeleteWarning;
 import Implement.Trie;
 import Implement.TrieNode;
 import Implement.WordFormatter;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,13 +18,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 public class mainMenuController implements Initializable{
   @FXML
@@ -45,7 +49,7 @@ public class mainMenuController implements Initializable{
   private ImageView recycleBin;
   @FXML
   private String currentMenu = "Search";
-  String currentWord = new String();
+  String currentWord;
 
   String getImgPath(String name) {
     return "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\" + name + ".png";
@@ -71,6 +75,16 @@ public class mainMenuController implements Initializable{
                 if (currentWord == null || currentWord.isEmpty()) {
                   return;
                 }
+                if (currentWord.equals("Thêm...")) {
+                  try {
+                    String word = WordFormatter.normalize(searchBar.getText());
+                    OpenAdd.start(new Stage(), word);
+                  } catch (Exception err) {
+                    System.out.println("Unknown Error.");
+                  } finally{
+                    return;
+                  }
+                }
                 TrieNode node = Trie.find(currentWord);
                 searchBar.setText(currentWord);
                 lblWord.setText(currentWord);
@@ -95,8 +109,11 @@ public class mainMenuController implements Initializable{
     if (word == null || word.isEmpty()) {
       getSuggestion(DictionaryMap.getKey());
     } else {
-      String[] suggestion = Trie.getPrefix(WordFormatter.normalize(word));
-      suggestWord.getItems().addAll(suggestion);
+      List<String> suggestion = Trie.getPrefix(WordFormatter.normalize(word));
+      if (suggestion.isEmpty()) {
+        suggestion.add("Thêm...");
+      }
+      suggestWord.getItems().addAll(suggestion.toArray(new String[(int)suggestion.size()]));
     }
   }
 
@@ -136,6 +153,15 @@ public class mainMenuController implements Initializable{
     String word = lblWord.getText();
     if (word.equals("Nghĩa của từ")) {
       return;
+    }
+    try {
+      MutableBoolean deleted = new MutableBoolean();
+      OpenDeleteWarning.start(new Stage(), deleted);
+      if (!deleted.isValue()) {
+        return;
+      }
+    } catch (Exception err) {
+      System.out.println("ABC");
     }
     Trie.delete(word);
     DictionaryMap.delete(word);
