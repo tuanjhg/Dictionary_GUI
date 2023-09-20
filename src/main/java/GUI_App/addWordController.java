@@ -27,9 +27,13 @@ public class addWordController implements Initializable {
   }
   @FXML
   public void clickAdd(ActionEvent e) {
-    OpenAdd.closeStage(WordFormatter.normalize(tfEng.getText()),
-        WordFormatter.normalize(tfPhonetic.getText()),
-        WordFormatter.normalize(tfType.getText()),
-        WordFormatter.normalize(tfVie.getText()));
+    String word = new String(WordFormatter.normalize(tfEng.getText()));
+    String phonetic = new String(WordFormatter.normalize(tfPhonetic.getText()));
+    String type = new String(WordFormatter.normalize(tfType.getText()));
+    String meaning = new String(WordFormatter.normalize(tfVie.getText()));
+    if (word.isBlank() || phonetic.isBlank() || type.isBlank() || meaning.isBlank()) {
+      return;
+    }
+    OpenAdd.closeStage(word, phonetic, type, meaning);
   }
 }

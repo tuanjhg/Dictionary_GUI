@@ -2,7 +2,8 @@ package Implement;
 
 public class WordFormatter {
   public static String normalize(String s) {
-    if (s.equals("")) return "";
+    if (s.isBlank()) return s;
+    s = s.trim();
     StringBuilder res = new StringBuilder(s);
     for (int i = 0; i < res.length(); i++) {
       char c = res.charAt(i);

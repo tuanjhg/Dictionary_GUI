@@ -3,6 +3,7 @@ package GUI_App;
 import Implement.AddFromFile;
 import Implement.Bookmark;
 import Implement.DictionaryMap;
+import Implement.History;
 import Implement.MutableBoolean;
 import Implement.OpenAdd;
 import Implement.OpenDeleteWarning;
@@ -26,7 +27,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-public class mainMenuController implements Initializable{
+public class mainController implements Initializable{
   @FXML
   private TextField searchBar;
   @FXML
@@ -43,6 +44,8 @@ public class mainMenuController implements Initializable{
   private ImageView imgSearch;
   @FXML
   private ImageView imgBookmark;
+  @FXML
+  private ImageView imgHistory;
   @FXML
   private ImageView bookmarkStar;
   @FXML
@@ -96,6 +99,9 @@ public class mainMenuController implements Initializable{
                 } else {
                   bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
                 }
+                if (!currentMenu.equals("History")) {
+                  History.add(currentWord);
+                }
               }
             });
     Tooltip.install(imgSearch, new Tooltip("Tìm kiếm"));
@@ -108,7 +114,7 @@ public class mainMenuController implements Initializable{
     String word = searchBar.getText();
     if (word == null || word.isEmpty()) {
       getSuggestion(DictionaryMap.getKey());
-    } else {
+    } else if (!word.isBlank()) {
       List<String> suggestion = Trie.getPrefix(WordFormatter.normalize(word));
       if (suggestion.isEmpty()) {
         suggestion.add("Thêm...");
@@ -120,14 +126,23 @@ public class mainMenuController implements Initializable{
   public void menuSearch(MouseEvent e) {
     imgSearch.setImage(new Image(getImgPath("searchToggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
+    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
     getSuggestion(DictionaryMap.getKey());
     currentMenu = "Search";
   }
   public void menuBookmark(MouseEvent e) {
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starToggle")));
+    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
     getSuggestion(Bookmark.getList());
     currentMenu = "Bookmark";
+  }
+  public void menuHistory(MouseEvent e) {
+    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
+    imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
+    imgHistory.setImage(new Image(getImgPath("hisToggle")));
+    getSuggestion(History.getList());
+    currentMenu = "History";
   }
   public void changeBookmarkState(MouseEvent e) {
     String word = lblWord.getText();
@@ -161,16 +176,18 @@ public class mainMenuController implements Initializable{
         return;
       }
     } catch (Exception err) {
-      System.out.println("ABC");
+      System.out.println("Unknown Error");
     }
     Trie.delete(word);
     DictionaryMap.delete(word);
     Bookmark.delete(word);
+    History.delete(word);
     if (currentMenu.equals("Search")) {
       getSuggestion(DictionaryMap.getKey());
-    }
-    else if (currentMenu.equals("Bookmark")) {
+    } else if (currentMenu.equals("Bookmark")) {
       getSuggestion(Bookmark.getList());
+    } else if (currentMenu.equals("History")) {
+      getSuggestion(History.getList());
     }
     searchBar.setText("");
     lblWord.setText("");

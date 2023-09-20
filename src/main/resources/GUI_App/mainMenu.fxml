@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.04829123328380387, 0.3135215453194651" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI_App.mainMenuController">
+<SplitPane fx:id="mainPane" dividerPositions="0.04829123328380387, 0.3135215453194651" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI_App.mainController">
    <items>
       <GridPane prefHeight="592.0" prefWidth="199.0">
         <columnConstraints>
@@ -20,16 +20,16 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="78.0" minHeight="50.0" prefHeight="78.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <GridPane.margin>
-                  <Insets />
+                  <Insets right="2.0" />
                </GridPane.margin>
                <image>
                   <Image url="@../Images/searchToggle.png" />
@@ -39,6 +39,25 @@
                <image>
                   <Image url="@../Images/starUntoggle.png" />
                </image>
+               <GridPane.margin>
+                  <Insets right="2.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSearch1" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@../Images/dictionaryImg.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="3.0" right="2.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgHistory" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuHistory" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/hisUntoggle.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="2.0" />
+               </GridPane.margin>
             </ImageView>
          </children>
       </GridPane>
@@ -82,7 +101,7 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="55.0" minHeight="55.0" prefHeight="55.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="33.0" minHeight="33.0" prefHeight="33.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="466.6666679382324" minHeight="10.0" prefHeight="363.99997965494794" vgrow="SOMETIMES" />
@@ -120,7 +139,7 @@
                   <Font name="Times New Roman Bold Italic" size="16.0" />
                </font>
             </Label>
-            <ImageView fx:id="bookmarkStar" fitHeight="18.0" fitWidth="18.0" onMouseClicked="#changeBookmarkState" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="bookmarkStar" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#changeBookmarkState" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
@@ -128,12 +147,12 @@
                   <Image url="@../Images/starBlanked.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="recycleBin" fitHeight="18.0" fitWidth="18.0" onMouseClicked="#deleteWord" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="recycleBin" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#deleteWord" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../Images/bin.png" />
                </image>
                <GridPane.margin>
-                  <Insets bottom="5.0" left="32.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="43.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ImageView>
          </children>
