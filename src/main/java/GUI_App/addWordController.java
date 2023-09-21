@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.OpenAdd;
+import Implement.Open.OpenAdd;
 import Implement.WordFormatter;
 import java.net.URL;
 import java.util.ResourceBundle;

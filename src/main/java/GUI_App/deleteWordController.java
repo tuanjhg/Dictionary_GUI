@@ -1,13 +1,16 @@
 package GUI_App;
 
-import Implement.OpenDeleteWarning;
+import Implement.Open.OpenDeleteWarning;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 
-public class deleteWordController{
+public class deleteWordController implements Initializable {
   @FXML
   public static Button btnYes;
   @FXML
@@ -18,6 +21,10 @@ public class deleteWordController{
   @FXML
   Label lblMsg;
 
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    lblMsg.setText("Bạn có chắc muốn xóa " + OpenDeleteWarning.Word + " khỏi từ điển?");
+  }
   @FXML
   public void clickYes(ActionEvent e) {
     OpenDeleteWarning.closeStage(true);

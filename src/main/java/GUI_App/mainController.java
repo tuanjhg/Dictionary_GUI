@@ -5,8 +5,9 @@ import Implement.Bookmark;
 import Implement.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
-import Implement.OpenAdd;
-import Implement.OpenDeleteWarning;
+import Implement.Open.OpenAdd;
+import Implement.Open.OpenDeleteWarning;
+import Implement.Open.OpenInfo;
 import Implement.Trie;
 import Implement.TrieNode;
 import Implement.WordFormatter;
@@ -82,6 +83,9 @@ public class mainController implements Initializable{
                   try {
                     String word = WordFormatter.normalize(searchBar.getText());
                     OpenAdd.start(new Stage(), word);
+                    if (OpenAdd.added.isValue()) {
+                      OpenInfo.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
+                    }
                   } catch (Exception err) {
                     System.out.println("Unknown Error.");
                   } finally{
@@ -106,6 +110,7 @@ public class mainController implements Initializable{
             });
     Tooltip.install(imgSearch, new Tooltip("Tìm kiếm"));
     Tooltip.install(imgBookmark, new Tooltip("Bookmark"));
+    Tooltip.install(imgHistory, new Tooltip("Lịch sử"));
   }
 
   @FXML
@@ -127,6 +132,7 @@ public class mainController implements Initializable{
     imgSearch.setImage(new Image(getImgPath("searchToggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    searchBar.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
     currentMenu = "Search";
   }
@@ -134,6 +140,7 @@ public class mainController implements Initializable{
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starToggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    searchBar.setVisible(true);
     getSuggestion(Bookmark.getList());
     currentMenu = "Bookmark";
   }
@@ -141,12 +148,13 @@ public class mainController implements Initializable{
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisToggle")));
+    searchBar.setVisible(false);
     getSuggestion(History.getList());
     currentMenu = "History";
   }
   public void changeBookmarkState(MouseEvent e) {
     String word = lblWord.getText();
-    if (word.equals("Nghĩa của từ")) {
+    if (word.equals("Nghĩa của từ") || word.isBlank()) {
       return;
     }
     TrieNode node = Trie.find(word);
@@ -171,13 +179,16 @@ public class mainController implements Initializable{
     }
     try {
       MutableBoolean deleted = new MutableBoolean();
-      OpenDeleteWarning.start(new Stage(), deleted);
+      OpenDeleteWarning.start(new Stage(), deleted, word);
       if (!deleted.isValue()) {
         return;
       }
     } catch (Exception err) {
       System.out.println("Unknown Error");
     }
+    try {
+      OpenInfo.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
+    } catch (Exception err) {};
     Trie.delete(word);
     DictionaryMap.delete(word);
     Bookmark.delete(word);

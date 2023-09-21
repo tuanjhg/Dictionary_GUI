@@ -1,6 +1,10 @@
-package Implement;
+package Implement.Open;
 
 import GUI_App.dictionaryApp;
+import Implement.DictionaryMap;
+import Implement.History;
+import Implement.MutableBoolean;
+import Implement.Trie;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,10 +14,13 @@ import javafx.stage.Stage;
 
 public class OpenAdd {
   static Stage stage;
+  public static MutableBoolean added;
   public static String AddWord;
   public static void start(Stage curStage, String str) throws IOException {
     stage = curStage;
     AddWord = str;
+    added = new MutableBoolean();
+    added.setValue(false);
     FXMLLoader fxmlLoader = new FXMLLoader(dictionaryApp.class.getResource("addWord.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 270, 350);
     stage.initModality(Modality.APPLICATION_MODAL);
@@ -32,6 +39,7 @@ public class OpenAdd {
     Trie.add(word, phonetic, type, meaning);
     DictionaryMap.add(word, meaning);
     History.add(word);
+    added.setValue(true);
     stage.close();
   }
 }

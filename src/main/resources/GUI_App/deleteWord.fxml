@@ -27,20 +27,20 @@
          </GridPane.margin>
       </Button>
       <Button fx:id="btnNo" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#clickNo" prefWidth="70.0" text="Không" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <ImageView fx:id="qMark" fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="qMark" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
          <GridPane.margin>
-            <Insets left="10.0" />
+            <Insets left="10.0" top="10.0" />
          </GridPane.margin>
          <image>
             <Image url="@../Images/questionMark.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblMsg" prefHeight="111.0" prefWidth="374.0" text="Bạn chắc chắn muốn xóa từ này khỏi từ điển?" wrapText="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <Label fx:id="lblMsg" prefHeight="111.0" prefWidth="374.0" wrapText="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <GridPane.margin>
-            <Insets bottom="15.0" left="80.0" right="10.0" top="20.0" />
+            <Insets bottom="15.0" left="70.0" right="10.0" top="20.0" />
          </GridPane.margin>
          <font>
-            <Font size="20.0" />
+            <Font size="16.0" />
          </font>
       </Label>
    </children>
