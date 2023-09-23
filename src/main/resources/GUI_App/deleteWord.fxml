@@ -21,12 +21,15 @@
   </rowConstraints>
    <children>
       <Label fx:id="delMsg" GridPane.columnIndex="1" />
-      <Button fx:id="btnYes" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#clickYes" prefWidth="70.0" text="Có" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="btnYes" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#clickYes" prefWidth="70.0" text="Có" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
-            <Insets />
+            <Insets left="50.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="btnNo" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#clickNo" prefWidth="70.0" text="Không" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button fx:id="btnNo" maxWidth="70.0" minWidth="70.0" mnemonicParsing="false" onAction="#clickNo" prefWidth="70.0" text="Không" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <GridPane.margin>
+            <Insets right="50.0" />
+         </GridPane.margin></Button>
       <ImageView fx:id="qMark" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
          <GridPane.margin>
             <Insets left="10.0" top="10.0" />

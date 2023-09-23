@@ -1,5 +1,7 @@
 package GUI_App;
 
+import Implement.Input.API.DictionaryEntry;
+import Implement.Input.AddFromAPI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -7,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 public class dictionaryApp extends Application {
 

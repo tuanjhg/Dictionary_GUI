@@ -1,5 +1,8 @@
-package Implement;
+package Implement.Input;
 
+import Implement.DictionaryMap;
+import Implement.Trie;
+import Implement.WordFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

@@ -1,6 +1,10 @@
 package GUI_App;
 
-import Implement.AddFromFile;
+import Implement.Input.API.Definition;
+import Implement.Input.API.DictionaryEntry;
+import Implement.Input.API.Meaning;
+import Implement.Input.AddFromAPI;
+import Implement.Input.AddFromFile;
 import Implement.Bookmark;
 import Implement.DictionaryMap;
 import Implement.History;
@@ -20,6 +24,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -36,8 +41,6 @@ public class mainController implements Initializable{
   @FXML
   private Label spelling;
   @FXML
-  private Label type;
-  @FXML
   private Label meaning;
   @FXML
   private ListView<String> suggestWord;
@@ -48,9 +51,13 @@ public class mainController implements Initializable{
   @FXML
   private ImageView imgHistory;
   @FXML
+  private ImageView imgAPI;
+  @FXML
   private ImageView bookmarkStar;
   @FXML
   private ImageView recycleBin;
+  @FXML
+  private ScrollPane scrollMeaning;
   @FXML
   private String currentMenu = "Search";
   String currentWord;
@@ -96,8 +103,8 @@ public class mainController implements Initializable{
                 searchBar.setText(currentWord);
                 lblWord.setText(currentWord);
                 spelling.setText(node.spelling);
-                type.setText("•   " + node.type);
-                meaning.setText("•   " + node.meaning);
+                meaning.setText("•   " +  node.type + "\n          •   " + node.meaning);
+                scrollMeaning.setContent(meaning);
                 if (!node.bookmarked) {
                   bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
                 } else {
@@ -115,16 +122,62 @@ public class mainController implements Initializable{
 
   @FXML
   public void findPrefix(KeyEvent e) {
-    suggestWord.getItems().clear();
     String word = searchBar.getText();
-    if (word == null || word.isEmpty()) {
-      getSuggestion(DictionaryMap.getKey());
-    } else if (!word.isBlank()) {
-      List<String> suggestion = Trie.getPrefix(WordFormatter.normalize(word));
-      if (suggestion.isEmpty()) {
-        suggestion.add("Thêm...");
+    if (!currentMenu.equals("API")) {
+      suggestWord.getItems().clear();
+      if (word == null || word.isEmpty()) {
+        getSuggestion(DictionaryMap.getKey());
+      } else if (!word.isBlank()) {
+        List<String> suggestion = Trie.getPrefix(WordFormatter.normalize(word));
+        if (suggestion.isEmpty()) {
+          suggestion.add("Thêm...");
+        }
+        suggestWord.getItems().addAll(suggestion.toArray(new String[(int)suggestion.size()]));
       }
-      suggestWord.getItems().addAll(suggestion.toArray(new String[(int)suggestion.size()]));
+    } else {
+      if (e.getCharacter().equals("\r")) {
+        if (word.isBlank()) {
+          return;
+        }
+        DictionaryEntry entry = AddFromAPI.get(word);
+        if (entry != null) {
+          lblWord.setText(entry.getWord());
+          spelling.setText(entry.getPhonetics().get(0).getText());
+          StringBuilder wordMeaning = new StringBuilder();
+          for (Meaning i : entry.getMeanings()) {
+            wordMeaning.append("•   ").append(i.getPartOfSpeech()).append("\n");
+            for (Definition j : i.getDefinitions()) {
+              wordMeaning.append("          +   ").append(j.getDefinition()).append("\n");
+              if (!j.getExample().isBlank()) {
+                wordMeaning.append("                    Example:   ").append(j.getExample()).append("\n");
+              }
+            }
+            if (!i.getSynonyms().isEmpty()) { // If i has synonyms
+              wordMeaning.append("          +   Synonyms: ");
+              for (String j : i.getSynonyms()) {
+                wordMeaning.append(j).append(", ");
+              }
+              wordMeaning.delete(wordMeaning.length() - 2, wordMeaning.length() - 1);
+              wordMeaning.append("\n");
+            }
+            if (!i.getAntonyms().isEmpty()) { // If i has antonyms
+              wordMeaning.append("          +   Antonyms: ");
+              for (String j : i.getAntonyms()) {
+                wordMeaning.append(j).append(", ");
+              }
+              wordMeaning.delete(wordMeaning.length() - 2, wordMeaning.length() - 1);
+              wordMeaning.append("\n");
+            }
+          }
+          meaning.setText(wordMeaning.toString());
+          scrollMeaning.setContent(meaning);
+        } else {
+          lblWord.setText(""); spelling.setText(""); meaning.setText("");
+          try {
+            OpenInfo.start(new Stage(), "Không tìm thấy " + word + " trong từ điển.");
+          } catch (Exception err) {}
+        }
+      }
     }
   }
 
@@ -132,29 +185,52 @@ public class mainController implements Initializable{
     imgSearch.setImage(new Image(getImgPath("searchToggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
     searchBar.setVisible(true);
+    suggestWord.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
+    bookmarkStar.setVisible(true);
+    recycleBin.setVisible(true);
     currentMenu = "Search";
   }
   public void menuBookmark(MouseEvent e) {
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starToggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
     searchBar.setVisible(true);
+    suggestWord.setVisible(true);
     getSuggestion(Bookmark.getList());
+    bookmarkStar.setVisible(true);
+    recycleBin.setVisible(true);
     currentMenu = "Bookmark";
   }
   public void menuHistory(MouseEvent e) {
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisToggle")));
+    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
     searchBar.setVisible(false);
+    suggestWord.setVisible(true);
+    bookmarkStar.setVisible(true);
+    recycleBin.setVisible(true);
     getSuggestion(History.getList());
     currentMenu = "History";
   }
+  public void menuAPI(MouseEvent e) {
+    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
+    imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
+    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    imgAPI.setImage(new Image(getImgPath("apiToggle")));
+    searchBar.setVisible(true);
+    suggestWord.setVisible(false);
+    bookmarkStar.setVisible(false);
+    recycleBin.setVisible(false);
+    currentMenu = "API";
+  }
   public void changeBookmarkState(MouseEvent e) {
     String word = lblWord.getText();
-    if (word.equals("Nghĩa của từ") || word.isBlank()) {
+    if (word.equals("Từ điển") || word.isBlank()) {
       return;
     }
     TrieNode node = Trie.find(word);
@@ -174,7 +250,7 @@ public class mainController implements Initializable{
 
   public void deleteWord(MouseEvent e) {
     String word = lblWord.getText();
-    if (word.equals("Nghĩa của từ")) {
+    if (word.equals("Từ điển")) {
       return;
     }
     try {
@@ -203,7 +279,6 @@ public class mainController implements Initializable{
     searchBar.setText("");
     lblWord.setText("");
     spelling.setText("");
-    type.setText("");
     meaning.setText("");
     bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
   }

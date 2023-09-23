@@ -22,7 +22,7 @@
    <children>
       <ImageView fx:id="imgIcon" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Images/info.png" />
+            <Image url="@../Images/Info.png" />
          </image>
          <GridPane.margin>
             <Insets left="10.0" />
@@ -38,7 +38,7 @@
       </Label>
       <Button fx:id="btnOK" mnemonicParsing="false" onAction="#clickOK" prefHeight="23.0" prefWidth="63.0" text="OK" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
-            <Insets />
+            <Insets bottom="6.0" />
          </GridPane.margin>
       </Button>
    </children>
