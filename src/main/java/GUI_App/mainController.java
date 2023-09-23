@@ -3,6 +3,7 @@ package GUI_App;
 import Implement.Input.API.Definition;
 import Implement.Input.API.DictionaryEntry;
 import Implement.Input.API.Meaning;
+import Implement.Input.API.Phonetic;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Bookmark;
@@ -25,15 +26,23 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Stage;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class mainController implements Initializable{
+
+  @FXML
+  private SplitPane mainPane;
   @FXML
   private TextField searchBar;
   @FXML
@@ -60,10 +69,13 @@ public class mainController implements Initializable{
   private ScrollPane scrollMeaning;
   @FXML
   private String currentMenu = "Search";
-  String currentWord;
+  private String currentWord;
+  private Media media;
+  private MediaPlayer player;
+  final String IMGPath = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\";
 
   String getImgPath(String name) {
-    return "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\" + name + ".png";
+    return IMGPath + name + ".png";
   }
   public void getSuggestion(String[] suggestion) {
     searchBar.setText("");
@@ -72,6 +84,7 @@ public class mainController implements Initializable{
   }
   @Override
   public void initialize(URL url, ResourceBundle rb) {
+    scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
     AddFromFile.add();
     getSuggestion(DictionaryMap.getKey());
     suggestWord
@@ -141,8 +154,15 @@ public class mainController implements Initializable{
         }
         DictionaryEntry entry = AddFromAPI.get(word);
         if (entry != null) {
-          lblWord.setText(entry.getWord());
-          spelling.setText(entry.getPhonetics().get(0).getText());
+          lblWord.setText(WordFormatter.normalize(word));
+          for (Phonetic i : entry.getPhonetics()) {
+            if (!i.getText().isBlank() && !i.getAudio().isBlank()) {
+              spelling.setText(i.getText());
+              media = new Media(i.getAudio());
+              player = new MediaPlayer(media);
+              break;
+            }
+          }
           StringBuilder wordMeaning = new StringBuilder();
           for (Meaning i : entry.getMeanings()) {
             wordMeaning.append("•   ").append(i.getPartOfSpeech()).append("\n");
@@ -281,5 +301,14 @@ public class mainController implements Initializable{
     spelling.setText("");
     meaning.setText("");
     bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
+  }
+  public void playMedia(MouseEvent e) {
+    if (player != null) {
+      if (player.getStatus() == Status.PLAYING) {
+        player.stop();
+      }
+      player.seek(Duration.ZERO);
+      player.play();
+    }
   }
 }

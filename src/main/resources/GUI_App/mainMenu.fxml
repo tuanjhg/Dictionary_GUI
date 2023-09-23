@@ -136,7 +136,7 @@
                   <Insets bottom="20.0" left="40.0" right="30.0" top="5.0" />
                </GridPane.margin>
                <font>
-                  <Font name="Times New Roman Bold Italic" size="17.0" />
+                  <Font name="Times New Roman Bold" size="17.0" />
                </font>
             </Label>
             <ScrollPane fx:id="scrollMeaning" fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="498.0" prefWidth="626.0" vbarPolicy="NEVER" GridPane.columnSpan="2147483647" GridPane.rowIndex="3" GridPane.valignment="TOP">
@@ -160,7 +160,7 @@
                   <Insets bottom="5.0" left="43.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+            <ImageView fitHeight="17.0" fitWidth="17.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="3.0" left="15.0" />
                </GridPane.margin>
