@@ -1,7 +1,5 @@
 package GUI_App;
 
-import Implement.Input.API.DictionaryEntry;
-import Implement.Input.AddFromAPI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

@@ -1,12 +1,8 @@
 package Implement.Input;
 
-import Implement.Input.API.Definition;
 import Implement.Input.API.DictionaryEntry;
-import Implement.Input.API.Meaning;
-import Implement.Input.API.Phonetic;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
