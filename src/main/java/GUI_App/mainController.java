@@ -196,13 +196,13 @@ public class mainController implements Initializable{
           for (Meaning i : entry.getMeanings()) {
             wordMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
             for (Definition j : i.getDefinitions()) {
-              wordMeaning.append("          •   ").append(j.getDefinition()).append("\n");
+              wordMeaning.append("          »   ").append(j.getDefinition()).append("\n");
               if (!j.getExample().isBlank()) {
-                wordMeaning.append("                    Example:   ").append(j.getExample()).append("\n");
+                wordMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
               }
             }
             if (!i.getSynonyms().isEmpty()) { // If i has synonyms
-              wordMeaning.append("          •   Synonyms: ");
+              wordMeaning.append("          »   Synonyms: ");
               for (String j : i.getSynonyms()) {
                 wordMeaning.append(j).append(", ");
               }
@@ -210,7 +210,7 @@ public class mainController implements Initializable{
               wordMeaning.append("\n");
             }
             if (!i.getAntonyms().isEmpty()) { // If i has antonyms
-              wordMeaning.append("          •   Antonyms: ");
+              wordMeaning.append("          »   Antonyms: ");
               for (String j : i.getAntonyms()) {
                 wordMeaning.append(j).append(", ");
               }
