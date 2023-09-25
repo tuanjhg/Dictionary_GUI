@@ -35,8 +35,8 @@ public class OpenAdd {
     stage.showAndWait();
   }
 
-  public static void closeStage(String word, String phonetic, String type, String meaning) {
-    Trie.add(word, phonetic, type, meaning);
+  public static void closeStage(String word, String phonetic, String meaning) {
+    Trie.add(word, phonetic, meaning);
     DictionaryMap.add(word, meaning);
     History.add(word);
     added.setValue(true);

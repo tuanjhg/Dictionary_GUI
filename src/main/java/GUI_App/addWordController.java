@@ -17,8 +17,6 @@ public class addWordController implements Initializable {
   @FXML
   TextField tfPhonetic;
   @FXML
-  TextField tfType;
-  @FXML
   TextField tfVie;
 
   @Override
@@ -30,11 +28,10 @@ public class addWordController implements Initializable {
   public void clickAdd(ActionEvent e) {
     String word = new String(WordFormatter.normalize(tfEng.getText()));
     String phonetic = new String(WordFormatter.normalize(tfPhonetic.getText()));
-    String type = new String(WordFormatter.normalize(tfType.getText()));
     String meaning = new String(WordFormatter.normalize(tfVie.getText()));
-    if (word.isBlank() || phonetic.isBlank() || type.isBlank() || meaning.isBlank()) {
+    if (word.isBlank() || phonetic.isBlank() || meaning.isBlank()) {
       return;
     }
-    OpenAdd.closeStage(word, phonetic, type, meaning);
+    OpenAdd.closeStage(word, phonetic, meaning);
   }
 }

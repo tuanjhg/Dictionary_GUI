@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Trie {
   private static final TrieNode root = new TrieNode();
-  public static void add(String word, String spelling, String type, String meaning) {
+  public static void add(String word, String spelling, String meaning) {
     TrieNode cur = root;
     int addition = 1;
     if (DictionaryMap.exist(word)) addition = 0;
@@ -20,10 +20,9 @@ public class Trie {
       cur.numPrefix += addition;
     }
     cur.isEndOfWord = true;
-    cur.meaning = meaning;
     cur.fullWord = word;
-    cur.spelling = spelling;
-    cur.type = type;
+    if (!meaning.isBlank()) cur.meaning = meaning;
+    if (!spelling.isBlank()) cur.spelling = spelling;
   }
 
   public static TrieNode find(String word) {

@@ -16,9 +16,8 @@ public class AddFromFile {
       while (fileScan.hasNext()) {
         String word = WordFormatter.normalize(fileScan.nextLine()); // Từ tiếng Anh
         String spelling = fileScan.nextLine();
-        String type = WordFormatter.normalize(fileScan.nextLine());
         String meaning = WordFormatter.normalize(fileScan.nextLine()); // Nghĩa tiếng Việt
-        Trie.add(word, spelling, type, meaning);
+        Trie.add(word, spelling, meaning);
         DictionaryMap.add(word, meaning); // Thêm vào Map
       }
     } catch (FileNotFoundException e)

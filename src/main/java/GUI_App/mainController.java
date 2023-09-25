@@ -26,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -42,6 +43,8 @@ public class mainController implements Initializable{
   
   @FXML
   private TextField searchBar;
+  @FXML
+  private TextArea txtEditor;
   @FXML
   private Label lblWord;
   @FXML
@@ -65,6 +68,12 @@ public class mainController implements Initializable{
   @FXML
   private ImageView imgSpeaker;
   @FXML
+  private ImageView imgEditor;
+  @FXML
+  private ImageView imgTick;
+  @FXML
+  private ImageView imgCross;
+  @FXML
   private ScrollPane scrollMeaning;
   @FXML
   private String currentMenu = "Search";
@@ -73,6 +82,11 @@ public class mainController implements Initializable{
   final String IMGPath = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\";
   boolean noSound = true;
 
+  void setEditor(boolean type) {
+    txtEditor.setVisible(type);
+    imgTick.setVisible(type);
+    imgCross.setVisible(type);
+  }
   void setSound() {
     imgSpeaker.setDisable(noSound);
     if (noSound) {
@@ -92,6 +106,7 @@ public class mainController implements Initializable{
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+    setEditor(false);
     setSound();
     AddFromFile.add();
     getSuggestion(DictionaryMap.getKey());
@@ -124,7 +139,7 @@ public class mainController implements Initializable{
                 searchBar.setText(currentWord);
                 lblWord.setText(currentWord);
                 spelling.setText(node.spelling);
-                meaning.setText("•   " +  node.type + "\n          •   " + node.meaning);
+                meaning.setText(node.meaning);
                 scrollMeaning.setContent(meaning);
                 if (!node.bookmarked) {
                   bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
@@ -139,6 +154,7 @@ public class mainController implements Initializable{
     Tooltip.install(imgSearch, new Tooltip("Tìm kiếm"));
     Tooltip.install(imgBookmark, new Tooltip("Bookmark"));
     Tooltip.install(imgHistory, new Tooltip("Lịch sử"));
+    Tooltip.install(imgAPI, new Tooltip("API"));
   }
 
   @FXML
@@ -216,51 +232,41 @@ public class mainController implements Initializable{
     }
   }
 
-  public void menuSearch(MouseEvent e) {
-    imgSearch.setImage(new Image(getImgPath("searchToggle")));
+  void untoggleAll() {
+    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
     imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
-    searchBar.setVisible(true);
-    suggestWord.setVisible(true);
+  }
+  public void menuSearch(MouseEvent e) {
+    untoggleAll();
+    imgSearch.setImage(new Image(getImgPath("searchToggle")));
+    searchBar.setVisible(true); suggestWord.setVisible(true);
+    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
-    bookmarkStar.setVisible(true);
-    recycleBin.setVisible(true);
     currentMenu = "Search";
   }
   public void menuBookmark(MouseEvent e) {
-    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
+    untoggleAll();
     imgBookmark.setImage(new Image(getImgPath("starToggle")));
-    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
-    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
-    searchBar.setVisible(true);
-    suggestWord.setVisible(true);
+    searchBar.setVisible(true); suggestWord.setVisible(true);
+    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
     getSuggestion(Bookmark.getList());
-    bookmarkStar.setVisible(true);
-    recycleBin.setVisible(true);
     currentMenu = "Bookmark";
   }
   public void menuHistory(MouseEvent e) {
-    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
-    imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
+    untoggleAll();
     imgHistory.setImage(new Image(getImgPath("hisToggle")));
-    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
-    searchBar.setVisible(false);
-    suggestWord.setVisible(true);
-    bookmarkStar.setVisible(true);
-    recycleBin.setVisible(true);
+    searchBar.setVisible(false); suggestWord.setVisible(true);
+    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
     getSuggestion(History.getList());
     currentMenu = "History";
   }
   public void menuAPI(MouseEvent e) {
-    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
-    imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
-    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
+    untoggleAll();
     imgAPI.setImage(new Image(getImgPath("apiToggle")));
-    searchBar.setVisible(true);
-    suggestWord.setVisible(false);
-    bookmarkStar.setVisible(false);
-    recycleBin.setVisible(false);
+    searchBar.setVisible(true); suggestWord.setVisible(false);
+    bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
     currentMenu = "API";
   }
   public void changeBookmarkState(MouseEvent e) {
@@ -327,5 +333,43 @@ public class mainController implements Initializable{
       player.seek(Duration.ZERO);
       player.play();
     }
+  }
+  public void openEditor(MouseEvent e) {
+    if (lblWord.getText().equals("Từ điển")) {
+      return;
+    }
+    setEditor(true);
+    txtEditor.setText(meaning.getText());
+    imgSearch.setDisable(true); imgBookmark.setDisable(true); imgHistory.setDisable(true);
+    imgAPI.setDisable(true); imgSpeaker.setDisable(true);
+    bookmarkStar.setDisable(true); recycleBin.setDisable(true);
+    imgSearch.setOpacity(0.3); imgBookmark.setOpacity(0.3); imgHistory.setOpacity(0.3);
+    imgAPI.setOpacity(0.3); imgSpeaker.setOpacity(0.3); meaning.setOpacity(0);
+    bookmarkStar.setOpacity(0.3); recycleBin.setOpacity(0.3);
+    if (currentMenu.equals("Search")) {
+      imgSearch.setOpacity(1);
+    } else if (currentMenu.equals("Bookmark")) {
+      imgBookmark.setOpacity(1);
+    } else if (currentMenu.equals("History")) {
+      imgHistory.setOpacity(1);
+    }
+  }
+  void closeEditor() {
+    setEditor(false);
+    imgSearch.setDisable(false); imgBookmark.setDisable(false); imgHistory.setDisable(false);
+    imgAPI.setDisable(false); imgSpeaker.setDisable(false);
+    bookmarkStar.setDisable(false); recycleBin.setDisable(false);
+    imgSearch.setOpacity(1); imgBookmark.setOpacity(1); imgHistory.setOpacity(1);
+    imgAPI.setOpacity(1); imgSpeaker.setOpacity(1); meaning.setOpacity(1);
+    bookmarkStar.setOpacity(1); recycleBin.setOpacity(1);
+  }
+  public void exitEditor(MouseEvent e) {
+    closeEditor();
+  }
+  public void saveEditor(MouseEvent e) {
+    String newMeaning = txtEditor.getText();
+    meaning.setText(newMeaning);
+    Trie.add(lblWord.getText(), "", newMeaning);
+    closeEditor();
   }
 }
