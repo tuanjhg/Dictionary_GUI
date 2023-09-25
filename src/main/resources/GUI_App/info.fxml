@@ -28,7 +28,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </ImageView>
-      <Label fx:id="msg" prefHeight="135.0" prefWidth="280.0" GridPane.columnSpan="2147483647">
+      <Label fx:id="msg" prefHeight="135.0" prefWidth="280.0" wrapText="true" GridPane.columnSpan="2147483647">
          <GridPane.margin>
             <Insets bottom="20.0" left="70.0" right="10.0" top="20.0" />
          </GridPane.margin>

@@ -66,6 +66,8 @@ public class mainController implements Initializable{
   @FXML
   private ImageView recycleBin;
   @FXML
+  private ImageView imgSpeaker;
+  @FXML
   private ScrollPane scrollMeaning;
   @FXML
   private String currentMenu = "Search";
@@ -73,7 +75,16 @@ public class mainController implements Initializable{
   private Media media;
   private MediaPlayer player;
   final String IMGPath = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\";
+  boolean noSound = true;
 
+  void setSound() {
+    imgSpeaker.setDisable(noSound);
+    if (noSound) {
+      imgSpeaker.setOpacity(0.3);
+    } else {
+      imgSpeaker.setOpacity(1);
+    }
+  }
   String getImgPath(String name) {
     return IMGPath + name + ".png";
   }
@@ -85,6 +96,7 @@ public class mainController implements Initializable{
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+    setSound();
     AddFromFile.add();
     getSuggestion(DictionaryMap.getKey());
     suggestWord
@@ -113,6 +125,7 @@ public class mainController implements Initializable{
                   }
                 }
                 TrieNode node = Trie.find(currentWord);
+                noSound = true; setSound();
                 searchBar.setText(currentWord);
                 lblWord.setText(currentWord);
                 spelling.setText(node.spelling);
@@ -152,17 +165,22 @@ public class mainController implements Initializable{
         if (word.isBlank()) {
           return;
         }
+        noSound = true;
         DictionaryEntry entry = AddFromAPI.get(word);
         if (entry != null) {
           lblWord.setText(WordFormatter.normalize(word));
           for (Phonetic i : entry.getPhonetics()) {
-            if (!i.getText().isBlank() && !i.getAudio().isBlank()) {
+            if (!i.getText().isBlank()) {
               spelling.setText(i.getText());
-              media = new Media(i.getAudio());
-              player = new MediaPlayer(media);
-              break;
+              if (!i.getAudio().isBlank()) {
+                media = new Media(i.getAudio());
+                player = new MediaPlayer(media);
+                noSound = false;
+                break;
+              }
             }
           }
+          setSound();
           StringBuilder wordMeaning = new StringBuilder();
           for (Meaning i : entry.getMeanings()) {
             wordMeaning.append("•   ").append(i.getPartOfSpeech()).append("\n");
