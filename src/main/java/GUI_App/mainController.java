@@ -26,7 +26,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -40,9 +39,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class mainController implements Initializable{
-
-  @FXML
-  private SplitPane mainPane;
+  
   @FXML
   private TextField searchBar;
   @FXML
@@ -72,7 +69,6 @@ public class mainController implements Initializable{
   @FXML
   private String currentMenu = "Search";
   private String currentWord;
-  private Media media;
   private MediaPlayer player;
   final String IMGPath = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\";
   boolean noSound = true;
@@ -120,9 +116,8 @@ public class mainController implements Initializable{
                     }
                   } catch (Exception err) {
                     System.out.println("Unknown Error.");
-                  } finally{
-                    return;
                   }
+                  return;
                 }
                 TrieNode node = Trie.find(currentWord);
                 noSound = true; setSound();
@@ -173,7 +168,7 @@ public class mainController implements Initializable{
             if (!i.getText().isBlank()) {
               spelling.setText(i.getText());
               if (!i.getAudio().isBlank()) {
-                media = new Media(i.getAudio());
+                Media media = new Media(i.getAudio());
                 player = new MediaPlayer(media);
                 noSound = false;
                 break;
@@ -213,7 +208,9 @@ public class mainController implements Initializable{
           lblWord.setText(""); spelling.setText(""); meaning.setText("");
           try {
             OpenInfo.start(new Stage(), "Không tìm thấy " + word + " trong từ điển.");
-          } catch (Exception err) {}
+          } catch (Exception err) {
+            System.out.println("Lỗi không xác định");
+          }
         }
       }
     }
@@ -298,11 +295,13 @@ public class mainController implements Initializable{
         return;
       }
     } catch (Exception err) {
-      System.out.println("Unknown Error");
+      System.out.println("Lỗi không xác định");
     }
     try {
       OpenInfo.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
-    } catch (Exception err) {};
+    } catch (Exception err) {
+      System.out.println("Lỗi không xác định");
+    }
     Trie.delete(word);
     DictionaryMap.delete(word);
     Bookmark.delete(word);
