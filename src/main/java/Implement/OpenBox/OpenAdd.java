@@ -1,10 +1,10 @@
-package Implement.Open;
+package Implement.OpenBox;
 
 import GUI_App.dictionaryApp;
-import Implement.DictionaryMap;
+import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
-import Implement.Trie;
+import Implement.WordStorage.Trie.Trie;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

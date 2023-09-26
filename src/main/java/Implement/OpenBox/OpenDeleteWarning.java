@@ -1,4 +1,4 @@
-package Implement.Open;
+package Implement.OpenBox;
 
 import GUI_App.dictionaryApp;
 import Implement.MutableBoolean;

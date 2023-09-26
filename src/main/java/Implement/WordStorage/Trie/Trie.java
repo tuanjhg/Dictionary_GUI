@@ -1,5 +1,6 @@
-package Implement;
+package Implement.WordStorage.Trie;
 
+import Implement.WordStorage.DictionaryMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

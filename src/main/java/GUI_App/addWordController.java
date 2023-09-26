@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.Open.OpenAdd;
+import Implement.OpenBox.OpenAdd;
 import Implement.WordFormatter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,14 +21,14 @@ public class addWordController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    String temp = new String(OpenAdd.AddWord);
+    String temp = OpenAdd.AddWord;
     tfEng.setText(temp);
   }
   @FXML
   public void clickAdd(ActionEvent e) {
-    String word = new String(WordFormatter.normalize(tfEng.getText()));
-    String phonetic = new String(WordFormatter.normalize(tfPhonetic.getText()));
-    String meaning = new String(WordFormatter.normalize(tfVie.getText()));
+    String word = WordFormatter.normalize(tfEng.getText());
+    String phonetic = WordFormatter.normalize(tfPhonetic.getText());
+    String meaning = WordFormatter.normalize(tfVie.getText());
     if (word.isBlank() || phonetic.isBlank() || meaning.isBlank()) {
       return;
     }

@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.Open.OpenDeleteWarning;
+import Implement.OpenBox.OpenDeleteWarning;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

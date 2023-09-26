@@ -7,20 +7,18 @@ import Implement.Input.API.Phonetic;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Bookmark;
-import Implement.DictionaryMap;
+import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
-import Implement.Open.OpenAdd;
-import Implement.Open.OpenDeleteWarning;
-import Implement.Open.OpenInfo;
-import Implement.Trie;
-import Implement.TrieNode;
+import Implement.OpenBox.OpenAdd;
+import Implement.OpenBox.OpenDeleteWarning;
+import Implement.OpenBox.OpenInfo;
+import Implement.WordStorage.Trie.Trie;
+import Implement.WordStorage.Trie.TrieNode;
 import Implement.WordFormatter;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -43,6 +41,8 @@ public class mainController implements Initializable{
   
   @FXML
   private TextField searchBar;
+  @FXML
+  private TextField tfPhonetic;
   @FXML
   private TextArea txtEditor;
   @FXML
@@ -84,6 +84,7 @@ public class mainController implements Initializable{
 
   void setEditor(boolean type) {
     txtEditor.setVisible(type);
+    tfPhonetic.setVisible(type);
     imgTick.setVisible(type);
     imgCross.setVisible(type);
   }
@@ -114,41 +115,37 @@ public class mainController implements Initializable{
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
-            new ChangeListener<String>() {
-              @Override
-              public void changed(
-                  ObservableValue<? extends String> observableValue, String s, String t1) {
-                currentWord = suggestWord.getSelectionModel().getSelectedItem();
-                if (currentWord == null || currentWord.isEmpty()) {
-                  return;
-                }
-                if (currentWord.equals("Thêm...")) {
-                  try {
-                    String word = WordFormatter.normalize(searchBar.getText());
-                    OpenAdd.start(new Stage(), word);
-                    if (OpenAdd.added.isValue()) {
-                      OpenInfo.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
-                    }
-                  } catch (Exception err) {
-                    System.out.println("Unknown Error.");
+            (observableValue, s, t1) -> {
+              currentWord = suggestWord.getSelectionModel().getSelectedItem();
+              if (currentWord == null || currentWord.isEmpty()) {
+                return;
+              }
+              if (currentWord.equals("Thêm...")) {
+                try {
+                  String word = WordFormatter.normalize(searchBar.getText());
+                  OpenAdd.start(new Stage(), word);
+                  if (OpenAdd.added.isValue()) {
+                    OpenInfo.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
                   }
-                  return;
+                } catch (Exception err) {
+                  System.out.println("Unknown Error.");
                 }
-                TrieNode node = Trie.find(currentWord);
-                noSound = true; setSound();
-                searchBar.setText(currentWord);
-                lblWord.setText(currentWord);
-                spelling.setText(node.spelling);
-                meaning.setText(node.meaning);
-                scrollMeaning.setContent(meaning);
-                if (!node.bookmarked) {
-                  bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
-                } else {
-                  bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
-                }
-                if (!currentMenu.equals("History")) {
-                  History.add(currentWord);
-                }
+                return;
+              }
+              TrieNode node = Trie.find(currentWord);
+              noSound = true; setSound();
+              searchBar.setText(currentWord);
+              lblWord.setText(currentWord);
+              spelling.setText(node.getSpelling());
+              meaning.setText(node.getMeaning());
+              scrollMeaning.setContent(meaning);
+              if (!node.getBookmarked()) {
+                bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
+              } else {
+                bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+              }
+              if (!currentMenu.equals("History")) {
+                History.add(currentWord);
               }
             });
     Tooltip.install(imgSearch, new Tooltip("Tìm kiếm"));
@@ -184,8 +181,7 @@ public class mainController implements Initializable{
             if (!i.getText().isBlank()) {
               spelling.setText(i.getText());
               if (!i.getAudio().isBlank()) {
-                Media media = new Media(i.getAudio());
-                player = new MediaPlayer(media);
+                Media media = new Media(i.getAudio()); player = new MediaPlayer(media);
                 noSound = false;
                 break;
               }
@@ -232,38 +228,37 @@ public class mainController implements Initializable{
     }
   }
 
-  void untoggleAll() {
+  void menuInit() {
     imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
     imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
     imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
     imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
+    suggestWord.setVisible(true); bookmarkStar.setVisible(true);
+    recycleBin.setVisible(true); imgEditor.setVisible(true);
   }
   public void menuSearch(MouseEvent e) {
-    untoggleAll();
+    menuInit();
     imgSearch.setImage(new Image(getImgPath("searchToggle")));
-    searchBar.setVisible(true); suggestWord.setVisible(true);
-    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
+    searchBar.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
     currentMenu = "Search";
   }
   public void menuBookmark(MouseEvent e) {
-    untoggleAll();
+    menuInit();
     imgBookmark.setImage(new Image(getImgPath("starToggle")));
-    searchBar.setVisible(true); suggestWord.setVisible(true);
-    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
+    searchBar.setVisible(true);
     getSuggestion(Bookmark.getList());
     currentMenu = "Bookmark";
   }
   public void menuHistory(MouseEvent e) {
-    untoggleAll();
+    menuInit();
     imgHistory.setImage(new Image(getImgPath("hisToggle")));
-    searchBar.setVisible(false); suggestWord.setVisible(true);
-    bookmarkStar.setVisible(true); recycleBin.setVisible(true); imgEditor.setVisible(true);
+    searchBar.setVisible(false);
     getSuggestion(History.getList());
     currentMenu = "History";
   }
   public void menuAPI(MouseEvent e) {
-    untoggleAll();
+    menuInit();
     imgAPI.setImage(new Image(getImgPath("apiToggle")));
     searchBar.setVisible(true); suggestWord.setVisible(false);
     bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
@@ -275,13 +270,13 @@ public class mainController implements Initializable{
       return;
     }
     TrieNode node = Trie.find(word);
-    if (!node.bookmarked) {
+    if (!node.getBookmarked()) {
       bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
-      node.bookmarked = true;
+      node.setBookmarked(true);
       Bookmark.add(word);
     } else {
       bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
-      node.bookmarked = false;
+      node.setBookmarked(false);
       Bookmark.delete(word);
     }
     if (currentMenu.equals("Bookmark")) {
@@ -309,15 +304,11 @@ public class mainController implements Initializable{
       System.out.println("Lỗi không xác định");
     }
     Trie.delete(word);
-    DictionaryMap.delete(word);
-    Bookmark.delete(word);
-    History.delete(word);
-    if (currentMenu.equals("Search")) {
-      getSuggestion(DictionaryMap.getKey());
-    } else if (currentMenu.equals("Bookmark")) {
-      getSuggestion(Bookmark.getList());
-    } else if (currentMenu.equals("History")) {
-      getSuggestion(History.getList());
+    DictionaryMap.delete(word); Bookmark.delete(word); History.delete(word);
+    switch (currentMenu) {
+      case "Search" -> getSuggestion(DictionaryMap.getKey());
+      case "Bookmark" -> getSuggestion(Bookmark.getList());
+      case "History" -> getSuggestion(History.getList());
     }
     searchBar.setText("");
     lblWord.setText("");
@@ -334,42 +325,47 @@ public class mainController implements Initializable{
       player.play();
     }
   }
+  void iconDisable(boolean b) {
+    imgSearch.setDisable(b); imgBookmark.setDisable(b); imgHistory.setDisable(b);
+    imgAPI.setDisable(b); imgSpeaker.setDisable(b);
+    bookmarkStar.setDisable(true); recycleBin.setDisable(b);
+    meaning.setOpacity(1); spelling.setOpacity(1);
+    double opacity = 1;
+    if (b) {
+      opacity = 0.3;
+      meaning.setOpacity(0); spelling.setOpacity(0);
+    }
+    imgSearch.setOpacity(opacity); imgBookmark.setOpacity(opacity); imgHistory.setOpacity(opacity);
+    imgAPI.setOpacity(opacity); imgSpeaker.setOpacity(opacity);
+    bookmarkStar.setOpacity(opacity); recycleBin.setOpacity(opacity);
+  }
   public void openEditor(MouseEvent e) {
     if (lblWord.getText().equals("Từ điển")) {
       return;
     }
     setEditor(true);
     txtEditor.setText(meaning.getText());
-    imgSearch.setDisable(true); imgBookmark.setDisable(true); imgHistory.setDisable(true);
-    imgAPI.setDisable(true); imgSpeaker.setDisable(true);
-    bookmarkStar.setDisable(true); recycleBin.setDisable(true);
-    imgSearch.setOpacity(0.3); imgBookmark.setOpacity(0.3); imgHistory.setOpacity(0.3);
-    imgAPI.setOpacity(0.3); imgSpeaker.setOpacity(0.3); meaning.setOpacity(0);
-    bookmarkStar.setOpacity(0.3); recycleBin.setOpacity(0.3);
-    if (currentMenu.equals("Search")) {
-      imgSearch.setOpacity(1);
-    } else if (currentMenu.equals("Bookmark")) {
-      imgBookmark.setOpacity(1);
-    } else if (currentMenu.equals("History")) {
-      imgHistory.setOpacity(1);
+    tfPhonetic.setText(spelling.getText());
+    iconDisable(true);
+    switch (currentMenu) {
+      case "Search" -> imgSearch.setOpacity(1);
+      case "Bookmark" -> imgBookmark.setOpacity(1);
+      case "History" -> imgHistory.setOpacity(1);
     }
   }
   void closeEditor() {
     setEditor(false);
-    imgSearch.setDisable(false); imgBookmark.setDisable(false); imgHistory.setDisable(false);
-    imgAPI.setDisable(false); imgSpeaker.setDisable(false);
-    bookmarkStar.setDisable(false); recycleBin.setDisable(false);
-    imgSearch.setOpacity(1); imgBookmark.setOpacity(1); imgHistory.setOpacity(1);
-    imgAPI.setOpacity(1); imgSpeaker.setOpacity(1); meaning.setOpacity(1);
-    bookmarkStar.setOpacity(1); recycleBin.setOpacity(1);
+    iconDisable(false);
   }
   public void exitEditor(MouseEvent e) {
     closeEditor();
   }
   public void saveEditor(MouseEvent e) {
     String newMeaning = txtEditor.getText();
+    String newSpelling = tfPhonetic.getText();
     meaning.setText(newMeaning);
-    Trie.add(lblWord.getText(), "", newMeaning);
+    spelling.setText(newSpelling);
+    Trie.add(lblWord.getText(), newSpelling, newMeaning);
     closeEditor();
   }
 }

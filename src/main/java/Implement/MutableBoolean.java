@@ -1,7 +1,7 @@
 package Implement;
 
 public class MutableBoolean {
-  boolean value;
+  private boolean value;
 
   public boolean isValue() {
     return value;

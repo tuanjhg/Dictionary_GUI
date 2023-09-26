@@ -201,6 +201,14 @@
                   <Font name="Times New Roman Bold" size="17.0" />
                </font>
             </TextArea>
+            <TextField fx:id="tfPhonetic" prefHeight="60.0" prefWidth="261.0" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="40.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+            </TextField>
          </children>
          <padding>
             <Insets top="10.0" />
