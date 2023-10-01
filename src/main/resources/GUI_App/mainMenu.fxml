@@ -116,7 +116,7 @@
             <RowConstraints maxHeight="466.6666679382324" minHeight="10.0" prefHeight="363.99997965494794" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblWord" text="Từ điển" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+            <Label fx:id="lblWord" prefHeight="31.0" prefWidth="161.0" text="LingoBench" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Arial Bold" size="26.0" />
                </font>

@@ -88,6 +88,9 @@ public class mainController implements Initializable{
     imgTick.setVisible(type);
     imgCross.setVisible(type);
   }
+  void setStyle(ImageView x) {
+    x.getStyleClass().add("imageViewStyle");
+  }
   void setSound() {
     imgSpeaker.setDisable(noSound);
     if (noSound) {
@@ -107,6 +110,12 @@ public class mainController implements Initializable{
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+    setStyle(bookmarkStar);
+    setStyle(recycleBin);
+    setStyle(imgEditor);
+    setStyle(imgCross);
+    setStyle(imgTick);
+    setStyle(imgSpeaker);
     setEditor(false);
     setSound();
     AddFromFile.add();
@@ -266,7 +275,7 @@ public class mainController implements Initializable{
   }
   public void changeBookmarkState(MouseEvent e) {
     String word = lblWord.getText();
-    if (word.equals("Từ điển") || word.isBlank()) {
+    if (word.equals("LingoBench") || word.isBlank()) {
       return;
     }
     TrieNode node = Trie.find(word);
@@ -286,7 +295,7 @@ public class mainController implements Initializable{
 
   public void deleteWord(MouseEvent e) {
     String word = lblWord.getText();
-    if (word.equals("Từ điển")) {
+    if (word.equals("LingoBench")) {
       return;
     }
     try {
@@ -340,7 +349,7 @@ public class mainController implements Initializable{
     bookmarkStar.setOpacity(opacity); recycleBin.setOpacity(opacity);
   }
   public void openEditor(MouseEvent e) {
-    if (lblWord.getText().equals("Từ điển")) {
+    if (lblWord.getText().equals("LingoBench")) {
       return;
     }
     setEditor(true);
