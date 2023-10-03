@@ -16,6 +16,7 @@ import Implement.OpenBox.OpenInfo;
 import Implement.WordStorage.Trie.Trie;
 import Implement.WordStorage.Trie.TrieNode;
 import Implement.WordFormatter;
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,7 +80,7 @@ public class mainController implements Initializable{
   private String currentMenu = "Search";
   private String currentWord;
   private MediaPlayer player;
-  final String IMGPath = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\";
+  final String IMGPath = "src/main/resources/Images/";
   boolean noSound = true;
 
   void setEditor(boolean type) {
@@ -100,7 +101,7 @@ public class mainController implements Initializable{
     }
   }
   String getImgPath(String name) {
-    return IMGPath + name + ".png";
+    return new File(IMGPath + name).toURI().toString();
   }
   public void getSuggestion(String[] suggestion) {
     searchBar.setText("");
