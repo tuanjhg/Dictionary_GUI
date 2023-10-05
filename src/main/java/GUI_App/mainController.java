@@ -101,7 +101,7 @@ public class mainController implements Initializable{
     }
   }
   String getImgPath(String name) {
-    return new File(IMGPath + name).toURI().toString();
+    return new File(IMGPath + name + ".png").toURI().toString();
   }
   public void getSuggestion(String[] suggestion) {
     searchBar.setText("");
