@@ -1,6 +1,7 @@
 package Implement.OpenBox;
 
 import GUI_App.dictionaryApp;
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class OpenInfo {
+public class infoBox {
   static Stage stage;
   public static String message;
   public static void start(Stage curStage, String str) throws IOException {
@@ -21,7 +22,7 @@ public class OpenInfo {
         .getIcons()
         .add(
             new Image(
-                "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\infoIcon.png"));
+                new File("src/main/resources/Images/infoIcon.png").toURI().toString()));
     stage.setResizable(false);
     stage.setTitle("Info");
     stage.setScene(scene);

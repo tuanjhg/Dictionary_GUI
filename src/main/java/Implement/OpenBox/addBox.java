@@ -5,6 +5,7 @@ import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
 import Implement.WordStorage.Trie.Trie;
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +13,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class OpenAdd {
+public class addBox {
   static Stage stage;
   public static MutableBoolean added;
   public static String AddWord;
@@ -28,7 +29,7 @@ public class OpenAdd {
         .getIcons()
         .add(
             new Image(
-                "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\plusIcon.png"));
+                new File("src/main/resources/Images/plusIcon.png").toURI().toString()));
     stage.setResizable(false);
     stage.setTitle("Thêm từ");
     stage.setScene(scene);
@@ -36,7 +37,7 @@ public class OpenAdd {
   }
 
   public static void closeStage(String word, String phonetic, String meaning) {
-    Trie.add(word, phonetic, meaning);
+    Trie.add(word, phonetic, meaning, "");
     DictionaryMap.add(word, meaning);
     History.add(word);
     added.setValue(true);

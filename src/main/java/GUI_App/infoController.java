@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.OpenBox.OpenInfo;
+import Implement.OpenBox.infoBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -17,10 +17,10 @@ public class infoController implements Initializable {
   @FXML
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    msg.setText(OpenInfo.message);
+    msg.setText(infoBox.message);
   }
   @FXML
   public void clickOK(ActionEvent e) {
-    OpenInfo.closeStage();
+    infoBox.closeStage();
   }
 }

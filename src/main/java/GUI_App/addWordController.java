@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.OpenBox.OpenAdd;
+import Implement.OpenBox.addBox;
 import Implement.WordFormatter;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,7 +21,7 @@ public class addWordController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    String temp = OpenAdd.AddWord;
+    String temp = addBox.AddWord;
     tfEng.setText(temp);
   }
   @FXML
@@ -32,6 +32,6 @@ public class addWordController implements Initializable {
     if (word.isBlank() || phonetic.isBlank() || meaning.isBlank()) {
       return;
     }
-    OpenAdd.closeStage(word, phonetic, meaning);
+    addBox.closeStage(word, phonetic, meaning);
   }
 }

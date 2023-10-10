@@ -5,11 +5,11 @@ import java.util.TreeMap;
 public class TrieNode {
   TreeMap<Character, TrieNode> child = new TreeMap<>();
   Boolean isEndOfWord, bookmarked;
-  String fullWord, meaning, spelling;
+  String fullWord, meaning, spelling, audio;
   int numPrefix;
   TrieNode() {
     isEndOfWord = bookmarked = false;
-    fullWord = meaning = spelling = "";
+    fullWord = meaning = spelling = audio = "";
     numPrefix = 0;
   }
 
@@ -67,5 +67,13 @@ public class TrieNode {
 
   public void setNumPrefix(int numPrefix) {
     this.numPrefix = numPrefix;
+  }
+
+  public String getAudio() {
+    return audio;
+  }
+
+  public void setAudio(String audio) {
+    this.audio = audio;
   }
 }

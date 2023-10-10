@@ -29,7 +29,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="imgToggle" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="imgToggle" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <image>
                   <Image url="@../Images/Toggle.png" />
                </image>
@@ -166,7 +166,7 @@
                   <Image url="@../Images/bin.png" />
                </image>
                <GridPane.margin>
-                  <Insets bottom="5.0" left="43.0" right="5.0" top="5.0" />
+                  <Insets bottom="5.0" left="40.0" right="5.0" top="5.0" />
                </GridPane.margin>
             </ImageView>
             <ImageView fx:id="imgEditor" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openEditor" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -174,7 +174,7 @@
                   <Image url="@../Images/editor.png" />
                </image>
                <GridPane.margin>
-                  <Insets left="80.0" />
+                  <Insets left="75.0" />
                </GridPane.margin>
             </ImageView>
             <ImageView fx:id="imgSpeaker" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
@@ -217,6 +217,14 @@
                   <Insets bottom="1.0" left="40.0" right="1.0" top="1.0" />
                </GridPane.margin>
             </TextField>
+            <ImageView fx:id="imgAdd" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addFromAPI" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Images/plusIcon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="100.0" />
+               </GridPane.margin>
+            </ImageView>
          </children>
          <padding>
             <Insets top="10.0" />

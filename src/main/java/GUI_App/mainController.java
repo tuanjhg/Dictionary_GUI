@@ -7,12 +7,13 @@ import Implement.Input.API.Phonetic;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Bookmark;
+import Implement.OpenBox.addAPI;
 import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
-import Implement.OpenBox.OpenAdd;
-import Implement.OpenBox.OpenDeleteWarning;
-import Implement.OpenBox.OpenInfo;
+import Implement.OpenBox.addBox;
+import Implement.OpenBox.deleteWarning;
+import Implement.OpenBox.infoBox;
 import Implement.WordStorage.Trie.Trie;
 import Implement.WordStorage.Trie.TrieNode;
 import Implement.WordFormatter;
@@ -78,12 +79,15 @@ public class mainController implements Initializable{
   @FXML
   private ImageView imgToggle;
   @FXML
+  private ImageView imgAdd;
+  @FXML
   private ScrollPane scrollMeaning;
   private String currentMenu = "Search";
   private String currentWord;
   private MediaPlayer player;
   final String IMGPath = "src/main/resources/Images/";
   private boolean noSound = true;
+  String apiAudio;
   private TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setEditor(boolean type) {
@@ -115,7 +119,7 @@ public class mainController implements Initializable{
   public void initialize(URL url, ResourceBundle rb) {
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
     setStyle(bookmarkStar); setStyle(recycleBin); setStyle(imgEditor);
-    setStyle(imgCross); setStyle(imgTick); setStyle(imgSpeaker);
+    setStyle(imgCross); setStyle(imgTick); setStyle(imgSpeaker); imgAdd.setVisible(false);
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle);
     setSound();
@@ -133,9 +137,9 @@ public class mainController implements Initializable{
               if (currentWord.equals("Thêm...")) {
                 try {
                   String word = WordFormatter.normalize(searchBar.getText());
-                  OpenAdd.start(new Stage(), word);
-                  if (OpenAdd.added.isValue()) {
-                    OpenInfo.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
+                  addBox.start(new Stage(), word);
+                  if (addBox.added.isValue()) {
+                    infoBox.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
                   }
                 } catch (Exception err) {
                   System.out.println("Unknown Error.");
@@ -143,12 +147,13 @@ public class mainController implements Initializable{
                 return;
               }
               TrieNode node = Trie.find(currentWord);
-              noSound = true; setSound();
+              apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
               searchBar.setText(currentWord);
               lblWord.setText(currentWord);
               spelling.setText(node.getSpelling());
               meaning.setText(node.getMeaning());
               scrollMeaning.setContent(meaning);
+              imgAdd.setVisible(false);
               if (!node.getBookmarked()) {
                 bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
               } else {
@@ -191,45 +196,45 @@ public class mainController implements Initializable{
             if (!i.getText().isBlank()) {
               spelling.setText(i.getText());
               if (!i.getAudio().isBlank()) {
-                Media media = new Media(i.getAudio()); player = new MediaPlayer(media);
+                apiAudio = i.getAudio();
                 noSound = false;
                 break;
               }
             }
           }
-          setSound();
-          StringBuilder wordMeaning = new StringBuilder();
+          setSound(); imgAdd.setVisible(true);
+          StringBuilder apiMeaning = new StringBuilder();
           for (Meaning i : entry.getMeanings()) {
-            wordMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
+            apiMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
             for (Definition j : i.getDefinitions()) {
-              wordMeaning.append("          »   ").append(j.getDefinition()).append("\n");
+              apiMeaning.append("          »   ").append(j.getDefinition()).append("\n");
               if (!j.getExample().isBlank()) {
-                wordMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
+                apiMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
               }
             }
             if (!i.getSynonyms().isEmpty()) { // If i has synonyms
-              wordMeaning.append("          »   Synonyms: ");
+              apiMeaning.append("          »   Synonyms: ");
               for (String j : i.getSynonyms()) {
-                wordMeaning.append(j).append(", ");
+                apiMeaning.append(j).append(", ");
               }
-              wordMeaning.delete(wordMeaning.length() - 2, wordMeaning.length() - 1);
-              wordMeaning.append("\n");
+              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+              apiMeaning.append("\n");
             }
             if (!i.getAntonyms().isEmpty()) { // If i has antonyms
-              wordMeaning.append("          »   Antonyms: ");
+              apiMeaning.append("          »   Antonyms: ");
               for (String j : i.getAntonyms()) {
-                wordMeaning.append(j).append(", ");
+                apiMeaning.append(j).append(", ");
               }
-              wordMeaning.delete(wordMeaning.length() - 2, wordMeaning.length() - 1);
-              wordMeaning.append("\n");
+              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+              apiMeaning.append("\n");
             }
           }
-          meaning.setText(wordMeaning.toString());
+          meaning.setText(apiMeaning.toString());
           scrollMeaning.setContent(meaning);
         } else {
           lblWord.setText(""); spelling.setText(""); meaning.setText("");
           try {
-            OpenInfo.start(new Stage(), "Không tìm thấy " + word + " trong từ điển.");
+            infoBox.start(new Stage(), "Không tìm thấy " + word + " trong API từ điển.");
           } catch (Exception err) {
             System.out.println("Lỗi không xác định");
           }
@@ -251,6 +256,7 @@ public class mainController implements Initializable{
     suggestWord.setVisible(true); bookmarkStar.setVisible(true);
     recycleBin.setVisible(true); imgEditor.setVisible(true);
   }
+
   public void menuSearch(MouseEvent e) {
     menuInit();
     toggleMenu(imgSearch);
@@ -258,6 +264,7 @@ public class mainController implements Initializable{
     getSuggestion(DictionaryMap.getKey());
     currentMenu = "Search";
   }
+
   public void menuBookmark(MouseEvent e) {
     menuInit();
     toggleMenu(imgBookmark);
@@ -265,6 +272,7 @@ public class mainController implements Initializable{
     getSuggestion(Bookmark.getList());
     currentMenu = "Bookmark";
   }
+
   public void menuHistory(MouseEvent e) {
     menuInit();
     toggleMenu(imgHistory);
@@ -272,6 +280,7 @@ public class mainController implements Initializable{
     getSuggestion(History.getList());
     currentMenu = "History";
   }
+
   public void menuAPI(MouseEvent e) {
     menuInit();
     toggleMenu(imgAPI);
@@ -279,6 +288,7 @@ public class mainController implements Initializable{
     bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
     currentMenu = "API";
   }
+
   public void changeBookmarkState(MouseEvent e) {
     String word = lblWord.getText();
     if (word.equals("LingoBench") || word.isBlank()) {
@@ -306,15 +316,15 @@ public class mainController implements Initializable{
     }
     try {
       MutableBoolean deleted = new MutableBoolean();
-      OpenDeleteWarning.start(new Stage(), deleted, word);
+      deleteWarning.start(new Stage(), deleted, word);
       if (!deleted.isValue()) {
         return;
       }
     } catch (Exception err) {
-      System.out.println("Lỗi không xác định");
+      System.out.println("Lỗi không xác định DeleteWord");
     }
     try {
-      OpenInfo.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
+      infoBox.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
     } catch (Exception err) {
       System.out.println("Lỗi không xác định");
     }
@@ -331,7 +341,9 @@ public class mainController implements Initializable{
     meaning.setText("");
     bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
   }
+
   public void playMedia(MouseEvent e) {
+    Media media = new Media(apiAudio); player = new MediaPlayer(media);
     if (player != null) {
       if (player.getStatus() == Status.PLAYING) {
         player.stop();
@@ -340,6 +352,7 @@ public class mainController implements Initializable{
       player.play();
     }
   }
+
   void iconDisable(boolean b) {
     imgSearch.setDisable(b); imgBookmark.setDisable(b); imgHistory.setDisable(b);
     imgAPI.setDisable(b); imgSpeaker.setDisable(b);
@@ -354,6 +367,7 @@ public class mainController implements Initializable{
     imgAPI.setOpacity(opacity); imgSpeaker.setOpacity(opacity);
     bookmarkStar.setOpacity(opacity); recycleBin.setOpacity(opacity);
   }
+
   public void openEditor(MouseEvent e) {
     if (lblWord.getText().equals("LingoBench")) {
       return;
@@ -368,19 +382,42 @@ public class mainController implements Initializable{
       case "History" -> imgHistory.setOpacity(1);
     }
   }
+
   void closeEditor() {
     setEditor(false);
     iconDisable(false);
   }
+
   public void exitEditor(MouseEvent e) {
     closeEditor();
   }
+
   public void saveEditor(MouseEvent e) {
     String newMeaning = txtEditor.getText();
     String newSpelling = tfPhonetic.getText();
     meaning.setText(newMeaning);
     spelling.setText(newSpelling);
-    Trie.add(lblWord.getText(), newSpelling, newMeaning);
+    Trie.add(lblWord.getText(), newSpelling, newMeaning, "");
     closeEditor();
+  }
+
+  public void addFromAPI(MouseEvent e) {
+    try {
+      MutableBoolean added = new MutableBoolean();
+      addAPI.start(new Stage(), added, lblWord.getText());
+      if (!added.isValue()) {
+        return;
+      }
+      Trie.add(lblWord.getText(), spelling.getText(), meaning.getText(), apiAudio);
+      DictionaryMap.add(lblWord.getText(), meaning.getText());
+      History.add(lblWord.getText());
+    } catch (Exception err) {
+      System.out.println("Lỗi không xác định");
+    }
+    try {
+      infoBox.start(new Stage(), "Đã thêm " + lblWord.getText() + " vào từ điển.");
+    } catch (Exception err) {
+      System.out.println("Lỗi không xác định");
+    }
   }
 }

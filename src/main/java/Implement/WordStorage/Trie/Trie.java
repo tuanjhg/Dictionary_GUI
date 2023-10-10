@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class Trie {
   private static final TrieNode root = new TrieNode();
-  public static void add(String word, String spelling, String meaning) {
+  public static void add(String word, String spelling, String meaning, String audio) {
     TrieNode cur = root;
     int addition = 1;
     if (DictionaryMap.exist(word)) addition = 0;
@@ -24,6 +24,7 @@ public class Trie {
     cur.fullWord = word;
     if (!meaning.isBlank()) cur.meaning = meaning;
     if (!spelling.isBlank()) cur.spelling = spelling;
+    if (!audio.isBlank()) cur.audio = audio;
   }
 
   public static TrieNode find(String word) {

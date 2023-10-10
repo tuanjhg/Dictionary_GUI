@@ -2,6 +2,7 @@ package Implement.OpenBox;
 
 import GUI_App.dictionaryApp;
 import Implement.MutableBoolean;
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,13 +10,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class OpenDeleteWarning {
+public class deleteWarning {
   static Stage stage;
   public static MutableBoolean deleted;
   public static String Word;
   public static void start(Stage curStage, MutableBoolean curDel, String word) throws IOException {
     Word = word;
-    FXMLLoader fxmlLoader = new FXMLLoader(dictionaryApp.class.getResource("deleteWord.fxml"));
+    FXMLLoader fxmlLoader = new FXMLLoader(dictionaryApp.class.getResource("deleteWarning.fxml"));
     Scene scene = new Scene(fxmlLoader.load(), 340, 150);
     stage = curStage;
     deleted = curDel;
@@ -25,7 +26,7 @@ public class OpenDeleteWarning {
         .getIcons()
         .add(
             new Image(
-                "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\Images\\minusIcon.png"));
+                new File("src/main/resources/Images/minusIcon.png").toURI().toString()));
     stage.setResizable(false);
     stage.setTitle("Xóa từ");
     stage.setScene(scene);
