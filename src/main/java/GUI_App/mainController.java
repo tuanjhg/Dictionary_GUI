@@ -338,7 +338,7 @@ public class mainController implements Initializable{
   void iconDisable(boolean b) {
     imgSearch.setDisable(b); imgBookmark.setDisable(b); imgHistory.setDisable(b);
     imgAPI.setDisable(b); imgSpeaker.setDisable(b);
-    bookmarkStar.setDisable(true); recycleBin.setDisable(b);
+    bookmarkStar.setDisable(b); recycleBin.setDisable(b);
     meaning.setOpacity(1); spelling.setOpacity(1);
     double opacity = 1;
     if (b) {
