@@ -20,6 +20,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -75,13 +76,15 @@ public class mainController implements Initializable{
   @FXML
   private ImageView imgCross;
   @FXML
-  private ScrollPane scrollMeaning;
+  private ImageView imgToggle;
   @FXML
+  private ScrollPane scrollMeaning;
   private String currentMenu = "Search";
   private String currentWord;
   private MediaPlayer player;
   final String IMGPath = "src/main/resources/Images/";
-  boolean noSound = true;
+  private boolean noSound = true;
+  private TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setEditor(boolean type) {
     txtEditor.setVisible(type);
@@ -111,13 +114,10 @@ public class mainController implements Initializable{
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-    setStyle(bookmarkStar);
-    setStyle(recycleBin);
-    setStyle(imgEditor);
-    setStyle(imgCross);
-    setStyle(imgTick);
-    setStyle(imgSpeaker);
-    setEditor(false);
+    setStyle(bookmarkStar); setStyle(recycleBin); setStyle(imgEditor);
+    setStyle(imgCross); setStyle(imgTick); setStyle(imgSpeaker);
+    imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
+    setEditor(false); transition.setNode(imgToggle);
     setSound();
     AddFromFile.add();
     getSuggestion(DictionaryMap.getKey());
@@ -150,9 +150,9 @@ public class mainController implements Initializable{
               meaning.setText(node.getMeaning());
               scrollMeaning.setContent(meaning);
               if (!node.getBookmarked()) {
-                bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
-              } else {
                 bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+              } else {
+                bookmarkStar.setImage(new Image(getImgPath("star")));
               }
               if (!currentMenu.equals("History")) {
                 History.add(currentWord);
@@ -238,38 +238,43 @@ public class mainController implements Initializable{
     }
   }
 
+  void toggleMenu(ImageView img) {
+    transition.setToY(img.getLayoutY() - 1.5 - imgToggle.getLayoutY());
+    transition.play();
+  }
+
   void menuInit() {
-    imgSearch.setImage(new Image(getImgPath("searchUntoggle")));
-    imgBookmark.setImage(new Image(getImgPath("starUntoggle")));
-    imgHistory.setImage(new Image(getImgPath("hisUntoggle")));
-    imgAPI.setImage(new Image(getImgPath("apiUntoggle")));
+    imgSearch.setImage(new Image(getImgPath("search")));
+    imgBookmark.setImage(new Image(getImgPath("bookmark")));
+    imgHistory.setImage(new Image(getImgPath("history")));
+    imgAPI.setImage(new Image(getImgPath("api")));
     suggestWord.setVisible(true); bookmarkStar.setVisible(true);
     recycleBin.setVisible(true); imgEditor.setVisible(true);
   }
   public void menuSearch(MouseEvent e) {
     menuInit();
-    imgSearch.setImage(new Image(getImgPath("searchToggle")));
+    toggleMenu(imgSearch);
     searchBar.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
     currentMenu = "Search";
   }
   public void menuBookmark(MouseEvent e) {
     menuInit();
-    imgBookmark.setImage(new Image(getImgPath("starToggle")));
+    toggleMenu(imgBookmark);
     searchBar.setVisible(true);
     getSuggestion(Bookmark.getList());
     currentMenu = "Bookmark";
   }
   public void menuHistory(MouseEvent e) {
     menuInit();
-    imgHistory.setImage(new Image(getImgPath("hisToggle")));
+    toggleMenu(imgHistory);
     searchBar.setVisible(false);
     getSuggestion(History.getList());
     currentMenu = "History";
   }
   public void menuAPI(MouseEvent e) {
     menuInit();
-    imgAPI.setImage(new Image(getImgPath("apiToggle")));
+    toggleMenu(imgAPI);
     searchBar.setVisible(true); suggestWord.setVisible(false);
     bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
     currentMenu = "API";
@@ -281,11 +286,11 @@ public class mainController implements Initializable{
     }
     TrieNode node = Trie.find(word);
     if (!node.getBookmarked()) {
-      bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+      bookmarkStar.setImage(new Image(getImgPath("star")));
       node.setBookmarked(true);
       Bookmark.add(word);
     } else {
-      bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
+      bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
       node.setBookmarked(false);
       Bookmark.delete(word);
     }
@@ -324,7 +329,7 @@ public class mainController implements Initializable{
     lblWord.setText("");
     spelling.setText("");
     meaning.setText("");
-    bookmarkStar.setImage(new Image(getImgPath("starBlanked")));
+    bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
   }
   public void playMedia(MouseEvent e) {
     if (player != null) {

@@ -29,17 +29,25 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="imgSearch" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <ImageView fx:id="imgToggle" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/Toggle.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="1.5" right="2.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSearch" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets right="2.0" />
                </GridPane.margin>
                <image>
-                  <Image url="@../Images/searchToggle.png" />
+                  <Image url="@../Images/search.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="imgBookmark" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <ImageView fx:id="imgBookmark" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#menuBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/starUntoggle.png" />
+                  <Image url="@../Images/bookmark.png" />
                </image>
                <GridPane.margin>
                   <Insets right="2.0" />
@@ -53,17 +61,17 @@
                   <Insets bottom="3.0" right="2.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fx:id="imgHistory" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuHistory" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+            <ImageView fx:id="imgHistory" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#menuHistory" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/hisUntoggle.png" />
+                  <Image url="@../Images/history.png" />
                </image>
                <GridPane.margin>
                   <Insets right="2.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fx:id="imgAPI" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+            <ImageView fx:id="imgAPI" fitHeight="37.0" fitWidth="37.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/apiUntoggle.png" />
+                  <Image url="@../Images/api.png" />
                </image>
                <GridPane.margin>
                   <Insets right="2.0" />
@@ -150,7 +158,7 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </GridPane.margin>
                <image>
-                  <Image url="@../Images/starBlanked.png" />
+                  <Image url="@../Images/starUntoggle.png" />
                </image>
             </ImageView>
             <ImageView fx:id="recycleBin" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#deleteWord" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
