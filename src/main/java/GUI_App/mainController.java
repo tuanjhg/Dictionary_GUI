@@ -7,13 +7,13 @@ import Implement.Input.API.Phonetic;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Bookmark;
-import Implement.OpenBox.addAPI;
+import Implement.Box.addAPI;
 import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;
-import Implement.OpenBox.addBox;
-import Implement.OpenBox.deleteWarning;
-import Implement.OpenBox.infoBox;
+import Implement.Box.addBox;
+import Implement.Box.deleteWarning;
+import Implement.Box.infoBox;
 import Implement.WordStorage.Trie.Trie;
 import Implement.WordStorage.Trie.TrieNode;
 import Implement.WordFormatter;
@@ -24,7 +24,9 @@ import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -38,6 +40,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer.Status;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Callback;
 import javafx.util.Duration;
 
 public class mainController implements Initializable{
@@ -55,7 +58,7 @@ public class mainController implements Initializable{
   @FXML
   private Label meaning;
   @FXML
-  private ListView<String> suggestWord;
+  private ListView<String> suggestWord = new ListView<>();
   @FXML
   private ImageView imgSearch;
   @FXML
@@ -84,11 +87,10 @@ public class mainController implements Initializable{
   private ScrollPane scrollMeaning;
   private String currentMenu = "Search";
   private String currentWord;
-  private MediaPlayer player;
   final String IMGPath = "src/main/resources/Images/";
   private boolean noSound = true;
-  String apiAudio;
-  private TranslateTransition transition = new TranslateTransition(Duration.millis(130));
+  String apiAudio = "";
+  private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setEditor(boolean type) {
     txtEditor.setVisible(type);
@@ -96,8 +98,8 @@ public class mainController implements Initializable{
     imgTick.setVisible(type);
     imgCross.setVisible(type);
   }
-  void setStyle(ImageView x) {
-    x.getStyleClass().add("imageViewStyle");
+  void setStyle(Node x, String style) {
+    x.getStyleClass().add(style);
   }
   void setSound() {
     imgSpeaker.setDisable(noSound);
@@ -115,21 +117,52 @@ public class mainController implements Initializable{
     suggestWord.getItems().clear();
     suggestWord.getItems().addAll(suggestion);
   }
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
+  public void setTooltip(Node tmp, String msg) {
+    Tooltip k = new Tooltip(msg); k.setShowDelay(Duration.millis(300));
+    Tooltip.install(tmp, k);
+  }
+  public void cellFormat() {
+    suggestWord.getStyleClass().add("list-cell");
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-    setStyle(bookmarkStar); setStyle(recycleBin); setStyle(imgEditor);
-    setStyle(imgCross); setStyle(imgTick); setStyle(imgSpeaker); imgAdd.setVisible(false);
+    suggestWord.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+      @Override
+      public ListCell<String> call(ListView<String> param) {
+        return new ListCell<String>() {
+          @Override
+          protected void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+            if (item != null) {
+              setText("   " + item);
+            } else {
+              setText(null);
+            }
+          }
+        };
+      }
+    });
+  }
+  public void buttonFormat() {
+    setStyle(bookmarkStar, "imageViewStyle"); setStyle(recycleBin, "imageViewStyle");
+    setStyle(imgEditor, "imageViewStyle"); setStyle(imgAdd, "imageViewStyle");
+    setStyle(imgCross, "imageViewStyle"); setStyle(imgTick, "imageViewStyle");
+    setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle);
-    setSound();
-    AddFromFile.add();
-    getSuggestion(DictionaryMap.getKey());
+  }
+  public void tFieldFormat() {
+    searchBar.getStyleClass().add("text-field");
+  }
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    cellFormat(); buttonFormat(); setSound();
+    AddFromFile.add(); getSuggestion(DictionaryMap.getKey());
+    menuInit(false);
     suggestWord
         .getSelectionModel()
         .selectedItemProperty()
         .addListener(
             (observableValue, s, t1) -> {
+              menuInit(true);
               currentWord = suggestWord.getSelectionModel().getSelectedItem();
               if (currentWord == null || currentWord.isEmpty()) {
                 return;
@@ -163,10 +196,12 @@ public class mainController implements Initializable{
                 History.add(currentWord);
               }
             });
-    Tooltip.install(imgSearch, new Tooltip("Tìm kiếm"));
-    Tooltip.install(imgBookmark, new Tooltip("Bookmark"));
-    Tooltip.install(imgHistory, new Tooltip("Lịch sử"));
-    Tooltip.install(imgAPI, new Tooltip("API"));
+    setTooltip(imgSearch, "Tra từ"); setTooltip(imgBookmark, "Bookmark");
+    setTooltip(imgHistory, "Lịch sử"); setTooltip(imgAPI, "API");
+    setTooltip(imgSpeaker, "Phát âm"); setTooltip(bookmarkStar, "Đánh dấu");
+    setTooltip(recycleBin, "Xóa từ"); setTooltip(imgEditor, "Sửa đổi");
+    setTooltip(imgAdd, "Thêm vào từ điển");
+    setTooltip(imgTick, "Lưu"); setTooltip(imgCross, "Hủy");
   }
 
   @FXML
@@ -232,11 +267,10 @@ public class mainController implements Initializable{
           meaning.setText(apiMeaning.toString());
           scrollMeaning.setContent(meaning);
         } else {
-          lblWord.setText(""); spelling.setText(""); meaning.setText("");
           try {
             infoBox.start(new Stage(), "Không tìm thấy " + word + " trong API từ điển.");
           } catch (Exception err) {
-            System.out.println("Lỗi không xác định");
+            System.out.println("Lỗi không xác định FIND_PREFIX");
           }
         }
       }
@@ -248,17 +282,18 @@ public class mainController implements Initializable{
     transition.play();
   }
 
-  void menuInit() {
-    imgSearch.setImage(new Image(getImgPath("search")));
-    imgBookmark.setImage(new Image(getImgPath("bookmark")));
-    imgHistory.setImage(new Image(getImgPath("history")));
-    imgAPI.setImage(new Image(getImgPath("api")));
-    suggestWord.setVisible(true); bookmarkStar.setVisible(true);
-    recycleBin.setVisible(true); imgEditor.setVisible(true);
+  void menuInit(boolean active) {
+    suggestWord.setVisible(true); bookmarkStar.setVisible(active);
+    if (active && Bookmark.find(lblWord.getText())) {
+      bookmarkStar.setImage(new Image(getImgPath("star")));
+    } else {
+      bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+    }
+    recycleBin.setVisible(active); imgEditor.setVisible(active);
   }
 
   public void menuSearch(MouseEvent e) {
-    menuInit();
+    menuInit(true);
     toggleMenu(imgSearch);
     searchBar.setVisible(true);
     getSuggestion(DictionaryMap.getKey());
@@ -266,7 +301,7 @@ public class mainController implements Initializable{
   }
 
   public void menuBookmark(MouseEvent e) {
-    menuInit();
+    menuInit(true);
     toggleMenu(imgBookmark);
     searchBar.setVisible(true);
     getSuggestion(Bookmark.getList());
@@ -274,7 +309,7 @@ public class mainController implements Initializable{
   }
 
   public void menuHistory(MouseEvent e) {
-    menuInit();
+    menuInit(true);
     toggleMenu(imgHistory);
     searchBar.setVisible(false);
     getSuggestion(History.getList());
@@ -282,7 +317,7 @@ public class mainController implements Initializable{
   }
 
   public void menuAPI(MouseEvent e) {
-    menuInit();
+    menuInit(true);
     toggleMenu(imgAPI);
     searchBar.setVisible(true); suggestWord.setVisible(false);
     bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
@@ -296,6 +331,11 @@ public class mainController implements Initializable{
     }
     TrieNode node = Trie.find(word);
     if (!node.getBookmarked()) {
+      if (!DictionaryMap.exist(word)) {
+        Trie.add(word, spelling.getText(), meaning.getText(), apiAudio);
+        DictionaryMap.add(word, meaning.getText());
+        History.add(word);
+      }
       bookmarkStar.setImage(new Image(getImgPath("star")));
       node.setBookmarked(true);
       Bookmark.add(word);
@@ -315,6 +355,7 @@ public class mainController implements Initializable{
       return;
     }
     try {
+
       MutableBoolean deleted = new MutableBoolean();
       deleteWarning.start(new Stage(), deleted, word);
       if (!deleted.isValue()) {
@@ -326,7 +367,7 @@ public class mainController implements Initializable{
     try {
       infoBox.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
     } catch (Exception err) {
-      System.out.println("Lỗi không xác định");
+      System.out.println("Lỗi không xác định DELETE WORD");
     }
     Trie.delete(word);
     DictionaryMap.delete(word); Bookmark.delete(word); History.delete(word);
@@ -343,14 +384,13 @@ public class mainController implements Initializable{
   }
 
   public void playMedia(MouseEvent e) {
-    Media media = new Media(apiAudio); player = new MediaPlayer(media);
-    if (player != null) {
-      if (player.getStatus() == Status.PLAYING) {
-        player.stop();
-      }
-      player.seek(Duration.ZERO);
-      player.play();
+    Media media = new Media(apiAudio);
+    MediaPlayer player = new MediaPlayer(media);
+    if (player.getStatus() == Status.PLAYING) {
+      player.stop();
     }
+    player.seek(Duration.ZERO);
+    player.play();
   }
 
   void iconDisable(boolean b) {
@@ -412,7 +452,7 @@ public class mainController implements Initializable{
       DictionaryMap.add(lblWord.getText(), meaning.getText());
       History.add(lblWord.getText());
     } catch (Exception err) {
-      System.out.println("Lỗi không xác định");
+      System.out.println("Lỗi không xác định ADD API");
     }
     try {
       infoBox.start(new Stage(), "Đã thêm " + lblWord.getText() + " vào từ điển.");

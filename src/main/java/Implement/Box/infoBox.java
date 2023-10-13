@@ -1,4 +1,4 @@
-package Implement.OpenBox;
+package Implement.Box;
 
 import GUI_App.dictionaryApp;
 import java.io.File;

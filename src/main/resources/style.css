@@ -1,6 +1,24 @@
 .imageViewStyle:hover {
-  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 10, 0, 0, 0);
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.45), 2, 4, 0, 0);
   -fx-border-color: #3498db;
   -fx-border-width: 2px;
   -fx-border-radius: 5px;
+}
+.list-cell {
+  -fx-background-color: #e3e4e9;
+  -fx-padding: 0;
+  -fx-border-width: 0;
+  -fx-pref-height: 30;
+}
+
+.list-cell:filled:hover,
+.list-cell:selected,
+.list-cell:filled:selected {
+  -fx-background-color: #d4d6dc;
+  -fx-background-insets: 0;
+  -fx-text-fill: black;
+}
+
+.text-field, .text-field:selected {
+  -fx-background-color: #e3e4e9;
 }

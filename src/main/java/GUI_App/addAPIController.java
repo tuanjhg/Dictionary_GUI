@@ -1,7 +1,6 @@
 package GUI_App;
 
-import Implement.OpenBox.addAPI;
-import Implement.OpenBox.deleteWarning;
+import Implement.Box.addAPI;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

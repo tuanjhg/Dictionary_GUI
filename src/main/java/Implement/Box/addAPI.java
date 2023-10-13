@@ -1,10 +1,7 @@
-package Implement.OpenBox;
+package Implement.Box;
 
 import GUI_App.dictionaryApp;
-import Implement.WordStorage.DictionaryMap;
-import Implement.History;
 import Implement.MutableBoolean;
-import Implement.WordStorage.Trie.Trie;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -13,17 +10,17 @@ import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class addBox {
+public class addAPI {
   static Stage stage;
   public static MutableBoolean added;
-  public static String AddWord;
-  public static void start(Stage curStage, String str) throws IOException {
+  public static String Word;
+  public static void start(Stage curStage, MutableBoolean curAdd, String word) throws IOException {
+    Word = word;
+    FXMLLoader fxmlLoader = new FXMLLoader(dictionaryApp.class.getResource("addAPIBox.fxml"));
+    Scene scene = new Scene(fxmlLoader.load(), 340, 150);
     stage = curStage;
-    AddWord = str;
-    added = new MutableBoolean();
+    added = curAdd;
     added.setValue(false);
-    FXMLLoader fxmlLoader = new FXMLLoader(dictionaryApp.class.getResource("addWord.fxml"));
-    Scene scene = new Scene(fxmlLoader.load(), 270, 350);
     stage.initModality(Modality.APPLICATION_MODAL);
     stage
         .getIcons()
@@ -36,11 +33,8 @@ public class addBox {
     stage.showAndWait();
   }
 
-  public static void closeStage(String word, String phonetic, String meaning) {
-    Trie.add(word, phonetic, meaning, "");
-    DictionaryMap.add(word, meaning);
-    History.add(word);
-    added.setValue(true);
+  public static void closeStage(boolean type) {
+    added.setValue(type);
     stage.close();
   }
 }

@@ -13,6 +13,9 @@ public class Bookmark {
   public static void delete(String word) {
     saved.remove(word);
   }
+  public static boolean find(String word) {
+    return saved.contains(word);
+  }
 
   public static String[] getList() {
     if (saved.isEmpty()) {

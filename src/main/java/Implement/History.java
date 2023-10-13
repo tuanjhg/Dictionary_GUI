@@ -6,6 +6,7 @@ import java.util.List;
 public class History {
   private static final List<String> his = new ArrayList<>();
   public static void add(String word) {
+    delete(word);
     his.add(0, word);
   }
 

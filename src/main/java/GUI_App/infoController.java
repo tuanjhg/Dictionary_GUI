@@ -1,6 +1,6 @@
 package GUI_App;
 
-import Implement.OpenBox.infoBox;
+import Implement.Box.infoBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
