@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
@@ -77,6 +78,8 @@ public class mainController implements Initializable{
   private ImageView imgEditor;
   @FXML
   private ImageView imgTick;
+  @FXML
+  private ImageView miniGlass;
   @FXML
   private ImageView imgCross;
   @FXML
@@ -124,6 +127,7 @@ public class mainController implements Initializable{
   public void cellFormat() {
     suggestWord.getStyleClass().add("list-cell");
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
+    //Chat GPT
     suggestWord.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
       @Override
       public ListCell<String> call(ListView<String> param) {
@@ -140,12 +144,16 @@ public class mainController implements Initializable{
         };
       }
     });
+    //End of Chat GPT
   }
   public void buttonFormat() {
     setStyle(bookmarkStar, "imageViewStyle"); setStyle(recycleBin, "imageViewStyle");
     setStyle(imgEditor, "imageViewStyle"); setStyle(imgAdd, "imageViewStyle");
     setStyle(imgCross, "imageViewStyle"); setStyle(imgTick, "imageViewStyle");
     setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
+    setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
+    setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
+    setStyle(miniGlass, "toHandCursor");
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle);
   }
@@ -204,6 +212,61 @@ public class mainController implements Initializable{
     setTooltip(imgTick, "Lưu"); setTooltip(imgCross, "Hủy");
   }
 
+  void apiSearch(String word) {
+    if (word.isBlank()) {
+      return;
+    }
+    noSound = true;
+    DictionaryEntry entry = AddFromAPI.get(word);
+    if (entry != null) {
+      lblWord.setText(WordFormatter.normalize(word));
+      for (Phonetic i : entry.getPhonetics()) {
+        if (!i.getText().isBlank()) {
+          spelling.setText(i.getText());
+          if (!i.getAudio().isBlank()) {
+            apiAudio = i.getAudio();
+            noSound = false;
+            break;
+          }
+        }
+      }
+      setSound(); imgAdd.setVisible(true);
+      StringBuilder apiMeaning = new StringBuilder();
+      for (Meaning i : entry.getMeanings()) {
+        apiMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
+        for (Definition j : i.getDefinitions()) {
+          apiMeaning.append("          »   ").append(j.getDefinition()).append("\n");
+          if (!j.getExample().isBlank()) {
+            apiMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
+          }
+        }
+        if (!i.getSynonyms().isEmpty()) { // If i has synonyms
+          apiMeaning.append("          »   Synonyms: ");
+          for (String j : i.getSynonyms()) {
+            apiMeaning.append(j).append(", ");
+          }
+          apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+          apiMeaning.append("\n");
+        }
+        if (!i.getAntonyms().isEmpty()) { // If i has antonyms
+          apiMeaning.append("          »   Antonyms: ");
+          for (String j : i.getAntonyms()) {
+            apiMeaning.append(j).append(", ");
+          }
+          apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+          apiMeaning.append("\n");
+        }
+      }
+      meaning.setText(apiMeaning.toString());
+      scrollMeaning.setContent(meaning);
+    } else {
+      try {
+        infoBox.start(new Stage(), "Không tìm thấy " + word + " trong API từ điển.");
+      } catch (Exception err) {
+        System.out.println("Lỗi không xác định FIND_PREFIX");
+      }
+    }
+  }
   @FXML
   public void findPrefix(KeyEvent e) {
     String word = searchBar.getText();
@@ -219,60 +282,8 @@ public class mainController implements Initializable{
         suggestWord.getItems().addAll(suggestion.toArray(new String[(int)suggestion.size()]));
       }
     } else {
-      if (e.getCharacter().equals("\r")) {
-        if (word.isBlank()) {
-          return;
-        }
-        noSound = true;
-        DictionaryEntry entry = AddFromAPI.get(word);
-        if (entry != null) {
-          lblWord.setText(WordFormatter.normalize(word));
-          for (Phonetic i : entry.getPhonetics()) {
-            if (!i.getText().isBlank()) {
-              spelling.setText(i.getText());
-              if (!i.getAudio().isBlank()) {
-                apiAudio = i.getAudio();
-                noSound = false;
-                break;
-              }
-            }
-          }
-          setSound(); imgAdd.setVisible(true);
-          StringBuilder apiMeaning = new StringBuilder();
-          for (Meaning i : entry.getMeanings()) {
-            apiMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
-            for (Definition j : i.getDefinitions()) {
-              apiMeaning.append("          »   ").append(j.getDefinition()).append("\n");
-              if (!j.getExample().isBlank()) {
-                apiMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
-              }
-            }
-            if (!i.getSynonyms().isEmpty()) { // If i has synonyms
-              apiMeaning.append("          »   Synonyms: ");
-              for (String j : i.getSynonyms()) {
-                apiMeaning.append(j).append(", ");
-              }
-              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
-              apiMeaning.append("\n");
-            }
-            if (!i.getAntonyms().isEmpty()) { // If i has antonyms
-              apiMeaning.append("          »   Antonyms: ");
-              for (String j : i.getAntonyms()) {
-                apiMeaning.append(j).append(", ");
-              }
-              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
-              apiMeaning.append("\n");
-            }
-          }
-          meaning.setText(apiMeaning.toString());
-          scrollMeaning.setContent(meaning);
-        } else {
-          try {
-            infoBox.start(new Stage(), "Không tìm thấy " + word + " trong API từ điển.");
-          } catch (Exception err) {
-            System.out.println("Lỗi không xác định FIND_PREFIX");
-          }
-        }
+      if (e.getCharacter().equals("\r") || e.getCode().equals(KeyCode.ENTER)) {
+        apiSearch(word);
       }
     }
   }
@@ -395,16 +406,19 @@ public class mainController implements Initializable{
 
   void iconDisable(boolean b) {
     imgSearch.setDisable(b); imgBookmark.setDisable(b); imgHistory.setDisable(b);
-    imgAPI.setDisable(b); imgSpeaker.setDisable(b);
+    imgAPI.setDisable(b);
     bookmarkStar.setDisable(b); recycleBin.setDisable(b);
     meaning.setOpacity(1); spelling.setOpacity(1);
     double opacity = 1;
     if (b) {
-      opacity = 0.3;
+      opacity = 0.3; imgSpeaker.setDisable(b); imgSpeaker.setOpacity(opacity);
       meaning.setOpacity(0); spelling.setOpacity(0);
+    } else {
+      TrieNode node = Trie.find(lblWord.getText());
+      apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
     }
     imgSearch.setOpacity(opacity); imgBookmark.setOpacity(opacity); imgHistory.setOpacity(opacity);
-    imgAPI.setOpacity(opacity); imgSpeaker.setOpacity(opacity);
+    imgAPI.setOpacity(opacity);
     bookmarkStar.setOpacity(opacity); recycleBin.setOpacity(opacity);
   }
 
@@ -459,5 +473,11 @@ public class mainController implements Initializable{
     } catch (Exception err) {
       System.out.println("Lỗi không xác định");
     }
+  }
+
+  public void clickMiniGlass(MouseEvent e) {
+    KeyEvent keyEvent = new KeyEvent(KeyEvent.KEY_PRESSED, "", "",
+        KeyCode.ENTER, false, false, false, false);
+    findPrefix(keyEvent);
   }
 }
