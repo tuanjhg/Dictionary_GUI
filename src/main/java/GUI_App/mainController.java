@@ -150,13 +150,13 @@ public class mainController implements Initializable{
     setEditor(false); transition.setNode(imgToggle);
   }
   public void tFieldFormat() {
-    searchBar.getStyleClass().add("text-field");
+    searchBar.getStyleClass().add("txtField");
   }
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     cellFormat(); buttonFormat(); setSound();
     AddFromFile.add(); getSuggestion(DictionaryMap.getKey());
-    menuInit(false);
+    menuInit(false); tFieldFormat();
     suggestWord
         .getSelectionModel()
         .selectedItemProperty()
