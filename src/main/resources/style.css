@@ -45,3 +45,25 @@
   -fx-padding: 0 10 0 0;
   -fx-cursor: hand;
 }
+
+.lan {
+  -fx-background-color: #e7e6e8;
+  -fx-text-fill: black;
+  -fx-alignment: center;
+  -fx-cursor: hand;
+}
+
+.lan.focus {
+  -fx-background-color: white;
+  -fx-text-fill: black;
+  -fx-alignment: center;
+  -fx-cursor: hand;
+}
+
+.translateArea, .translateArea:focused {
+  -fx-background-color: none;
+  -fx-focus-color: transparent;
+  -fx-border-style: none;
+  -fx-border-color: none;
+  -fx-border-width: 0;
+}

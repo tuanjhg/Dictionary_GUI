@@ -37,20 +37,34 @@ public class translateController implements Initializable {
 
   @FXML private TextArea result = new TextArea();
 
+  @FXML private Label lanEn, lanVi, lanEn1, lanVi1;
+
+  String lanFrom = "en", lanTo = "vi";
+
   mainController mControl = dictionaryApp.mControl;
   private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setStyle(Node x, String style) {
     x.getStyleClass().add(style);
   }
+  void removeStyle(Node x, String style) {
+    x.getStyleClass().remove(style);
+  }
 
   public void initialize(URL url, ResourceBundle rb) {
     Font font =  Font.loadFont(("file:src/main/resources/Font/Roboto-Regular.ttf"),23);
     Font bold =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),23);
+    Font lanFont =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),15);
     input.setFont(font); result.setFont(font); btnTranslate.setFont(bold);
+    lanEn.setFont(lanFont); lanVi.setFont(lanFont); lanEn1.setFont(lanFont); lanVi1.setFont(lanFont);
+    setStyle(lanEn, "lan"); setStyle(lanVi, "lan");
+    setStyle(lanEn1, "lan"); setStyle(lanVi1, "lan");
     setStyle(btnTranslate, "translateButton"); setStyle(imgAPI, "toHandCursor");
     setStyle(imgBookmark, "toHandCursor"); setStyle(imgSearch, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgTranslate, "toHandCursor");
+    setStyle(input, "translateArea"); setStyle(result, "translateArea");
+    unfocusAllLan("from"); unfocusAllLan("to");
+    focusLan(lanEn); focusLan(lanVi1);
     transition.setNode(imgToggle);
   }
   public ImageView getImgAPI() {
@@ -125,13 +139,66 @@ public class translateController implements Initializable {
     if (input.getText().isBlank()) {
       return;
     }
-    String to = Translator.translate(from, "en", "vi");
+    String to = Translator.translate(from, lanFrom, lanTo);
     result.setText(to);
   }
 
+  void fromEn() {
+    lanFrom = "en"; unfocusAllLan("from"); focusLan(lanEn);
+  }
+
+  void fromVi() {
+    lanFrom = "vi"; unfocusAllLan("from"); focusLan(lanVi);
+  }
+
+  void toEn() {
+    lanTo = "en"; unfocusAllLan("to"); focusLan(lanEn1);
+  }
+
+  void toVi() {
+    lanTo = "vi"; unfocusAllLan("to"); focusLan(lanVi1);
+  }
+
+  @FXML
+  void fromEng(MouseEvent e) {
+    toVi();
+    fromEn();
+  }
+
+  @FXML
+  void fromVie(MouseEvent e) {
+    toEn();
+    fromVi();
+  }
+
+  @FXML
+  void toEng(MouseEvent e) {
+    fromVi();
+    toEn();
+  }
+
+  @FXML
+  void toVie(MouseEvent e) {
+    fromEn();
+    toVi();
+  }
+
   void init() {
-    toggleMenu(imgTranslate);
-    input.setText("");
-    result.setText("");
+    toggleMenu(imgTranslate); input.setText(""); result.setText("");
+    unfocusAllLan("from"); focusLan(lanEn);
+  }
+
+  void unfocusAllLan(String type) {
+    if (type.equals("from")) {
+      removeStyle(lanEn, "focus");
+      removeStyle(lanVi, "focus");
+    } else {
+      removeStyle(lanEn1, "focus");
+      removeStyle(lanVi1, "focus");
+    }
+  }
+
+  void focusLan(Node node) {
+    setStyle(node, "focus");
   }
 }

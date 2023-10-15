@@ -95,17 +95,17 @@
                <children>
                   <TextArea fx:id="input" prefHeight="200.0" prefWidth="200.0">
                      <GridPane.margin>
-                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
                      </GridPane.margin>
                   </TextArea>
                   <TextArea fx:id="result" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
                      </GridPane.margin>
                   </TextArea>
                   <Label fx:id="btnTranslate" onMouseClicked="#translate" prefHeight="35.0" prefWidth="104.0" text="  Dịch" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets right="200.0" />
+                        <Insets right="200.0" top="30.0" />
                      </GridPane.margin>
                      <graphic>
                         <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
@@ -114,6 +114,34 @@
                            </image>
                         </ImageView>
                      </graphic>
+                  </Label>
+                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets top="30.0" />
+                     </GridPane.margin>
+                     <image>
+                        <Image url="@../Images/translateTo.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lanEn" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromEng" prefHeight="35.0" prefWidth="120.0" text="Tiếng Anh" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanVi" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromVie" prefHeight="35.0" prefWidth="120.0" text="Tiếng Việt" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="160.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanEn1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toEng" prefHeight="35.0" prefWidth="120.0" text="Tiếng Anh" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanVi1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toVie" prefHeight="35.0" prefWidth="120.0" text="Tiếng Việt" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="160.0" top="23.0" />
+                     </GridPane.margin>
                   </Label>
                </children>
             </GridPane>
