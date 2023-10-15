@@ -1,4 +1,4 @@
-package Implement.Input.API;
+package Implement.Input.SingleWord;
 
 public class Definition {
   private String definition = new String();

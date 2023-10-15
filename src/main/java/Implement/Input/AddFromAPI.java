@@ -1,6 +1,6 @@
 package Implement.Input;
 
-import Implement.Input.API.DictionaryEntry;
+import Implement.Input.SingleWord.DictionaryEntry;
 import com.google.gson.Gson;
 import java.io.IOException;
 

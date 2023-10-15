@@ -30,3 +30,18 @@
 .txtField, .txtField:selected {
   -fx-background-color: #e3e4e9;
 }
+
+.translateButton {
+  -fx-background-color: #5a63ed;
+  -fx-text-fill: white;
+  -fx-alignment: center-right;
+  -fx-padding: 0 10 0 0;
+  -fx-cursor: hand;
+}
+.translateButton:hover {
+  -fx-background-color: #4950bf;
+  -fx-text-fill: white;
+  -fx-alignment: center-right;
+  -fx-padding: 0 10 0 0;
+  -fx-cursor: hand;
+}

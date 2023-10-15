@@ -1,4 +1,4 @@
-package Implement.Input.API;
+package Implement.Input.SingleWord;
 
 import java.util.ArrayList;
 import java.util.List;

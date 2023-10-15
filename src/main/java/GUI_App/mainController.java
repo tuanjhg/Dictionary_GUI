@@ -1,9 +1,9 @@
 package GUI_App;
 
-import Implement.Input.API.Definition;
-import Implement.Input.API.DictionaryEntry;
-import Implement.Input.API.Meaning;
-import Implement.Input.API.Phonetic;
+import Implement.Input.SingleWord.Definition;
+import Implement.Input.SingleWord.DictionaryEntry;
+import Implement.Input.SingleWord.Meaning;
+import Implement.Input.SingleWord.Phonetic;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Bookmark;
@@ -18,6 +18,7 @@ import Implement.WordStorage.Trie.Trie;
 import Implement.WordStorage.Trie.TrieNode;
 import Implement.WordFormatter;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -44,55 +45,58 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-public class mainController implements Initializable{
-  
+public class mainController implements Initializable {
+
   @FXML
-  private TextField searchBar;
+  private TextField searchBar = new TextField();
   @FXML
-  private TextField tfPhonetic;
+  private TextField tfPhonetic = new TextField();
   @FXML
-  private TextArea txtEditor;
+  private TextArea txtEditor = new TextArea();
   @FXML
-  private Label lblWord;
+  private Label lblWord = new Label();
   @FXML
-  private Label spelling;
+  private Label spelling = new Label();
   @FXML
-  private Label meaning;
+  private Label meaning = new Label();
   @FXML
   private ListView<String> suggestWord = new ListView<>();
   @FXML
-  private ImageView imgSearch;
+  private ImageView imgSearch = new ImageView();
   @FXML
-  private ImageView imgBookmark;
+  private ImageView imgBookmark = new ImageView();
   @FXML
-  private ImageView imgHistory;
+  private ImageView imgHistory = new ImageView();
   @FXML
-  private ImageView imgAPI;
+  private ImageView imgAPI = new ImageView();
   @FXML
-  private ImageView bookmarkStar;
+  private ImageView bookmarkStar = new ImageView();
   @FXML
-  private ImageView recycleBin;
+  private ImageView recycleBin = new ImageView();
   @FXML
-  private ImageView imgSpeaker;
+  private ImageView imgSpeaker = new ImageView();
   @FXML
-  private ImageView imgEditor;
+  private ImageView imgEditor = new ImageView();
   @FXML
-  private ImageView imgTick;
+  private ImageView imgTick = new ImageView();
   @FXML
-  private ImageView miniGlass;
+  private ImageView miniGlass = new ImageView();
   @FXML
-  private ImageView imgCross;
+  private ImageView imgCross = new ImageView();
   @FXML
-  private ImageView imgToggle;
+  private ImageView imgToggle = new ImageView();
   @FXML
-  private ImageView imgAdd;
+  private ImageView imgAdd = new ImageView();
+  @FXML
+  private ImageView imgTranslate = new ImageView();
   @FXML
   private ScrollPane scrollMeaning;
   private String currentMenu = "Search";
   private String currentWord;
   final String IMGPath = "src/main/resources/Images/";
   private boolean noSound = true;
-  String apiAudio = "";
+  String apiAudio = "", curMode = "dict";
+  translateController tControl;
   private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setEditor(boolean type) {
@@ -153,9 +157,8 @@ public class mainController implements Initializable{
     setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
     setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
-    setStyle(miniGlass, "toHandCursor");
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
-    setEditor(false); transition.setNode(imgToggle);
+    setEditor(false); transition.setNode(imgToggle); setStyle(imgTranslate, "toHandCursor");
   }
   public void tFieldFormat() {
     searchBar.getStyleClass().add("txtField");
@@ -303,36 +306,43 @@ public class mainController implements Initializable{
     recycleBin.setVisible(active); imgEditor.setVisible(active);
   }
 
+  public void Switch(boolean mInit, ImageView node, boolean searchB, String[] lst, String cMenu) {
+    menuInit(mInit);
+    toggleMenu(node);
+    searchBar.setVisible(searchB); miniGlass.setVisible(searchB);
+    if (lst != null) getSuggestion(lst);
+    currentMenu = cMenu;
+  }
+  public void switchToSearch() {
+    Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
+    tControl.switchToSearch();
+  }
   public void menuSearch(MouseEvent e) {
-    menuInit(true);
-    toggleMenu(imgSearch);
-    searchBar.setVisible(true);
-    getSuggestion(DictionaryMap.getKey());
-    currentMenu = "Search";
+    switchToSearch();
   }
-
+  public void switchToBookmark() {
+    Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
+    tControl.switchToBookmark();
+  }
   public void menuBookmark(MouseEvent e) {
-    menuInit(true);
-    toggleMenu(imgBookmark);
-    searchBar.setVisible(true);
-    getSuggestion(Bookmark.getList());
-    currentMenu = "Bookmark";
+    switchToBookmark();
   }
 
+  public void switchToHistory() {
+    Switch(true, imgHistory, false, History.getList(), "History");
+    tControl.switchToHistory();
+  }
   public void menuHistory(MouseEvent e) {
-    menuInit(true);
-    toggleMenu(imgHistory);
-    searchBar.setVisible(false);
-    getSuggestion(History.getList());
-    currentMenu = "History";
+    switchToHistory();
   }
 
+  public void switchToAPI() {
+    Switch(true, imgAPI, true, null, "API");
+    suggestWord.setVisible(false);
+    tControl.switchToAPI();
+  }
   public void menuAPI(MouseEvent e) {
-    menuInit(true);
-    toggleMenu(imgAPI);
-    searchBar.setVisible(true); suggestWord.setVisible(false);
-    bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
-    currentMenu = "API";
+    switchToAPI();
   }
 
   public void changeBookmarkState(MouseEvent e) {
@@ -360,26 +370,17 @@ public class mainController implements Initializable{
     }
   }
 
-  public void deleteWord(MouseEvent e) {
+  public void deleteWord(MouseEvent e) throws IOException {
     String word = lblWord.getText();
     if (word.equals("LingoBench")) {
       return;
     }
-    try {
-
-      MutableBoolean deleted = new MutableBoolean();
-      deleteWarning.start(new Stage(), deleted, word);
-      if (!deleted.isValue()) {
-        return;
-      }
-    } catch (Exception err) {
-      System.out.println("Lỗi không xác định DeleteWord");
+    MutableBoolean deleted = new MutableBoolean();
+    deleteWarning.start(new Stage(), deleted, word);
+    if (!deleted.isValue()) {
+      return;
     }
-    try {
-      infoBox.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
-    } catch (Exception err) {
-      System.out.println("Lỗi không xác định DELETE WORD");
-    }
+    infoBox.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
     Trie.delete(word);
     DictionaryMap.delete(word); Bookmark.delete(word); History.delete(word);
     switch (currentMenu) {
@@ -387,11 +388,8 @@ public class mainController implements Initializable{
       case "Bookmark" -> getSuggestion(Bookmark.getList());
       case "History" -> getSuggestion(History.getList());
     }
-    searchBar.setText("");
-    lblWord.setText("");
-    spelling.setText("");
-    meaning.setText("");
-    bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+    searchBar.setText(""); lblWord.setText(""); spelling.setText(""); meaning.setText("");
+    bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
   }
 
   public void playMedia(MouseEvent e) {
@@ -411,7 +409,7 @@ public class mainController implements Initializable{
     meaning.setOpacity(1); spelling.setOpacity(1);
     double opacity = 1;
     if (b) {
-      opacity = 0.3; imgSpeaker.setDisable(b); imgSpeaker.setOpacity(opacity);
+      opacity = 0.3; imgSpeaker.setDisable(true); imgSpeaker.setOpacity(opacity);
       meaning.setOpacity(0); spelling.setOpacity(0);
     } else {
       TrieNode node = Trie.find(lblWord.getText());
@@ -475,9 +473,11 @@ public class mainController implements Initializable{
     }
   }
 
-  public void clickMiniGlass(MouseEvent e) {
-    KeyEvent keyEvent = new KeyEvent(KeyEvent.KEY_PRESSED, "", "",
-        KeyCode.ENTER, false, false, false, false);
-    findPrefix(keyEvent);
+  public void menuTranslate(MouseEvent e) throws IOException{
+    toggleMenu(imgTranslate);
+    Stage stage = (Stage) imgSearch.getScene().getWindow();
+    stage.setScene(dictionaryApp.scene2);
+    tControl.init();
   }
+
 }
