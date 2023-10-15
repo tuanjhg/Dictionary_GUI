@@ -35,15 +35,17 @@
   -fx-background-color: #5a63ed;
   -fx-text-fill: white;
   -fx-alignment: center-right;
-  -fx-padding: 0 10 0 0;
+  -fx-padding: 0 25 0 0;
   -fx-cursor: hand;
+  -fx-background-radius: 5;
 }
 .translateButton:hover {
   -fx-background-color: #4950bf;
   -fx-text-fill: white;
   -fx-alignment: center-right;
-  -fx-padding: 0 10 0 0;
+  -fx-padding: 0 25 0 0;
   -fx-cursor: hand;
+  -fx-background-radius: 5;
 }
 
 .lan {
@@ -53,7 +55,7 @@
   -fx-cursor: hand;
 }
 
-.lan.focus {
+.lan.focus, .lan:hover {
   -fx-background-color: white;
   -fx-text-fill: black;
   -fx-alignment: center;
