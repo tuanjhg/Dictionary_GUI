@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -31,11 +32,10 @@ public class translateController implements Initializable {
 
   @FXML private ImageView imgToggle;
 
-  @FXML private Label btnTranslate = new Label();
 
-  @FXML private TextArea input = new TextArea();
+  @FXML private TextArea input = new TextArea("");
 
-  @FXML private TextArea result = new TextArea();
+  @FXML private TextArea result = new TextArea("");
 
   @FXML private Label lanEn, lanVi, lanEn1, lanVi1;
 
@@ -55,11 +55,11 @@ public class translateController implements Initializable {
     Font font =  Font.loadFont(("file:src/main/resources/Font/Roboto-Regular.ttf"),23);
     Font bold =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),23);
     Font lanFont =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),15);
-    input.setFont(font); result.setFont(font); btnTranslate.setFont(bold);
+    input.setFont(font); result.setFont(font);
     lanEn.setFont(lanFont); lanVi.setFont(lanFont); lanEn1.setFont(lanFont); lanVi1.setFont(lanFont);
     setStyle(lanEn, "lan"); setStyle(lanVi, "lan");
     setStyle(lanEn1, "lan"); setStyle(lanVi1, "lan");
-    setStyle(btnTranslate, "translateButton"); setStyle(imgAPI, "toHandCursor");
+    setStyle(imgAPI, "toHandCursor");
     setStyle(imgBookmark, "toHandCursor"); setStyle(imgSearch, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgTranslate, "toHandCursor");
     setStyle(input, "translateArea"); setStyle(result, "translateArea");
@@ -104,7 +104,7 @@ public class translateController implements Initializable {
     return new File(path).toURI().toString();
   }
   void mainMenu() throws IOException{
-    Stage stage = (Stage) btnTranslate.getScene().getWindow();
+    Stage stage = (Stage) input.getScene().getWindow();
     stage.setScene(dictionaryApp.scene1);
   }
 
@@ -132,15 +132,19 @@ public class translateController implements Initializable {
     mControl.switchToSearch();
   }
 
-
-  @FXML
-  void translate(MouseEvent event) {
-    String from = input.getText();
+  void trans() {
     if (input.getText().isBlank()) {
+      result.setText("");
       return;
     }
-    String to = Translator.translate(from, lanFrom, lanTo);
-    result.setText(to);
+    String from = input.getText();
+    Translator tran = new Translator();
+    tran.translate(from, lanFrom, lanTo, new Translator.Callback() {
+      @Override
+      public void onSuccess(String str) {
+        result.setText(str);
+      }
+    });
   }
 
   void fromEn() {
@@ -157,6 +161,22 @@ public class translateController implements Initializable {
 
   void toVi() {
     lanTo = "vi"; unfocusAllLan("to"); focusLan(lanVi1);
+  }
+
+  void swap() {
+    String lFrom = new String(lanFrom);
+    String lTo = new String(lanTo);
+    switch (lFrom) {
+      case "vi" -> toVi();
+      case "en" -> toEn();
+    }
+    switch (lTo) {
+      case "vi" -> fromVi();
+      case "en" -> fromEn();
+    }
+    String tmp = new String(input.getText());
+    input.setText(result.getText());
+    result.setText(tmp);
   }
 
   @FXML
@@ -183,6 +203,15 @@ public class translateController implements Initializable {
     toVi();
   }
 
+  @FXML
+  void onKeyPress(KeyEvent e) {
+    trans();
+  }
+
+  @FXML
+  void swapLan(MouseEvent e) {
+    swap();
+  }
   void init() {
     toggleMenu(imgTranslate); input.setText(""); result.setText("");
     unfocusAllLan("from"); focusLan(lanEn);

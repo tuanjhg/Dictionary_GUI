@@ -93,7 +93,7 @@
                   <RowConstraints maxHeight="275.0" minHeight="275.0" prefHeight="275.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextArea fx:id="input" prefHeight="200.0" prefWidth="200.0">
+                  <TextArea fx:id="input" onKeyTyped="#onKeyPress" prefHeight="200.0" prefWidth="200.0">
                      <GridPane.margin>
                         <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
                      </GridPane.margin>
@@ -103,24 +103,12 @@
                         <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
                      </GridPane.margin>
                   </TextArea>
-                  <Label fx:id="btnTranslate" minHeight="50.0" onMouseClicked="#translate" prefHeight="50.0" prefWidth="133.0" text="  Dịch" textAlignment="RIGHT" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-                     <GridPane.margin>
-                        <Insets right="180.0" top="30.0" />
-                     </GridPane.margin>
-                     <graphic>
-                        <ImageView fitHeight="29.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Images/translate-submit.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <ImageView fitHeight="70.0" fitWidth="70.0" onMouseClicked="#swapLan" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets right="20.0" top="30.0" />
                      </GridPane.margin>
                      <image>
-                        <Image url="@../Images/translateTo.png" />
+                        <Image url="@../Images/swap.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lanEn" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromEng" prefHeight="35.0" prefWidth="120.0" text="Tiếng Anh" GridPane.halignment="LEFT" GridPane.valignment="TOP">

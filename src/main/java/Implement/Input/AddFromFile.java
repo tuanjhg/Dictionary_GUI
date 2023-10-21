@@ -10,15 +10,26 @@ import java.util.Scanner;
 public class AddFromFile {
   public static void add() {
     try {
-      String Path = "C:\\Users\\Admin\\Desktop\\OOP_Project\\src\\main\\resources\\dictionaries.txt";
+      String Path = "src/main/resources/dictionaries.txt";
       File readerObject = new File(Path);
       Scanner fileScan = new Scanner(readerObject);
       while (fileScan.hasNext()) {
-        String word = WordFormatter.normalize(fileScan.nextLine()); // Từ tiếng Anh
+        String word = fileScan.nextLine();
         String spelling = fileScan.nextLine();
-        String meaning = WordFormatter.normalize(fileScan.nextLine()); // Nghĩa tiếng Việt
-        Trie.add(word, spelling, meaning, "");
-        DictionaryMap.add(word, meaning); // Thêm vào Map
+        String audio = fileScan.nextLine();
+        StringBuilder meaning = new StringBuilder();
+        while (fileScan.hasNext()) {
+          String tmp = fileScan.nextLine();
+          meaning.append(tmp).append("\n");
+          if (tmp.isBlank()) {
+            break;
+          }
+        }
+        if (word.isBlank()) {
+          continue;
+        }
+        Trie.add(word, spelling, meaning.toString(), audio);
+        DictionaryMap.add(word, meaning.toString()); // Thêm vào Map
       }
     } catch (FileNotFoundException e)
     {
