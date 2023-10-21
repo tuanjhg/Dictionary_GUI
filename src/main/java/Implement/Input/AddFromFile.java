@@ -2,7 +2,6 @@ package Implement.Input;
 
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
-import Implement.WordFormatter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

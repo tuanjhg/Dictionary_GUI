@@ -32,6 +32,8 @@ public class translateController implements Initializable {
 
   @FXML private ImageView imgToggle;
 
+  @FXML private ImageView swap;
+
 
   @FXML private TextArea input = new TextArea("");
 
@@ -59,7 +61,7 @@ public class translateController implements Initializable {
     lanEn.setFont(lanFont); lanVi.setFont(lanFont); lanEn1.setFont(lanFont); lanVi1.setFont(lanFont);
     setStyle(lanEn, "lan"); setStyle(lanVi, "lan");
     setStyle(lanEn1, "lan"); setStyle(lanVi1, "lan");
-    setStyle(imgAPI, "toHandCursor");
+    setStyle(imgAPI, "toHandCursor"); setStyle(swap, "toHandCursor");
     setStyle(imgBookmark, "toHandCursor"); setStyle(imgSearch, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgTranslate, "toHandCursor");
     setStyle(input, "translateArea"); setStyle(result, "translateArea");

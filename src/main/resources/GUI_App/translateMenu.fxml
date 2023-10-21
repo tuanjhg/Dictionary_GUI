@@ -103,9 +103,9 @@
                         <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
                      </GridPane.margin>
                   </TextArea>
-                  <ImageView fitHeight="70.0" fitWidth="70.0" onMouseClicked="#swapLan" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                  <ImageView fx:id="swap" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#swapLan" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets right="20.0" top="30.0" />
+                        <Insets right="20.0" top="20.0" />
                      </GridPane.margin>
                      <image>
                         <Image url="@../Images/swap.png" />
