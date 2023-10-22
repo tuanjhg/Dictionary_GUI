@@ -18,28 +18,14 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class translateController implements Initializable {
-
-  @FXML private ImageView imgAPI;
-
-  @FXML private ImageView imgBookmark;
-
-  @FXML private ImageView imgHistory;
-
-  @FXML private ImageView imgSearch;
-
-  @FXML private ImageView imgTranslate;
-
-  @FXML private ImageView imgToggle;
-
+public class translateController extends baseMenu implements Initializable {
   @FXML private ImageView swap;
-
 
   @FXML private TextArea input = new TextArea("");
 
   @FXML private TextArea result = new TextArea("");
 
-  @FXML private Label lanEn, lanVi, lanEn1, lanVi1;
+  @FXML private Label lanEn, lanVi, lanEn1, lanVi1, lanFr, lanFr1, lanIt, lanIt1;
 
   String lanFrom = "en", lanTo = "vi";
 
@@ -55,12 +41,14 @@ public class translateController implements Initializable {
 
   public void initialize(URL url, ResourceBundle rb) {
     Font font =  Font.loadFont(("file:src/main/resources/Font/Roboto-Regular.ttf"),23);
-    Font bold =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),23);
     Font lanFont =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),15);
     input.setFont(font); result.setFont(font);
     lanEn.setFont(lanFont); lanVi.setFont(lanFont); lanEn1.setFont(lanFont); lanVi1.setFont(lanFont);
-    setStyle(lanEn, "lan"); setStyle(lanVi, "lan");
-    setStyle(lanEn1, "lan"); setStyle(lanVi1, "lan");
+    lanFr.setFont(lanFont); lanFr1.setFont(lanFont); lanIt.setFont(lanFont); lanIt1.setFont(lanFont);
+    setStyle(lanEn, "lan"); setStyle(lanEn1, "lan");
+    setStyle(lanVi, "lan"); setStyle(lanVi1, "lan");
+    setStyle(lanFr, "lan"); setStyle(lanFr1, "lan");
+    setStyle(lanIt, "lan"); setStyle(lanIt1, "lan");
     setStyle(imgAPI, "toHandCursor"); setStyle(swap, "toHandCursor");
     setStyle(imgBookmark, "toHandCursor"); setStyle(imgSearch, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgTranslate, "toHandCursor");
@@ -68,21 +56,6 @@ public class translateController implements Initializable {
     unfocusAllLan("from"); unfocusAllLan("to");
     focusLan(lanEn); focusLan(lanVi1);
     transition.setNode(imgToggle);
-  }
-  public ImageView getImgAPI() {
-    return imgAPI;
-  }
-
-  public ImageView getImgBookmark() {
-    return imgBookmark;
-  }
-
-  public ImageView getImgHistory() {
-    return imgHistory;
-  }
-
-  public ImageView getImgSearch() {
-    return imgSearch;
   }
 
   void toggleMenu(ImageView img) {
@@ -134,6 +107,8 @@ public class translateController implements Initializable {
     mControl.switchToSearch();
   }
 
+  void menuTranslate(MouseEvent event) throws IOException {}
+
   void trans() {
     if (input.getText().isBlank()) {
       result.setText("");
@@ -157,6 +132,14 @@ public class translateController implements Initializable {
     lanFrom = "vi"; unfocusAllLan("from"); focusLan(lanVi);
   }
 
+  void fromFr() {
+    lanFrom = "fr"; unfocusAllLan("from"); focusLan(lanFr);
+  }
+
+  void fromIt() {
+    lanFrom = "it"; unfocusAllLan("from"); focusLan(lanIt);
+  }
+
   void toEn() {
     lanTo = "en"; unfocusAllLan("to"); focusLan(lanEn1);
   }
@@ -165,16 +148,28 @@ public class translateController implements Initializable {
     lanTo = "vi"; unfocusAllLan("to"); focusLan(lanVi1);
   }
 
+  void toFr() {
+    lanTo = "fr"; unfocusAllLan("to"); focusLan(lanFr1);
+  }
+
+  void toIt() {
+    lanTo = "it"; unfocusAllLan("to"); focusLan(lanIt1);
+  }
+
   void swap() {
     String lFrom = new String(lanFrom);
     String lTo = new String(lanTo);
     switch (lFrom) {
       case "vi" -> toVi();
       case "en" -> toEn();
+      case "fr" -> toFr();
+      case "it" -> toIt();
     }
     switch (lTo) {
       case "vi" -> fromVi();
       case "en" -> fromEn();
+      case "fr" -> fromFr();
+      case "it" -> fromIt();
     }
     String tmp = new String(input.getText());
     input.setText(result.getText());
@@ -183,26 +178,42 @@ public class translateController implements Initializable {
 
   @FXML
   void fromEng(MouseEvent e) {
-    toVi();
-    fromEn();
+    input.setText(""); fromEn(); trans();
   }
 
   @FXML
   void fromVie(MouseEvent e) {
-    toEn();
-    fromVi();
+    input.setText(""); fromVi(); trans();
+  }
+
+  @FXML
+  void fromFre(MouseEvent e) {
+    input.setText(""); fromFr(); trans();
+  }
+
+  @FXML
+  void fromIta(MouseEvent e) {
+    input.setText(""); fromIt(); trans();
   }
 
   @FXML
   void toEng(MouseEvent e) {
-    fromVi();
-    toEn();
+    toEn(); trans();
   }
 
   @FXML
   void toVie(MouseEvent e) {
-    fromEn();
-    toVi();
+    toVi(); trans();
+  }
+
+  @FXML
+  void toFre(MouseEvent e) {
+    toFr(); trans();
+  }
+
+  @FXML
+  void toIta(MouseEvent e) {
+    toIt(); trans();
   }
 
   @FXML
@@ -223,9 +234,13 @@ public class translateController implements Initializable {
     if (type.equals("from")) {
       removeStyle(lanEn, "focus");
       removeStyle(lanVi, "focus");
+      removeStyle(lanFr, "focus");
+      removeStyle(lanIt, "focus");
     } else {
       removeStyle(lanEn1, "focus");
       removeStyle(lanVi1, "focus");
+      removeStyle(lanFr1, "focus");
+      removeStyle(lanIt1, "focus");
     }
   }
 

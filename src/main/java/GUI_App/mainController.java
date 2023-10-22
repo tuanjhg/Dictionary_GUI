@@ -45,8 +45,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Callback;
 import javafx.util.Duration;
 
-public class mainController implements Initializable {
-
+public class mainController extends baseMenu implements Initializable {
   @FXML
   private TextField searchBar = new TextField();
   @FXML
@@ -62,14 +61,6 @@ public class mainController implements Initializable {
   @FXML
   private ListView<String> suggestWord = new ListView<>();
   @FXML
-  private ImageView imgSearch = new ImageView();
-  @FXML
-  private ImageView imgBookmark = new ImageView();
-  @FXML
-  private ImageView imgHistory = new ImageView();
-  @FXML
-  private ImageView imgAPI = new ImageView();
-  @FXML
   private ImageView bookmarkStar = new ImageView();
   @FXML
   private ImageView recycleBin = new ImageView();
@@ -83,8 +74,6 @@ public class mainController implements Initializable {
   private ImageView miniGlass = new ImageView();
   @FXML
   private ImageView imgCross = new ImageView();
-  @FXML
-  private ImageView imgToggle = new ImageView();
   @FXML
   private ImageView imgAdd = new ImageView();
   @FXML
@@ -131,7 +120,6 @@ public class mainController implements Initializable {
   public void cellFormat() {
     suggestWord.getStyleClass().add("list-cell");
     scrollMeaning.setStyle("-fx-background-color: transparent; -fx-padding: 0;");
-    //ChatGPT
     suggestWord.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
       @Override
       public ListCell<String> call(ListView<String> param) {
@@ -148,7 +136,6 @@ public class mainController implements Initializable {
         };
       }
     });
-    //End of ChatGPT
   }
   public void buttonFormat() {
     setStyle(bookmarkStar, "imageViewStyle"); setStyle(recycleBin, "imageViewStyle");
@@ -213,7 +200,6 @@ public class mainController implements Initializable {
     setTooltip(recycleBin, "Xóa từ"); setTooltip(imgEditor, "Sửa đổi");
     setTooltip(imgAdd, "Thêm vào từ điển");
     setTooltip(imgTick, "Lưu"); setTooltip(imgCross, "Hủy");
-    //AddFromFile.add();
   }
 
   void apiSearch(String word) {

@@ -50,7 +50,7 @@
                   <Insets right="2.0" />
                </GridPane.margin>
             </ImageView>
-            <ImageView fx:id="imgSearch1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
                <image>
                   <Image url="@../Images/dictionaryImg.png" />
                </image>
@@ -105,7 +105,7 @@
                   </TextArea>
                   <ImageView fx:id="swap" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#swapLan" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <GridPane.margin>
-                        <Insets right="20.0" top="20.0" />
+                        <Insets right="20.0" />
                      </GridPane.margin>
                      <image>
                         <Image url="@../Images/swap.png" />
@@ -129,6 +129,26 @@
                   <Label fx:id="lanVi1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toVie" prefHeight="35.0" prefWidth="120.0" text="Tiếng Việt" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                      <GridPane.margin>
                         <Insets left="160.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanFr" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromFre" prefHeight="35.0" prefWidth="120.0" text="Tiếng Pháp" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="280.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanFr1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toFre" prefHeight="35.0" prefWidth="120.0" text="Tiếng Pháp" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="280.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanIt" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromIta" prefHeight="35.0" prefWidth="120.0" text="Tiếng Ý" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="400.0" top="23.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="lanIt1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toIta" prefHeight="35.0" prefWidth="120.0" text="Tiếng Ý" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="400.0" top="23.0" />
                      </GridPane.margin>
                   </Label>
                </children>
