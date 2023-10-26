@@ -59,7 +59,7 @@ public class translateController extends baseMenu implements Initializable {
   }
 
   void toggleMenu(ImageView img) {
-    transition.setToY(img.getLayoutY() - 1.5 - imgToggle.getLayoutY());
+    transition.setToY(img.getLayoutY() - 7 - imgToggle.getLayoutY());
     transition.play();
   }
 

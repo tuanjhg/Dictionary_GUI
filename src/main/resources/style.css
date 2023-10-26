@@ -40,8 +40,8 @@
 }
 
 .lan.focus, .lan:hover {
-  -fx-background-color: white;
-  -fx-text-fill: black;
+  -fx-background-color: #3885eb;
+  -fx-text-fill: white;
   -fx-alignment: center;
   -fx-cursor: hand;
 }

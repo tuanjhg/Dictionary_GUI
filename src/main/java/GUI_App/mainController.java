@@ -147,6 +147,7 @@ public class mainController extends baseMenu implements Initializable {
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle); setStyle(imgTranslate, "toHandCursor");
   }
+
   public void tFieldFormat() {
     searchBar.getStyleClass().add("txtField");
   }
@@ -285,7 +286,7 @@ public class mainController extends baseMenu implements Initializable {
   }
 
   void toggleMenu(ImageView img) {
-    transition.setToY(img.getLayoutY() - 1.5 - imgToggle.getLayoutY());
+    transition.setToY(img.getLayoutY() - 7 - imgToggle.getLayoutY());
     transition.play();
   }
 
@@ -420,6 +421,7 @@ public class mainController extends baseMenu implements Initializable {
     setEditor(true);
     txtEditor.setText(meaning.getText());
     tfPhonetic.setText(spelling.getText());
+    suggestWord.setDisable(true);
     iconDisable(true);
     switch (currentMenu) {
       case "Search" -> imgSearch.setOpacity(1);
@@ -431,6 +433,7 @@ public class mainController extends baseMenu implements Initializable {
   void closeEditor() {
     setEditor(false);
     iconDisable(false);
+    suggestWord.setDisable(false);
   }
 
   public void exitEditor(MouseEvent e) {

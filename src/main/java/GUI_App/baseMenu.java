@@ -19,6 +19,7 @@ public abstract class baseMenu {
   @FXML
   protected ImageView imgToggle = new ImageView();
 
+
   public ImageView getImgSearch() {
     return imgSearch;
   }
