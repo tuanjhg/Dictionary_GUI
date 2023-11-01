@@ -1,6 +1,6 @@
 package Implement.Box;
 
-import GUI_App.dictionaryApp;
+import Dictionary.dictionaryApp;
 import Implement.MutableBoolean;
 import java.io.File;
 import java.io.IOException;

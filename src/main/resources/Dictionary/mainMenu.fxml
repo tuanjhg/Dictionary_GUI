@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane fx:id="mainPane" dividerPositions="0.078" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dictionary.mainController">
+   <items>
+      <GridPane fx:id="menu" maxWidth="70.0" minWidth="70.0" prefHeight="592.0" prefWidth="70.0" SplitPane.resizableWithParent="false">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="690.0" fitWidth="630.0" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/background1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgToggle" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/Toggle.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSearch" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Images/search.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgBookmark" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/bookmark.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSearch1" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <image>
+                  <Image url="@../Images/dictionaryImg.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgHistory" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuHistory" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/history.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgAPI" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/api.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgTranslate" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuTranslate" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/translate.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <GridPane maxHeight="800.0" prefHeight="800.0">
+        <columnConstraints>
+            <ColumnConstraints fx:id="content" hgrow="SOMETIMES" maxWidth="225.0" minWidth="225.0" prefWidth="225.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.3333740234375" minWidth="10.0" prefWidth="343.3333740234375" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="452.3333740234375" minWidth="10.0" prefWidth="97.66666666666669" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="260.3333740234375" minWidth="10.0" prefWidth="171.00000000000006" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="78.0" minHeight="78.0" prefHeight="78.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="33.0" minHeight="33.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="466.6666679382324" minHeight="10.0" prefHeight="363.99997965494794" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="meaning" alignment="TOP_LEFT" contentDisplay="TOP" style="-fx-background-color: transparent; -fx-text-fill: black;" textOverrun="CLIP" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="40.0" right="30.0" top="5.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="600.0" fitWidth="830.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/sean-oulashin-KMn4VEeEPR8-unsplash.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblWord" prefHeight="31.0" prefWidth="282.0" text="LingoBench" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold" size="26.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="spelling" prefHeight="60.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="40.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font>
+            </Label>
+            <ScrollPane fx:id="scrollMeaning" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="427.0" prefWidth="658.0" style="-fx-background-color: transparent;" vbarPolicy="ALWAYS" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
+               </GridPane.margin>
+            </ScrollPane>
+            <ImageView fx:id="bookmarkStar" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#changeBookmarkState" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Images/starUntoggle.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="recycleBin" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#deleteWord" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/bin.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="40.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgEditor" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#openEditor" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Images/editor.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="75.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSpeaker" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#playMedia" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Images/speaker.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="9.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgCross" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#exitEditor" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets right="3.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Images/cross.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgTick" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#saveEditor" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="3.0" />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Images/tick.png" />
+               </image>
+            </ImageView>
+            <TextArea fx:id="txtEditor" maxHeight="513.0" maxWidth="935.0" minHeight="249.0" minWidth="181.0" prefHeight="427.0" prefWidth="599.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Times New Roman Bold" size="17.0" />
+               </font>
+            </TextArea>
+            <TextField fx:id="tfPhonetic" prefHeight="60.0" prefWidth="261.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets bottom="1.0" left="40.0" right="1.0" top="1.0" />
+               </GridPane.margin>
+            </TextField>
+            <ImageView fx:id="imgAdd" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#addFromAPI" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../Images/plusIcon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="110.0" />
+               </GridPane.margin>
+            </ImageView>
+            <TextField fx:id="searchBar" onKeyTyped="#findPrefix" prefHeight="36.0" prefWidth="169.0" promptText="Tìm kiếm">
+               <font>
+                  <Font size="13.5" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="50.0" right="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Images/EngVieIcon.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="miniGlass" fitHeight="20.0" fitWidth="20.0" opacity="0.45" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT">
+               <image>
+                  <Image url="@../Images/magGlass.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets right="15.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ListView fx:id="suggestWord" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" GridPane.rowSpan="2147483647">
+               <GridPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </GridPane.margin>
+            </ListView>
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+      </GridPane>
+   </items>
+</SplitPane>

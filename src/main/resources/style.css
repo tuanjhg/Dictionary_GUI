@@ -31,6 +31,10 @@
   -fx-background-color: #e3e4e9;
 }
 
+.scroll-pane .viewport {
+  -fx-background-color: transparent;
+  -fx-background: transparent;
+}
 
 .lan {
   -fx-background-color: #e7e6e8;
@@ -44,6 +48,12 @@
   -fx-text-fill: white;
   -fx-alignment: center;
   -fx-cursor: hand;
+}
+
+.split-pane:vertical > * > sp {
+  -fx-border-color:  transparent;
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
 }
 
 .translateArea, .translateArea:focused {

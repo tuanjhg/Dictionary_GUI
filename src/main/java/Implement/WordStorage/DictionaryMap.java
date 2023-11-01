@@ -1,4 +1,7 @@
 package Implement.WordStorage;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.TreeMap;
 
 public class DictionaryMap {
@@ -17,5 +20,12 @@ public class DictionaryMap {
 
   public static Boolean exist(String word) {
     return map.containsKey(word);
+  }
+
+  public static String getRandom() {
+    List<String> keyList = new ArrayList<>(map.keySet());
+    Random random = new Random();
+    int randomIndex = random.nextInt(keyList.size());
+    return keyList.get(randomIndex).toLowerCase();
   }
 }

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<SplitPane fx:id="mainPane" dividerPositions="0.048" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dictionary.translateController">
+   <items>
+      <GridPane prefHeight="592.0" prefWidth="199.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fitHeight="690.0" fitWidth="630.0" pickOnBounds="true" translateX="-20.0" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/background1.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgToggle" fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/Toggle.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgSearch" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuSearch" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <image>
+                  <Image url="@../Images/search.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="imgBookmark" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuBookmark" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/bookmark.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+               <image>
+                  <Image url="@../Images/dictionaryImg.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets top="15.0" />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgHistory" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuHistory" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/history.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgAPI" fitHeight="45.0" fitWidth="45.0" onMouseClicked="#menuAPI" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/api.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </ImageView>
+            <ImageView fx:id="imgTranslate" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <image>
+                  <Image url="@../Images/translate.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <SplitPane prefHeight="160.0" prefWidth="200.0">
+         <items>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="275.0" minHeight="275.0" prefHeight="275.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="561.3333358764648" minHeight="10.0" prefHeight="546.2222277323405" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="275.0" minHeight="275.0" prefHeight="275.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fitHeight="600.0" fitWidth="830.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
+                     <image>
+                        <Image url="@../Images/sean-oulashin-KMn4VEeEPR8-unsplash.jpg" />
+                     </image>
+                  </ImageView>
+                  <TextArea fx:id="input" onKeyTyped="#onKeyPress" prefHeight="200.0" prefWidth="200.0">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
+                     </GridPane.margin>
+                  </TextArea>
+                  <TextArea fx:id="result" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+                     <GridPane.margin>
+                        <Insets bottom="20.0" left="40.0" right="40.0" top="60.0" />
+                     </GridPane.margin>
+                  </TextArea>
+                  <ImageView fx:id="swap" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#swapLan" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets right="20.0" />
+                     </GridPane.margin>
+                     <image>
+                        <Image url="@../Images/swap.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lanEn" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromEng" prefHeight="35.0" prefWidth="120.0" text="Tiếng Anh" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="23.0" />
+                     </GridPane.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/en.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanVi" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromVie" prefHeight="35.0" prefWidth="120.0" text="Tiếng Việt" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="160.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/vi.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanEn1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toEng" prefHeight="35.0" prefWidth="120.0" text="Tiếng Anh" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="40.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/en.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanVi1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toVie" prefHeight="35.0" prefWidth="120.0" text="Tiếng Việt" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="160.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/vi.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanFr" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromFre" prefHeight="35.0" prefWidth="120.0" text="Tiếng Pháp" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="280.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/fr.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanFr1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toFre" prefHeight="35.0" prefWidth="120.0" text="Tiếng Pháp" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="280.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/fr.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanIt" maxHeight="35.0" minHeight="35.0" onMouseClicked="#fromIta" prefHeight="35.0" prefWidth="120.0" text="Tiếng Ý" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="400.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/it.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+                  <Label fx:id="lanIt1" maxHeight="35.0" minHeight="35.0" onMouseClicked="#toIta" prefHeight="35.0" prefWidth="120.0" text="Tiếng Ý" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                     <GridPane.margin>
+                        <Insets left="400.0" top="23.0" />
+                     </GridPane.margin>
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Images/it.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
+               </children>
+            </GridPane>
+         </items>
+      </SplitPane>
+   </items>
+</SplitPane>

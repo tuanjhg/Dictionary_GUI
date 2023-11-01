@@ -9,7 +9,9 @@ module com.example.oop_project {
   requires javafx.media;
   requires org.json;
 
-  opens GUI_App to javafx.fxml;
+  opens Dictionary to javafx.fxml;
   opens Implement.Input.SingleWord to com.google.gson;
-  exports GUI_App;
+  exports Dictionary;
+  exports Game;
+  opens Game to javafx.fxml;
 }
