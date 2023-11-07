@@ -64,7 +64,7 @@
         </rowConstraints>
          <children>
             <Button fx:id="anagramBtn" mnemonicParsing="false" onAction="#anagram" prefHeight="250.0" prefWidth="250.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-            <Button mnemonicParsing="false" prefHeight="250.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <Button fx:id="quizBtn" mnemonicParsing="false" onAction="#quiz" prefHeight="250.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </items>
