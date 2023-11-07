@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -29,7 +30,7 @@ public class translateController extends baseMenu implements Initializable {
 
   String lanFrom = "en", lanTo = "vi";
 
-  mainController mControl = dictionaryApp.mControl;
+  mainController mControl = dictionaryApp.dictionaryControl;
   private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setStyle(Node x, String style) {
@@ -40,6 +41,7 @@ public class translateController extends baseMenu implements Initializable {
   }
 
   public void initialize(URL url, ResourceBundle rb) {
+    super.initialize(url, rb);
     Font font =  Font.loadFont(("file:src/main/resources/Font/Roboto-Regular.ttf"),23);
     Font lanFont =  Font.loadFont(("file:src/main/resources/Font/Roboto-Bold.ttf"),15);
     input.setFont(font); result.setFont(font);
@@ -58,7 +60,7 @@ public class translateController extends baseMenu implements Initializable {
     transition.setNode(imgToggle);
   }
 
-  void toggleMenu(ImageView img) {
+  void toggleMenu(Node img) {
     transition.setToY(img.getLayoutY() - 10 - imgToggle.getLayoutY());
     transition.play();
   }
@@ -80,34 +82,35 @@ public class translateController extends baseMenu implements Initializable {
   }
   void mainMenu() throws IOException{
     Stage stage = (Stage) input.getScene().getWindow();
-    stage.setScene(dictionaryApp.scene1);
+    stage.setScene(dictionaryApp.dictionaryScene);
   }
 
   @FXML
-  void menuAPI(MouseEvent event) throws IOException {
+  void menuAPI(ActionEvent event) throws IOException {
     mainMenu();
     mControl.switchToAPI();
   }
 
   @FXML
-  void menuBookmark(MouseEvent event) throws IOException {
+  void menuBookmark(ActionEvent event) throws IOException {
     mainMenu();
     mControl.switchToBookmark();
   }
 
   @FXML
-  void menuHistory(MouseEvent event) throws IOException {
+  void menuHistory(ActionEvent event) throws IOException {
     mainMenu();
     mControl.switchToHistory();
   }
 
   @FXML
-  void menuSearch(MouseEvent event) throws IOException {
+  void menuSearch(ActionEvent event) throws IOException {
     mainMenu();
     mControl.switchToSearch();
   }
 
-  void menuTranslate(MouseEvent event) throws IOException {}
+  @FXML
+  void menuTranslate(ActionEvent event) throws IOException {}
 
   void trans() {
     if (input.getText().isBlank()) {
