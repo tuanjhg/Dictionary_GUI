@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 
 import static Dictionary.Dictionary.dictionaryApp.*;
 
-public class MainController implements Initializable {
+public class QuizController implements Initializable {
     private static QuizModel model;
 
     @FXML

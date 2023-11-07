@@ -5,7 +5,6 @@ import Game.Anagram.anagramModeController;
 import Game.Anagram.anagramScoreController;
 import java.io.File;
 
-import Game.Quiz.controller.MainController;
 import Game.Quiz.models.QuizModel;
 import Game.Quiz.utils.Helper;
 import javafx.application.Application;
@@ -28,7 +27,7 @@ public class dictionaryApp extends Application {
   public static Scene gameSelectionScene;
   public static mainController dictionaryControl;
   public static translateController translateControl;
-  public static MainController QuizController;
+  public static Game.Quiz.controller.QuizController QuizController;
   public static gameSelectionController gameSelectionControl;
   public static anagramGameController anagramGameControl;
   public static anagramScoreController anagramScoreControl;
