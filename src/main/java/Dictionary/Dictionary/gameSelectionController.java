@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,10 +19,14 @@ public class gameSelectionController extends baseMenu implements Initializable {
   private Button anagramBtn = new Button();
   @FXML
   private Button quizBtn = new Button();
+
+
   public void initialize(URL url, ResourceBundle rb) {
     super.initialize(url, rb);
     anagramBtn.setGraphic(getGameImg("src/main/resources/Images/anagram.png"));
     quizBtn.setGraphic(getGameImg("src/main/resources/Images/Quiz.png"));
+    setStyle(anagramBtn, "toHandCursor");
+    setStyle(quizBtn, "toHandCursor");
   }
   ImageView getGameImg(String path) {
     ImageView ret = new ImageView(new Image(getFile(path)));

@@ -275,9 +275,7 @@ public class mainController extends baseMenu implements Initializable {
         getSuggestion(DictionaryMap.getKey());
       } else if (!word.isBlank()) {
         List<String> suggestion = Trie.getPrefix(WordFormatter.normalize(word));
-        if (suggestion.isEmpty()) {
-          suggestion.add("Thêm...");
-        }
+        suggestion.add(0, "Thêm...");
         suggestWord.getItems().addAll(suggestion.toArray(new String[(int)suggestion.size()]));
       }
     } else {

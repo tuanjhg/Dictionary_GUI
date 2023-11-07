@@ -105,6 +105,7 @@ public class dictionaryApp extends Application {
 
     dictionaryScene.getStylesheets().add(getFile("src/main/resources/style.css"));
     translateScene.getStylesheets().add(getFile("src/main/resources/style.css"));
+    gameSelectionScene.getStylesheets().add(getFile("src/main/resources/style.css"));
 
     stage.setResizable(false);
     stage.setTitle("LingoBench");
