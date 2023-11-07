@@ -12,6 +12,6 @@ module com.example.oop_project {
   opens Dictionary to javafx.fxml;
   opens Implement.Input.SingleWord to com.google.gson;
   exports Dictionary;
-  exports Game;
-  opens Game to javafx.fxml;
+  exports Game.Anagram;
+  opens Game.Anagram to javafx.fxml;
 }

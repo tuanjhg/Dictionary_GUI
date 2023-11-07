@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -77,8 +78,6 @@ public class mainController extends baseMenu implements Initializable {
   @FXML
   private ImageView imgAdd = new ImageView();
   @FXML
-  private ImageView imgTranslate = new ImageView();
-  @FXML
   private ScrollPane scrollMeaning = new ScrollPane();
   private String currentMenu = "Search";
   private String currentWord;
@@ -93,9 +92,6 @@ public class mainController extends baseMenu implements Initializable {
     tfPhonetic.setVisible(type);
     imgTick.setVisible(type);
     imgCross.setVisible(type);
-  }
-  void setStyle(Node x, String style) {
-    x.getStyleClass().add(style);
   }
   void setSound() {
     imgSpeaker.setDisable(noSound);
@@ -141,10 +137,8 @@ public class mainController extends baseMenu implements Initializable {
     setStyle(imgEditor, "imageViewStyle"); setStyle(imgAdd, "imageViewStyle");
     setStyle(imgCross, "imageViewStyle"); setStyle(imgTick, "imageViewStyle");
     setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
-    setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
-    setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
-    setEditor(false); transition.setNode(imgToggle); setStyle(imgTranslate, "toHandCursor");
+    setEditor(false); transition.setNode(imgToggle);
   }
 
   public void tFieldFormat() {
@@ -152,6 +146,7 @@ public class mainController extends baseMenu implements Initializable {
   }
   @Override
   public void initialize(URL url, ResourceBundle rb) {
+    super.initialize(url, rb);
     cellFormat(); buttonFormat(); setSound();
     AddFromFile.add(); getSuggestion(DictionaryMap.getKey());
     menuInit(false); tFieldFormat();
@@ -284,7 +279,7 @@ public class mainController extends baseMenu implements Initializable {
     }
   }
 
-  void toggleMenu(ImageView img) {
+  void toggleMenu(Node img) {
     transition.setToY(img.getLayoutY() - 10 - imgToggle.getLayoutY());
     transition.play();
   }
@@ -299,7 +294,7 @@ public class mainController extends baseMenu implements Initializable {
     recycleBin.setVisible(active); imgEditor.setVisible(active);
   }
 
-  public void Switch(boolean mInit, ImageView node, boolean searchB, String[] lst, String cMenu) {
+  public void Switch(boolean mInit, Node node, boolean searchB, String[] lst, String cMenu) {
     menuInit(mInit);
     toggleMenu(node);
     searchBar.setVisible(searchB); miniGlass.setVisible(searchB);
@@ -310,14 +305,14 @@ public class mainController extends baseMenu implements Initializable {
     Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
     tControl.switchToSearch();
   }
-  public void menuSearch(MouseEvent e) {
+  public void menuSearch(ActionEvent e) {
     switchToSearch();
   }
   public void switchToBookmark() {
     Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
     tControl.switchToBookmark();
   }
-  public void menuBookmark(MouseEvent e) {
+  public void menuBookmark(ActionEvent e) {
     switchToBookmark();
   }
 
@@ -325,7 +320,7 @@ public class mainController extends baseMenu implements Initializable {
     Switch(true, imgHistory, false, History.getList(), "History");
     tControl.switchToHistory();
   }
-  public void menuHistory(MouseEvent e) {
+  public void menuHistory(ActionEvent e) {
     switchToHistory();
   }
 
@@ -334,7 +329,7 @@ public class mainController extends baseMenu implements Initializable {
     suggestWord.setVisible(false);
     tControl.switchToAPI();
   }
-  public void menuAPI(MouseEvent e) {
+  public void menuAPI(ActionEvent e) {
     switchToAPI();
   }
 
@@ -468,10 +463,10 @@ public class mainController extends baseMenu implements Initializable {
     }
   }
 
-  public void menuTranslate(MouseEvent e) throws IOException{
+  public void menuTranslate(ActionEvent e) throws IOException{
     toggleMenu(imgTranslate);
     Stage stage = (Stage) imgSearch.getScene().getWindow();
-    stage.setScene(dictionaryApp.scene2);
+    stage.setScene(dictionaryApp.translateScene);
     tControl.init();
   }
 

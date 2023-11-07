@@ -1,77 +1,72 @@
 package Dictionary;
 
-import java.io.IOException;
-import javafx.fxml.FXML;
-import javafx.scene.control.SplitPane;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import static Dictionary.dictionaryApp.anagramMainMenuScene;
 
-public abstract class baseMenu {
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
+public abstract class baseMenu implements Initializable {
   @FXML
-  protected ImageView imgSearch = new ImageView();
+  protected Button imgSearch = new Button();
   @FXML
-  protected ImageView imgBookmark = new ImageView();
+  protected Button imgBookmark = new Button();
   @FXML
-  protected ImageView imgHistory = new ImageView();
+  protected Button imgHistory = new Button();
   @FXML
-  protected ImageView imgAPI = new ImageView();
+  protected Button imgAPI = new Button();
   @FXML
-  protected ImageView imgTranslate = new ImageView();
+  protected Button imgTranslate = new Button();
+  @FXML
+  protected Button imgGame = new Button();
   @FXML
   protected ImageView imgToggle = new ImageView();
 
-
-  public ImageView getImgSearch() {
-    return imgSearch;
+  void setStyle(Node x, String style) {
+    x.getStyleClass().add(style);
   }
 
-  public void setImgSearch(ImageView imgSearch) {
-    this.imgSearch = imgSearch;
+  String getFile(String path) {
+    return new File(path).toURI().toString();
   }
 
-  public ImageView getImgBookmark() {
-    return imgBookmark;
+  protected ImageView getImage(String img) {
+    ImageView ret = new ImageView(new Image(getFile(
+        "src/main/resources/Images/" + img + ".png")));
+    ret.setFitHeight(40);
+    ret.setFitWidth(40);
+    return ret;
   }
 
-  public void setImgBookmark(ImageView imgBookmark) {
-    this.imgBookmark = imgBookmark;
+  public void initialize(URL url, ResourceBundle rb) {
+    imgSearch.setGraphic(getImage("search"));
+    imgBookmark.setGraphic(getImage("bookmark"));
+    imgHistory.setGraphic(getImage("history"));
+    imgAPI.setGraphic(getImage("api"));
+    imgTranslate.setGraphic(getImage("translate"));
+    imgGame.setGraphic(getImage("game"));
+    setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
+    setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
+    setStyle(imgTranslate, "toHandCursor"); setStyle(imgGame, "toHandCursor");
   }
 
-  public ImageView getImgHistory() {
-    return imgHistory;
+  abstract void menuSearch(ActionEvent e) throws IOException;
+  abstract void menuHistory(ActionEvent e) throws IOException;
+  abstract void menuBookmark(ActionEvent e) throws IOException;
+  abstract void menuAPI(ActionEvent e) throws IOException;
+  abstract void menuTranslate(ActionEvent e) throws IOException;
+  @FXML
+  void menuGame(ActionEvent event) throws IOException {
+    Stage stage = (Stage) imgSearch.getScene().getWindow();
+    stage.setScene(anagramMainMenuScene);
   }
-
-  public void setImgHistory(ImageView imgHistory) {
-    this.imgHistory = imgHistory;
-  }
-
-  public ImageView getImgAPI() {
-    return imgAPI;
-  }
-
-  public void setImgAPI(ImageView imgAPI) {
-    this.imgAPI = imgAPI;
-  }
-
-  public ImageView getImgTranslate() {
-    return imgTranslate;
-  }
-
-  public void setImgTranslate(ImageView imgTranslate) {
-    this.imgTranslate = imgTranslate;
-  }
-
-  public ImageView getImgToggle() {
-    return imgToggle;
-  }
-
-  public void setImgToggle(ImageView imgToggle) {
-    this.imgToggle = imgToggle;
-  }
-
-  abstract void menuSearch(MouseEvent e) throws IOException;
-  abstract void menuHistory(MouseEvent e) throws IOException;
-  abstract void menuBookmark(MouseEvent e) throws IOException;
-  abstract void menuAPI(MouseEvent e) throws IOException;
-  abstract void menuTranslate(MouseEvent e) throws IOException;
 }
