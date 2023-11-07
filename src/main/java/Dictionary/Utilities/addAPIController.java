@@ -1,22 +1,24 @@
 package Dictionary.Utilities;
 
-import Implement.Box.addAPI;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
 public class addAPIController extends ChoiceBox {
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    lblMsg.setText("Bạn có chắc muốn thêm " + addAPI.Word + " vào từ điển?");
+  boolean added = false;
+
+  public boolean isAdded() {
+    return added;
   }
+
   @FXML
   public void clickYes(ActionEvent e) {
-    addAPI.closeStage(true);
+    super.clickYes(e);
+    added = true;
   }
+
   @FXML
   public void clickNo(ActionEvent e) {
-    addAPI.closeStage(false);
+    super.clickNo(e);
+    added = false;
   }
 }

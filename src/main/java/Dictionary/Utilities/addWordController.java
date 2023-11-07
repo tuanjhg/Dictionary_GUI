@@ -1,16 +1,17 @@
 package Dictionary.Utilities;
 
-import Implement.Box.addBox;
+import Implement.History;
 import Implement.WordFormatter;
-import java.net.URL;
-import java.util.ResourceBundle;
+import Implement.WordStorage.DictionaryMap;
+import Implement.WordStorage.Trie.Trie;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
-public class addWordController implements Initializable {
+public class addWordController {
 
   @FXML
   private TextField tfEng;
@@ -19,11 +20,10 @@ public class addWordController implements Initializable {
   @FXML
   TextField tfVie;
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    String temp = addBox.AddWord;
-    tfEng.setText(temp);
+  public void setWord(String WORD) {
+    tfEng.setText(WORD);
   }
+
   @FXML
   public void clickAdd(ActionEvent e) {
     String word = WordFormatter.normalize(tfEng.getText());
@@ -32,6 +32,10 @@ public class addWordController implements Initializable {
     if (word.isBlank() || phonetic.isBlank() || meaning.isBlank()) {
       return;
     }
-    addBox.closeStage(word, phonetic, meaning);
+    Trie.add(word, phonetic, meaning, "");
+    DictionaryMap.add(word, meaning);
+    History.add(word);
+    Stage stage = (Stage) tfEng.getScene().getWindow();
+    stage.close();
   }
 }

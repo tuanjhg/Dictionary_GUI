@@ -1,13 +1,17 @@
 package Dictionary.Dictionary;
 
+import static Dictionary.Dictionary.dictionaryApp.addAPIControl;
+import static Dictionary.Dictionary.dictionaryApp.addAPIScene;
+import static Dictionary.Dictionary.dictionaryApp.addWordControl;
+import static Dictionary.Dictionary.dictionaryApp.addWordScene;
+import static Dictionary.Dictionary.dictionaryApp.deleteControl;
+import static Dictionary.Dictionary.dictionaryApp.deleteScene;
 import static Dictionary.Dictionary.dictionaryApp.gameSelectionControl;
+import static Dictionary.Dictionary.dictionaryApp.infoControl;
+import static Dictionary.Dictionary.dictionaryApp.infoScene;
 import static Dictionary.Dictionary.dictionaryApp.translateControl;
 
 import Implement.Bookmark;
-import Implement.Box.addAPI;
-import Implement.Box.addBox;
-import Implement.Box.deleteWarning;
-import Implement.Box.infoBox;
 import Implement.History;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
@@ -15,7 +19,6 @@ import Implement.Input.SingleWord.Definition;
 import Implement.Input.SingleWord.DictionaryEntry;
 import Implement.Input.SingleWord.Meaning;
 import Implement.Input.SingleWord.Phonetic;
-import Implement.MutableBoolean;
 import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
@@ -45,6 +48,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
@@ -163,15 +167,18 @@ public class mainController extends baseMenu implements Initializable {
                 return;
               }
               if (currentWord.equals("Thêm...")) {
-                try {
-                  String word = WordFormatter.normalize(searchBar.getText());
-                  addBox.start(new Stage(), word);
-                  if (addBox.added.isValue()) {
-                    infoBox.start(new Stage(), "Đã thêm " + word + " vào từ điển.");
-                  }
-                } catch (Exception err) {
-                  System.out.println("Unknown Error.");
-                }
+                Stage stage = new Stage();
+                stage.setScene(addWordScene);
+                addWordControl.setWord(searchBar.getText());
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage
+                    .getIcons()
+                    .add(
+                        new Image(
+                            new File("src/main/resources/Images/plusIcon.png").toURI().toString()));
+                stage.setResizable(false);
+                stage.setTitle("Thêm từ");
+                stage.showAndWait();
                 return;
               }
               TrieNode node = Trie.find(currentWord);
@@ -250,11 +257,10 @@ public class mainController extends baseMenu implements Initializable {
           meaning.setText(apiMeaning.toString());
           scrollMeaning.setContent(meaning);
         } else {
-          try {
-            infoBox.start(new Stage(), "Không tìm thấy " + word + " trong API từ điển.");
-          } catch (Exception err) {
-            System.out.println("Lỗi không xác định FIND_PREFIX");
-          }
+          infoControl.setPrompt("Không tìm thấy " + word + "trong API từ điển");
+          Stage stage = new Stage();
+          stage.setScene(infoScene);
+          stage.showAndWait();
         }
       }
     });
@@ -299,33 +305,54 @@ public class mainController extends baseMenu implements Initializable {
     currentMenu = cMenu;
   }
 
+  @Override
+  public void switchToSearch() {
+    super.switchToSearch();
+    Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
+  }
+
   public void menuSearch(ActionEvent e) {
     switchToSearch();
     translateControl.switchToSearch();
     gameSelectionControl.switchToSearch();
-    Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
+  }
+
+  @Override
+  public void switchToBookmark() {
+    super.switchToBookmark();
+    Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
   }
 
   public void menuBookmark(ActionEvent e) {
     switchToBookmark();
     translateControl.switchToBookmark();
     gameSelectionControl.switchToBookmark();
-    Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
+  }
+
+  @Override
+  public void switchToHistory() {
+    super.switchToHistory();
+    Switch(true, imgHistory, false, History.getList(), "History");
   }
 
   public void menuHistory(ActionEvent e) {
     switchToHistory();
     translateControl.switchToHistory();
     gameSelectionControl.switchToHistory();
-    Switch(true, imgHistory, false, History.getList(), "History");
+  }
+
+  @Override
+  public void switchToAPI() {
+    super.switchToAPI();
+    Switch(true, imgAPI, true, null, "API");
+    suggestWord.setVisible(false);
+    bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
   }
 
   public void menuAPI(ActionEvent e) {
     switchToAPI();
     translateControl.switchToAPI();
     gameSelectionControl.switchToAPI();
-    Switch(true, imgAPI, true, null, "API");
-    suggestWord.setVisible(false);
   }
 
   public void changeBookmarkState(MouseEvent e) {
@@ -358,12 +385,22 @@ public class mainController extends baseMenu implements Initializable {
     if (word.equals("LingoBench")) {
       return;
     }
-    MutableBoolean deleted = new MutableBoolean();
-    deleteWarning.start(new Stage(), deleted, word);
-    if (!deleted.isValue()) {
+    deleteControl.setPrompt("Bạn có chắc muốn xóa " + lblWord.getText() + " khỏi từ điển?");
+    Stage stage = new Stage();
+    stage.setScene(deleteScene);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage
+        .getIcons()
+        .add(
+            new Image(
+                new File("src/main/resources/Images/minusIcon.png").toURI().toString()));
+    stage.setResizable(false);
+    stage.setTitle("Xóa từ");
+    infoControl.setPrompt("Đã xóa " + word + " khỏi từ điển");
+    stage.showAndWait();
+    if (!deleteControl.isDeleted()) {
       return;
     }
-    infoBox.start(new Stage(), "Đã xóa " + word + " khỏi từ điển.");
     Trie.delete(word);
     DictionaryMap.delete(word); Bookmark.delete(word); History.delete(word);
     switch (currentMenu) {
@@ -439,22 +476,21 @@ public class mainController extends baseMenu implements Initializable {
   }
 
   public void addFromAPI(MouseEvent e) {
-    try {
-      MutableBoolean added = new MutableBoolean();
-      addAPI.start(new Stage(), added, lblWord.getText());
-      if (!added.isValue()) {
-        return;
-      }
+    addAPIControl.setPrompt("Bạn có chắc muốn thêm " + lblWord.getText() + " vào từ điển?");
+    infoControl.setPrompt("Đã thêm " + lblWord.getText() + " vào từ điển.");
+    Stage stage = new Stage();
+    stage.setScene(addAPIScene);
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage
+        .getIcons()
+        .add(
+            new Image(
+                new File("src/main/resources/Images/plusIcon.png").toURI().toString()));
+    stage.setTitle("Thêm từ");
+    stage.showAndWait();
+    if (addAPIControl.isAdded()) {
       Trie.add(lblWord.getText(), spelling.getText(), meaning.getText(), apiAudio);
       DictionaryMap.add(lblWord.getText(), meaning.getText());
-      History.add(lblWord.getText());
-    } catch (Exception err) {
-      System.out.println("Lỗi không xác định ADD API");
-    }
-    try {
-      infoBox.start(new Stage(), "Đã thêm " + lblWord.getText() + " vào từ điển.");
-    } catch (Exception err) {
-      System.out.println("Lỗi không xác định");
     }
   }
 

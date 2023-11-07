@@ -1,5 +1,9 @@
 package Dictionary.Dictionary;
 
+import Dictionary.Utilities.addAPIController;
+import Dictionary.Utilities.addWordController;
+import Dictionary.Utilities.deleteWordController;
+import Dictionary.Utilities.infoController;
 import Game.Anagram.anagramMainMenuController;
 import Game.MainMenuController;
 import Game.Anagram.anagramModeController;
@@ -20,13 +24,13 @@ import java.io.IOException;
 
 public class dictionaryApp extends Application {
   private static QuizModel model;
-  public static FXMLLoader fxmlQuizGame;
+  public static FXMLLoader fxmlQuizGame, fxmlAddWord, fxmlAddAPI, fxmlInfo, fxmlDelete;
   public static FXMLLoader fxmlDictionary, fxmlTranslate, fxmlGameSelection;
   public static FXMLLoader fxmlAnagramGame, fxmlAnagramScore, fxmlAnagramMain, fxmlAnagramMode;
-  public static Scene dictionaryScene, translateScene;
+  public static Scene dictionaryScene, translateScene, infoScene;
   public static Scene anagramGameScene, anagramScoreScene, anagramMainMenuScene, anagramModeScene;
   public static Scene quizGameScene;
-  public static Scene gameSelectionScene;
+  public static Scene gameSelectionScene, addWordScene, addAPIScene, deleteScene;
   public static mainController dictionaryControl;
   public static translateController translateControl;
   public static MainController QuizController;
@@ -35,6 +39,12 @@ public class dictionaryApp extends Application {
   public static anagramScoreController anagramScoreControl;
   public static anagramMainMenuController anagramMainMenuControl;
   public static anagramModeController anagramModeController;
+  public static addWordController addWordControl;
+  public static addAPIController addAPIControl;
+  public static infoController infoControl;
+  public static deleteWordController deleteControl;
+  Parent dictRoot, transRoot, gameSelectionRoot, addWordRoot, addAPIRoot, infoRoot, deleteRoot;
+  Parent anagramGameRoot, anagramScoreRoot, anagramMainMenuRoot, anagramModeRoot, quizGameRoot;
   String getFile(String path) {
     return new File(path).toURI().toString();
   }
@@ -51,8 +61,10 @@ public class dictionaryApp extends Application {
     fxmlAnagramMode = new FXMLLoader(dictionaryApp.class.getResource("/Game/Anagram/selectMode.fxml"));
     fxmlQuizGame = new FXMLLoader(getClass().getResource("/Game/Quiz/Main.fxml"));
     fxmlGameSelection = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/gameMenu.fxml"));
-    Parent dictRoot, transRoot, gameSelectionRoot;
-    Parent anagramGameRoot, anagramScoreRoot, anagramMainMenuRoot, anagramModeRoot, quizGameRoot;
+    fxmlAddWord = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/addWord.fxml"));
+    fxmlAddAPI = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/addAPIBox.fxml"));
+    fxmlInfo = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/info.fxml"));
+    fxmlDelete = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/deleteWarning.fxml"));
 
     dictRoot = fxmlDictionary.load();
     transRoot = fxmlTranslate.load();
@@ -62,25 +74,36 @@ public class dictionaryApp extends Application {
     anagramModeRoot = fxmlAnagramMode.load();
     quizGameRoot = fxmlQuizGame.load();
     gameSelectionRoot = fxmlGameSelection.load();
+    addWordRoot = fxmlAddWord.load();
+    addAPIRoot = fxmlAddAPI.load();
+    infoRoot = fxmlInfo.load();
+    deleteRoot = fxmlDelete.load();
 
-    dictionaryControl = fxmlDictionary.getController(); translateControl = fxmlTranslate.getController();
+    dictionaryControl = fxmlDictionary.getController();
+    translateControl = fxmlTranslate.getController();
     gameSelectionControl = fxmlGameSelection.getController();
-
+    addWordControl = fxmlAddWord.getController();
+    addAPIControl = fxmlAddAPI.getController();
+    infoControl = fxmlInfo.getController();
     anagramGameControl = fxmlAnagramGame.getController();
     anagramScoreControl = fxmlAnagramScore.getController();
     anagramMainMenuControl = fxmlAnagramMain.getController();
     anagramModeController = fxmlAnagramMode.getController();
     QuizController = fxmlQuizGame.getController();
+    deleteControl = fxmlDelete.getController();
 
     dictionaryScene = new Scene(dictRoot, 900, 600);
     translateScene = new Scene(transRoot, 900, 600);
     gameSelectionScene = new Scene(gameSelectionRoot, 900, 600);
-
     anagramGameScene = new Scene(anagramGameRoot, 900, 600);
     anagramScoreScene = new Scene(anagramScoreRoot, 900, 600);
     anagramMainMenuScene = new Scene(anagramMainMenuRoot, 900, 600);
     anagramModeScene = new Scene(anagramModeRoot, 900, 600);
     quizGameScene = new Scene(quizGameRoot,900,600);
+    addWordScene = new Scene(addWordRoot);
+    addAPIScene = new Scene(addAPIRoot);
+    infoScene = new Scene(infoRoot);
+    deleteScene = new Scene(deleteRoot);
 
     dictionaryScene.getStylesheets().add(getFile("src/main/resources/style.css"));
     translateScene.getStylesheets().add(getFile("src/main/resources/style.css"));

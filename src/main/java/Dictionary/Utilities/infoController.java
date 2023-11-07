@@ -1,26 +1,28 @@
 package Dictionary.Utilities;
 
-import Implement.Box.infoBox;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
-public class infoController implements Initializable {
+public class infoController {
   @FXML
-  Label msg;
+  private Button btnOK;
+
   @FXML
-  Button btnOK;
+  private ImageView imgIcon;
+
   @FXML
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    msg.setText(infoBox.message);
+  private Label msg;
+
+  public void setPrompt(String MSG) {
+    msg.setText(MSG);
   }
   @FXML
   public void clickOK(ActionEvent e) {
-    infoBox.closeStage();
+    Stage stage = (Stage) msg.getScene().getWindow();
+    stage.close();
   }
 }
