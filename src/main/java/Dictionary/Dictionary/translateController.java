@@ -1,11 +1,13 @@
-package Dictionary;
+package Dictionary.Dictionary;
+
+import static Dictionary.Dictionary.dictionaryApp.dictionaryControl;
+import static Dictionary.Dictionary.dictionaryApp.gameSelectionControl;
 
 import Implement.Input.Paragraph.Translator;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +18,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class translateController extends baseMenu implements Initializable {
   @FXML private ImageView swap;
@@ -29,9 +29,6 @@ public class translateController extends baseMenu implements Initializable {
   @FXML private Label lanEn, lanVi, lanEn1, lanVi1, lanFr, lanFr1, lanIt, lanIt1;
 
   String lanFrom = "en", lanTo = "vi";
-
-  mainController mControl = dictionaryApp.dictionaryControl;
-  private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setStyle(Node x, String style) {
     x.getStyleClass().add(style);
@@ -57,60 +54,61 @@ public class translateController extends baseMenu implements Initializable {
     setStyle(input, "translateArea"); setStyle(result, "translateArea");
     unfocusAllLan("from"); unfocusAllLan("to");
     focusLan(lanEn); focusLan(lanVi1);
-    transition.setNode(imgToggle);
+    input.setText(""); result.setText("");
+    unfocusAllLan("from"); focusLan(lanEn);
   }
 
-  void toggleMenu(Node img) {
-    transition.setToY(img.getLayoutY() - 10 - imgToggle.getLayoutY());
-    transition.play();
-  }
-
-  public void switchToSearch() {
-    toggleMenu(imgSearch);
-  }
-  public void switchToBookmark() {
-    toggleMenu(imgBookmark);
-  }
-  public void switchToHistory() {
-    toggleMenu(imgHistory);
-  }
-  public void switchToAPI() {
-    toggleMenu(imgAPI);
-  }
   String getFile(String path) {
     return new File(path).toURI().toString();
-  }
-  void mainMenu() throws IOException{
-    Stage stage = (Stage) input.getScene().getWindow();
-    stage.setScene(dictionaryApp.dictionaryScene);
   }
 
   @FXML
   void menuAPI(ActionEvent event) throws IOException {
     mainMenu();
-    mControl.switchToAPI();
+    switchToAPI();
+    dictionaryControl.switchToAPI();
+    gameSelectionControl.switchToAPI();
   }
 
   @FXML
   void menuBookmark(ActionEvent event) throws IOException {
     mainMenu();
-    mControl.switchToBookmark();
+    switchToBookmark();
+    dictionaryControl.switchToBookmark();
+    gameSelectionControl.switchToBookmark();
   }
 
   @FXML
   void menuHistory(ActionEvent event) throws IOException {
     mainMenu();
-    mControl.switchToHistory();
+    switchToHistory();
+    dictionaryControl.switchToHistory();
+    gameSelectionControl.switchToHistory();
   }
 
   @FXML
   void menuSearch(ActionEvent event) throws IOException {
     mainMenu();
-    mControl.switchToSearch();
+    switchToSearch();
+    dictionaryControl.switchToSearch();
+    gameSelectionControl.switchToSearch();
   }
 
   @FXML
-  void menuTranslate(ActionEvent event) throws IOException {}
+  void menuTranslate(ActionEvent event) throws IOException {
+    switchToTranslate();
+    dictionaryControl.switchToTranslate();
+    gameSelectionControl.switchToTranslate();
+  }
+
+  @FXML
+  void menuGame(ActionEvent event) throws IOException {
+    gameSelectionMenu();
+    switchToGameSelection();
+    dictionaryControl.switchToGameSelection();
+    gameSelectionControl.switchToGameSelection();
+    
+  }
 
   void trans() {
     if (input.getText().isBlank()) {
@@ -227,10 +225,6 @@ public class translateController extends baseMenu implements Initializable {
   @FXML
   void swapLan(MouseEvent e) {
     swap();
-  }
-  void init() {
-    toggleMenu(imgTranslate); input.setText(""); result.setText("");
-    unfocusAllLan("from"); focusLan(lanEn);
   }
 
   void unfocusAllLan(String type) {

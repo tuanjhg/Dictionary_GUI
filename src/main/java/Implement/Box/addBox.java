@@ -1,6 +1,6 @@
 package Implement.Box;
 
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import Implement.WordStorage.DictionaryMap;
 import Implement.History;
 import Implement.MutableBoolean;

@@ -1,8 +1,8 @@
 package Game.Anagram;
 
-import static Dictionary.dictionaryApp.anagramGameControl;
-import static Dictionary.dictionaryApp.anagramGameScene;
-import static Dictionary.dictionaryApp.anagramMainMenuScene;
+import static Dictionary.Dictionary.dictionaryApp.anagramGameControl;
+import static Dictionary.Dictionary.dictionaryApp.anagramGameScene;
+import static Dictionary.Dictionary.dictionaryApp.anagramMainMenuScene;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

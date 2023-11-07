@@ -1,6 +1,6 @@
 package Implement.Box;
 
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package Dictionary;
+package Dictionary.Utilities;
 
 import Implement.Box.deleteWarning;
 import java.net.URL;

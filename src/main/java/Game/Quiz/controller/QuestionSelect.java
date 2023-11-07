@@ -1,5 +1,5 @@
 package Game.Quiz.controller;
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import Game.Quiz.models.Category;
 import Game.Quiz.models.Question;
 import Game.Quiz.models.QuizModel;

@@ -1,4 +1,4 @@
-package Dictionary;
+package Dictionary.Utilities;
 
 import java.net.URL;
 import java.util.ResourceBundle;

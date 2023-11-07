@@ -1,4 +1,4 @@
-package Dictionary;
+package Dictionary.Utilities;
 
 import Implement.Box.infoBox;
 import java.net.URL;

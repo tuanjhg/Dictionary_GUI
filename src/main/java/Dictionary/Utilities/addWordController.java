@@ -1,4 +1,4 @@
-package Dictionary;
+package Dictionary.Utilities;
 
 import Implement.Box.addBox;
 import Implement.WordFormatter;

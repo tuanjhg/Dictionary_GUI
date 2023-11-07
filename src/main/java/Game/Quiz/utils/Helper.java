@@ -1,5 +1,5 @@
 package Game.Quiz.utils;
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import Game.Quiz.models.QuizModel;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

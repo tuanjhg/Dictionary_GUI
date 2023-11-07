@@ -1,4 +1,7 @@
-package Dictionary;
+package Dictionary.Dictionary;
+
+import static Dictionary.Dictionary.dictionaryApp.gameSelectionControl;
+import static Dictionary.Dictionary.dictionaryApp.translateControl;
 
 import Implement.Bookmark;
 import Implement.Box.addAPI;
@@ -84,7 +87,6 @@ public class mainController extends baseMenu implements Initializable {
   final String IMGPath = "src/main/resources/Images/";
   private boolean noSound = true;
   String apiAudio = "";
-  translateController tControl;
   private final TranslateTransition transition = new TranslateTransition(Duration.millis(130));
 
   void setEditor(boolean type) {
@@ -279,11 +281,6 @@ public class mainController extends baseMenu implements Initializable {
     }
   }
 
-  void toggleMenu(Node img) {
-    transition.setToY(img.getLayoutY() - 10 - imgToggle.getLayoutY());
-    transition.play();
-  }
-
   void menuInit(boolean active) {
     suggestWord.setVisible(true); bookmarkStar.setVisible(active);
     if (active && Bookmark.find(lblWord.getText())) {
@@ -301,36 +298,34 @@ public class mainController extends baseMenu implements Initializable {
     if (lst != null) getSuggestion(lst);
     currentMenu = cMenu;
   }
-  public void switchToSearch() {
-    Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
-    tControl.switchToSearch();
-  }
+
   public void menuSearch(ActionEvent e) {
     switchToSearch();
+    translateControl.switchToSearch();
+    gameSelectionControl.switchToSearch();
+    Switch(true, imgSearch, true, DictionaryMap.getKey(), "Search");
   }
-  public void switchToBookmark() {
-    Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
-    tControl.switchToBookmark();
-  }
+
   public void menuBookmark(ActionEvent e) {
     switchToBookmark();
+    translateControl.switchToBookmark();
+    gameSelectionControl.switchToBookmark();
+    Switch(true, imgBookmark, true, Bookmark.getList(), "Bookmark");
   }
 
-  public void switchToHistory() {
-    Switch(true, imgHistory, false, History.getList(), "History");
-    tControl.switchToHistory();
-  }
   public void menuHistory(ActionEvent e) {
     switchToHistory();
+    translateControl.switchToHistory();
+    gameSelectionControl.switchToHistory();
+    Switch(true, imgHistory, false, History.getList(), "History");
   }
 
-  public void switchToAPI() {
-    Switch(true, imgAPI, true, null, "API");
-    suggestWord.setVisible(false);
-    tControl.switchToAPI();
-  }
   public void menuAPI(ActionEvent e) {
     switchToAPI();
+    translateControl.switchToAPI();
+    gameSelectionControl.switchToAPI();
+    Switch(true, imgAPI, true, null, "API");
+    suggestWord.setVisible(false);
   }
 
   public void changeBookmarkState(MouseEvent e) {
@@ -464,10 +459,16 @@ public class mainController extends baseMenu implements Initializable {
   }
 
   public void menuTranslate(ActionEvent e) throws IOException{
-    toggleMenu(imgTranslate);
-    Stage stage = (Stage) imgSearch.getScene().getWindow();
-    stage.setScene(dictionaryApp.translateScene);
-    tControl.init();
+    translateMenu();
+    switchToTranslate();
+    translateControl.switchToTranslate();
+    gameSelectionControl.switchToTranslate();
   }
 
+  public void menuGame(ActionEvent e) throws IOException{
+    gameSelectionMenu();
+    switchToTranslate();
+    translateControl.switchToGameSelection();
+    gameSelectionControl.switchToGameSelection();
+  }
 }

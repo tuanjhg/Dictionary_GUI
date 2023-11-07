@@ -1,7 +1,7 @@
 package Game.Anagram;
 
-import static Dictionary.dictionaryApp.anagramScoreScene;
-import static Dictionary.dictionaryApp.anagramScoreControl;
+import static Dictionary.Dictionary.dictionaryApp.anagramScoreScene;
+import static Dictionary.Dictionary.dictionaryApp.anagramScoreControl;
 
 import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
@@ -65,16 +65,8 @@ public class anagramGameController implements Initializable {
     return minLength;
   }
 
-  public void setMinLength(int minLength) {
-    this.minLength = minLength;
-  }
-
   public int getMaxLength() {
     return maxLength;
-  }
-
-  public void setMaxLength(int maxLength) {
-    this.maxLength = maxLength;
   }
 
   int score;
@@ -82,6 +74,8 @@ public class anagramGameController implements Initializable {
   int numCol;
   List<Character> letter = new ArrayList<>();
   List<selectedButton> answer = new ArrayList<>();
+
+  String tmp = "";
 
   public int getScore() {
     return score;
@@ -144,7 +138,7 @@ public class anagramGameController implements Initializable {
   void nextRound() {
     lblScore.setText(score + "");
     letter.clear();
-    String tmp = "";
+    tmp = "";
     while (!(tmp.length() >= minLength && tmp.length() <= maxLength)) {
       tmp = DictionaryMap.getRandom();
     }
@@ -219,7 +213,7 @@ public class anagramGameController implements Initializable {
       tmp.append(i.getParentButton().getC().toString());
     }
     String res = WordFormatter.normalize(tmp.toString());
-    if (DictionaryMap.exist(res)) {
+    if (DictionaryMap.exist(res) && res.length() == tmp.length()) {
       score++;
       countdownSeconds += 2;
       nextRound();

@@ -1,11 +1,14 @@
-package Dictionary;
+package Dictionary.Dictionary;
 
-import static Dictionary.dictionaryApp.anagramMainMenuScene;
+import static Dictionary.Dictionary.dictionaryApp.dictionaryScene;
+import static Dictionary.Dictionary.dictionaryApp.gameSelectionScene;
+import static Dictionary.Dictionary.dictionaryApp.translateScene;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public abstract class baseMenu implements Initializable {
   @FXML
@@ -30,7 +34,7 @@ public abstract class baseMenu implements Initializable {
   protected Button imgGame = new Button();
   @FXML
   protected ImageView imgToggle = new ImageView();
-
+  TranslateTransition transition = new TranslateTransition(Duration.millis(130));
   void setStyle(Node x, String style) {
     x.getStyleClass().add(style);
   }
@@ -57,6 +61,42 @@ public abstract class baseMenu implements Initializable {
     setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
     setStyle(imgTranslate, "toHandCursor"); setStyle(imgGame, "toHandCursor");
+    transition.setNode(imgToggle);
+  }
+
+  void toggleMenu(Node img) {
+    transition.setToY(img.getLayoutY() - 10 - imgToggle.getLayoutY());
+    transition.play();
+  }
+
+  public void switchToSearch() {
+    toggleMenu(imgSearch);
+  }
+  public void switchToBookmark() {
+    toggleMenu(imgBookmark);
+  }
+  public void switchToHistory() {
+    toggleMenu(imgHistory);
+  }
+  public void switchToAPI() {
+    toggleMenu(imgAPI);
+  }
+  public void switchToTranslate() { toggleMenu(imgTranslate); }
+  public void switchToGameSelection() { toggleMenu(imgGame); }
+
+  void mainMenu() throws IOException {
+    Stage stage = (Stage) imgSearch.getScene().getWindow();
+    stage.setScene(dictionaryScene);
+  }
+
+  void translateMenu() throws IOException {
+    Stage stage = (Stage) imgSearch.getScene().getWindow();
+    stage.setScene(translateScene);
+  }
+
+  void gameSelectionMenu() throws IOException {
+    Stage stage = (Stage) imgSearch.getScene().getWindow();
+    stage.setScene(gameSelectionScene);
   }
 
   abstract void menuSearch(ActionEvent e) throws IOException;
@@ -64,9 +104,5 @@ public abstract class baseMenu implements Initializable {
   abstract void menuBookmark(ActionEvent e) throws IOException;
   abstract void menuAPI(ActionEvent e) throws IOException;
   abstract void menuTranslate(ActionEvent e) throws IOException;
-  @FXML
-  void menuGame(ActionEvent event) throws IOException {
-    Stage stage = (Stage) imgSearch.getScene().getWindow();
-    stage.setScene(anagramMainMenuScene);
-  }
+  abstract void menuGame(ActionEvent event) throws IOException;
 }

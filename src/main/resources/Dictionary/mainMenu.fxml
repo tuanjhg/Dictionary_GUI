@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="mainPane" dividerPositions="0.078" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dictionary.mainController">
+<SplitPane fx:id="mainPane" dividerPositions="0.078" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dictionary.Dictionary.mainController">
    <items>
       <GridPane fx:id="menu" maxHeight="600.0" maxWidth="70.0" minHeight="600.0" minWidth="70.0" prefHeight="600.0" prefWidth="70.0" SplitPane.resizableWithParent="false">
         <columnConstraints>

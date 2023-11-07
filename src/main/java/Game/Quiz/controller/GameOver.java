@@ -1,6 +1,6 @@
 package Game.Quiz.controller;
 
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import Game.Quiz.models.QuizModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

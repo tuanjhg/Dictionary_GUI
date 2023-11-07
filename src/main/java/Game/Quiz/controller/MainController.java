@@ -1,6 +1,6 @@
 package Game.Quiz.controller;
 
-import Dictionary.dictionaryApp;
+import Dictionary.Dictionary.dictionaryApp;
 import Game.Quiz.models.QuizModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,8 +16,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Dictionary.dictionaryApp.anagramMainMenuScene;
-import static Dictionary.dictionaryApp.dictionaryScene;
+import static Dictionary.Dictionary.dictionaryApp.anagramMainMenuScene;
 
 public class MainController implements Initializable {
     private static QuizModel model;

@@ -1,7 +1,8 @@
 package Game.Anagram;
 
-import static Dictionary.dictionaryApp.anagramModeScene;
-import static Dictionary.dictionaryApp.dictionaryScene;
+import static Dictionary.Dictionary.dictionaryApp.anagramModeScene;
+import static Dictionary.Dictionary.dictionaryApp.dictionaryScene;
+import static Dictionary.Dictionary.dictionaryApp.gameSelectionScene;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,9 +17,9 @@ public class anagramMainMenuController {
   private Button newGameBtn = new Button();
 
   @FXML
-  void exit(ActionEvent event) {
+  void exitGame(ActionEvent event) {
     Stage stage = (Stage) exitBtn.getScene().getWindow();
-    stage.setScene(dictionaryScene);
+    stage.setScene(gameSelectionScene);
   }
 
   @FXML
