@@ -1,7 +1,6 @@
 package Dictionary.Dictionary;
 
 import Game.Anagram.anagramMainMenuController;
-import Game.MainMenuController;
 import Game.Anagram.anagramModeController;
 import Game.Anagram.anagramScoreController;
 import java.io.File;

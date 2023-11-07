@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static Dictionary.Dictionary.dictionaryApp.anagramMainMenuScene;
+import static Dictionary.Dictionary.dictionaryApp.*;
 
 public class MainController implements Initializable {
     private static QuizModel model;
@@ -54,7 +54,7 @@ public class MainController implements Initializable {
         if (model != null) {
             model.save();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(anagramMainMenuScene);
+            stage.setScene(gameSelectionScene);
         }
     }
     @Override
