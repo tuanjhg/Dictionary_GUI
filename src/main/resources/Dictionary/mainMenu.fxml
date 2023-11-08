@@ -83,7 +83,7 @@
             </Label>
             <ImageView fitHeight="600.0" fitWidth="830.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/sean-oulashin-KMn4VEeEPR8-unsplash.jpg" />
+                  <Image url="@../Images/background.jpg" />
                </image>
             </ImageView>
             <Label fx:id="lblWord" prefHeight="31.0" prefWidth="282.0" text="LingoBench" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="BOTTOM">

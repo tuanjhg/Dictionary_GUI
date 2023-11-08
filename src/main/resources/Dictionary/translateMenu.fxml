@@ -70,7 +70,7 @@
                <children>
                   <ImageView fitHeight="600.0" fitWidth="830.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                      <image>
-                        <Image url="@../Images/sean-oulashin-KMn4VEeEPR8-unsplash.jpg" />
+                        <Image url="@../Images/background.jpg" />
                      </image>
                   </ImageView>
                   <TextArea fx:id="input" onKeyTyped="#onKeyPress" prefHeight="200.0" prefWidth="200.0">

@@ -65,7 +65,7 @@
          <children>
             <ImageView fitHeight="600.0" fitWidth="830.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER">
                <image>
-                  <Image url="@../Images/gameBackground.jpg" />
+                  <Image url="@../Images/background.jpg" />
                </image>
             </ImageView>
             <Button fx:id="anagramBtn" mnemonicParsing="false" onAction="#anagram" prefHeight="250.0" prefWidth="250.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />

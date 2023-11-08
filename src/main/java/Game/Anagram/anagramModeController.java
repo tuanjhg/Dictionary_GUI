@@ -21,14 +21,14 @@ public class anagramModeController {
   }
 
   @FXML
-  void hardMode(ActionEvent event) {
+  void mediumMode(ActionEvent event) {
     Stage stage = (Stage) difficulty.getScene().getWindow();
     stage.setScene(anagramGameScene);
     anagramGameControl.startGame(30, 4, 5);
   }
 
   @FXML
-  void mediumMode(ActionEvent event) {
+  void hardMode(ActionEvent event) {
     Stage stage = (Stage) difficulty.getScene().getWindow();
     stage.setScene(anagramGameScene);
     anagramGameControl.startGame(60, 5, 7);
