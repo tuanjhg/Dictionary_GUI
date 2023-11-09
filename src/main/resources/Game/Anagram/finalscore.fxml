@@ -21,6 +21,11 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
+      <ImageView fitHeight="600.0" fitWidth="900.0" pickOnBounds="true" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
+         <image>
+            <Image url="@../../Images/anagramBackground2.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="605.0" fitWidth="619.0" pickOnBounds="true" preserveRatio="true" translateY="-130.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="2">
          <image>
             <Image url="@../../Images/gameOver.png" />

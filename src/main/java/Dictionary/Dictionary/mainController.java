@@ -16,7 +16,6 @@ import Implement.History;
 import Implement.Input.AddFromAPI;
 import Implement.Input.AddFromFile;
 import Implement.Input.SingleWord.Definition;
-import Implement.Input.SingleWord.DictionaryEntry;
 import Implement.Input.SingleWord.Meaning;
 import Implement.Input.SingleWord.Phonetic;
 import Implement.WordFormatter;
@@ -116,10 +115,10 @@ public class mainController extends baseMenu implements Initializable {
   }
   public void cellFormat() {
     suggestWord.getStyleClass().add("list-cell");
-    suggestWord.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+    suggestWord.setCellFactory(new Callback<>() {
       @Override
       public ListCell<String> call(ListView<String> param) {
-        return new ListCell<String>() {
+        return new ListCell<>() {
           @Override
           protected void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
@@ -210,56 +209,53 @@ public class mainController extends baseMenu implements Initializable {
     }
     noSound = true;
     AddFromAPI addFromAPI = new AddFromAPI();
-    addFromAPI.getWord(word, new AddFromAPI.Callback() {
-      @Override
-      public void onSuccess(DictionaryEntry entry) {
-        if (entry != null) {
-          lblWord.setText(WordFormatter.normalize(word));
-          for (Phonetic i : entry.getPhonetics()) {
-            if (!i.getText().isBlank()) {
-              spelling.setText(i.getText());
-              if (!i.getAudio().isBlank()) {
-                apiAudio = i.getAudio();
-                noSound = false;
-                break;
-              }
+    addFromAPI.getWord(word, entry -> {
+      if (entry != null) {
+        lblWord.setText(WordFormatter.normalize(word));
+        for (Phonetic i : entry.getPhonetics()) {
+          if (!i.getText().isBlank()) {
+            spelling.setText(i.getText());
+            if (!i.getAudio().isBlank()) {
+              apiAudio = i.getAudio();
+              noSound = false;
+              break;
             }
           }
-          setSound(); imgAdd.setVisible(true);
-          StringBuilder apiMeaning = new StringBuilder();
-          for (Meaning i : entry.getMeanings()) {
-            apiMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
-            for (Definition j : i.getDefinitions()) {
-              apiMeaning.append("          »   ").append(j.getDefinition()).append("\n");
-              if (!j.getExample().isBlank()) {
-                apiMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
-              }
-            }
-            if (!i.getSynonyms().isEmpty()) { // If i has synonyms
-              apiMeaning.append("          »   Synonyms: ");
-              for (String j : i.getSynonyms()) {
-                apiMeaning.append(j).append(", ");
-              }
-              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
-              apiMeaning.append("\n");
-            }
-            if (!i.getAntonyms().isEmpty()) { // If i has antonyms
-              apiMeaning.append("          »   Antonyms: ");
-              for (String j : i.getAntonyms()) {
-                apiMeaning.append(j).append(", ");
-              }
-              apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
-              apiMeaning.append("\n");
-            }
-          }
-          meaning.setText(apiMeaning.toString());
-          scrollMeaning.setContent(meaning);
-        } else {
-          infoControl.setPrompt("Không tìm thấy " + word + "trong API từ điển");
-          Stage stage = new Stage();
-          stage.setScene(infoScene);
-          stage.showAndWait();
         }
+        setSound(); imgAdd.setVisible(true);
+        StringBuilder apiMeaning = new StringBuilder();
+        for (Meaning i : entry.getMeanings()) {
+          apiMeaning.append("☆   ").append(i.getPartOfSpeech()).append("\n");
+          for (Definition j : i.getDefinitions()) {
+            apiMeaning.append("          »   ").append(j.getDefinition()).append("\n");
+            if (!j.getExample().isBlank()) {
+              apiMeaning.append("\n               • Example:   ").append(j.getExample()).append("\n\n");
+            }
+          }
+          if (!i.getSynonyms().isEmpty()) { // If i has synonyms
+            apiMeaning.append("          »   Synonyms: ");
+            for (String j : i.getSynonyms()) {
+              apiMeaning.append(j).append(", ");
+            }
+            apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+            apiMeaning.append("\n");
+          }
+          if (!i.getAntonyms().isEmpty()) { // If i has antonyms
+            apiMeaning.append("          »   Antonyms: ");
+            for (String j : i.getAntonyms()) {
+              apiMeaning.append(j).append(", ");
+            }
+            apiMeaning.delete(apiMeaning.length() - 2, apiMeaning.length() - 1);
+            apiMeaning.append("\n");
+          }
+        }
+        meaning.setText(apiMeaning.toString());
+        scrollMeaning.setContent(meaning);
+      } else {
+        infoControl.setPrompt("Không tìm thấy " + word + "trong API từ điển");
+        Stage stage = new Stage();
+        stage.setScene(infoScene);
+        stage.showAndWait();
       }
     });
 
@@ -376,7 +372,7 @@ public class mainController extends baseMenu implements Initializable {
     }
   }
 
-  public void deleteWord(MouseEvent e) throws IOException {
+  public void deleteWord(MouseEvent e) {
     String word = lblWord.getText();
     if (word.equals("LingoBench")) {
       return;
