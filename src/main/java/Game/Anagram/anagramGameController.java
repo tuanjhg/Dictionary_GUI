@@ -208,12 +208,12 @@ public class anagramGameController implements Initializable {
 
   @FXML
   void verifyWord(MouseEvent event) {
-    StringBuilder tmp = new StringBuilder();
+    StringBuilder ret = new StringBuilder();
     for (selectedButton i : answer) {
-      tmp.append(i.getParentButton().getC().toString());
+      ret.append(i.getParentButton().getC().toString());
     }
-    String res = WordFormatter.normalize(tmp.toString());
-    if (DictionaryMap.exist(res) && res.length() == tmp.length()) {
+    String res = WordFormatter.normalize(ret.toString());
+    if (DictionaryMap.exist(res) && res.length() == ret.length()) {
       score++;
       countdownSeconds += 2;
       nextRound();
