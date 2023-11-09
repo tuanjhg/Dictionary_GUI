@@ -39,7 +39,7 @@
             <Insets bottom="1.0" left="30.0" right="30.0" top="20.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="tfMeaning" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="200.0" promptText="Nghĩa tiếng Việt" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <TextField fx:id="tfMeaning" alignment="TOP_LEFT" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="200.0" promptText="Nghĩa tiếng Việt" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets bottom="1.0" left="10.0" right="10.0" top="20.0" />
          </GridPane.margin>

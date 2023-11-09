@@ -59,10 +59,10 @@ public class dictionaryApp extends Application {
     fxmlAnagramMode = new FXMLLoader(dictionaryApp.class.getResource("/Game/Anagram/selectMode.fxml"));
     fxmlQuizGame = new FXMLLoader(getClass().getResource("/Game/Quiz/Main.fxml"));
     fxmlGameSelection = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/gameMenu.fxml"));
-    fxmlAddWord = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/addWord.fxml"));
-    fxmlAddAPI = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/addAPIBox.fxml"));
-    fxmlInfo = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/info.fxml"));
-    fxmlDelete = new FXMLLoader(dictionaryApp.class.getResource("/Dictionary/deleteWarning.fxml"));
+    fxmlAddWord = new FXMLLoader(dictionaryApp.class.getResource("/Utilities/addWord.fxml"));
+    fxmlAddAPI = new FXMLLoader(dictionaryApp.class.getResource("/Utilities/addAPIBox.fxml"));
+    fxmlInfo = new FXMLLoader(dictionaryApp.class.getResource("/Utilities/info.fxml"));
+    fxmlDelete = new FXMLLoader(dictionaryApp.class.getResource("/Utilities/deleteWarning.fxml"));
 
     dictRoot = fxmlDictionary.load();
     transRoot = fxmlTranslate.load();

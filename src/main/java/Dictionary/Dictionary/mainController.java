@@ -39,7 +39,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -143,6 +142,36 @@ public class mainController extends baseMenu implements Initializable {
     setEditor(false); transition.setNode(imgToggle);
   }
 
+  void setContent(TrieNode node) {
+    apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
+    searchBar.setText(currentWord);
+    lblWord.setText(currentWord);
+    spelling.setText(node.getSpelling());
+    meaning.setText(node.getMeaning());
+    scrollMeaning.setContent(meaning);
+    imgAdd.setVisible(false);
+    if (!node.getBookmarked()) {
+      bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
+    } else {
+      bookmarkStar.setImage(new Image(getImgPath("star")));
+    }
+  }
+
+  void addWord() {
+    Stage stage = new Stage();
+    stage.setScene(addWordScene);
+    addWordControl.setWord(searchBar.getText());
+    stage.initModality(Modality.APPLICATION_MODAL);
+    stage
+        .getIcons()
+        .add(
+            new Image(
+                new File("src/main/resources/Images/plusIcon.png").toURI().toString()));
+    stage.setResizable(false);
+    stage.setTitle("Thêm từ");
+    stage.showAndWait();
+  }
+
   public void tFieldFormat() {
     searchBar.getStyleClass().add("txtField");
   }
@@ -163,33 +192,10 @@ public class mainController extends baseMenu implements Initializable {
                 return;
               }
               if (currentWord.equals("Thêm...")) {
-                Stage stage = new Stage();
-                stage.setScene(addWordScene);
-                addWordControl.setWord(searchBar.getText());
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage
-                    .getIcons()
-                    .add(
-                        new Image(
-                            new File("src/main/resources/Images/plusIcon.png").toURI().toString()));
-                stage.setResizable(false);
-                stage.setTitle("Thêm từ");
-                stage.showAndWait();
+                addWord();
                 return;
               }
-              TrieNode node = Trie.find(currentWord);
-              apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
-              searchBar.setText(currentWord);
-              lblWord.setText(currentWord);
-              spelling.setText(node.getSpelling());
-              meaning.setText(node.getMeaning());
-              scrollMeaning.setContent(meaning);
-              imgAdd.setVisible(false);
-              if (!node.getBookmarked()) {
-                bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
-              } else {
-                bookmarkStar.setImage(new Image(getImgPath("star")));
-              }
+              setContent(Trie.find(currentWord));
               if (!currentMenu.equals("History")) {
                 History.add(currentWord);
               }
