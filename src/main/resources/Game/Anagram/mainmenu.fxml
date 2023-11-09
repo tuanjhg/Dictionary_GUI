@@ -16,12 +16,12 @@
       <RowConstraints maxHeight="213.99992879231775" minHeight="79.99995930989587" prefHeight="180.6666158040365" />
   </rowConstraints>
    <children>
-      <Button fx:id="newAnagramGameBtn" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="200.0" text="New game" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <Button fx:id="newAnagramGameBtn" maxHeight="105.0" maxWidth="230.0" minHeight="105.0" minWidth="230.0" mnemonicParsing="false" onAction="#newGame" prefHeight="105.0" prefWidth="230.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
       </Button>
-      <Button fx:id="exitBtn" mnemonicParsing="false" onAction="#exitGame" prefHeight="75.0" prefWidth="200.0" text="Exit" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button fx:id="exitBtn" maxHeight="105.0" maxWidth="230.0" minHeight="105.0" minWidth="230.0" mnemonicParsing="false" onAction="#exitGame" prefHeight="105.0" prefWidth="230.0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font size="30.0" />
          </font>
