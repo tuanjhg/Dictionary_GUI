@@ -115,10 +115,6 @@ public class mainController extends baseMenu implements Initializable {
     suggestWord.getItems().clear();
     suggestWord.getItems().addAll(suggestion);
   }
-  public void setTooltip(Node tmp, String msg) {
-    Tooltip k = new Tooltip(msg); k.setShowDelay(Duration.millis(300));
-    Tooltip.install(tmp, k);
-  }
   public void cellFormat() {
     suggestWord.getStyleClass().add("list-cell");
     suggestWord.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
@@ -197,13 +193,9 @@ public class mainController extends baseMenu implements Initializable {
               if (!currentMenu.equals("History")) {
                 History.add(currentWord);
               }
+              setTooltip(imgAdd, "Thêm vào từ điển");
+              setTooltip(imgTick, "Lưu"); setTooltip(imgCross, "Hủy");
             });
-    setTooltip(imgSearch, "Tra từ"); setTooltip(imgBookmark, "Bookmark");
-    setTooltip(imgHistory, "Lịch sử"); setTooltip(imgAPI, "API");
-    setTooltip(imgSpeaker, "Phát âm"); setTooltip(bookmarkStar, "Đánh dấu");
-    setTooltip(recycleBin, "Xóa từ"); setTooltip(imgEditor, "Sửa đổi");
-    setTooltip(imgAdd, "Thêm vào từ điển");
-    setTooltip(imgTick, "Lưu"); setTooltip(imgCross, "Hủy");
   }
 
   void apiSearch(String word) {
@@ -422,7 +414,7 @@ public class mainController extends baseMenu implements Initializable {
 
   void iconDisable(boolean b) {
     imgSearch.setDisable(b); imgBookmark.setDisable(b); imgHistory.setDisable(b);
-    imgAPI.setDisable(b); imgTranslate.setDisable(b);
+    imgAPI.setDisable(b); imgTranslate.setDisable(b); imgGame.setDisable(b);
     bookmarkStar.setDisable(b); recycleBin.setDisable(b);
     meaning.setOpacity(1); spelling.setOpacity(1);
     double opacity = 1;
@@ -434,7 +426,7 @@ public class mainController extends baseMenu implements Initializable {
       apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
     }
     imgSearch.setOpacity(opacity); imgBookmark.setOpacity(opacity); imgHistory.setOpacity(opacity);
-    imgAPI.setOpacity(opacity); imgTranslate.setOpacity(opacity);
+    imgAPI.setOpacity(opacity); imgTranslate.setOpacity(opacity); imgGame.setOpacity(opacity);
     bookmarkStar.setOpacity(opacity); recycleBin.setOpacity(opacity);
   }
 

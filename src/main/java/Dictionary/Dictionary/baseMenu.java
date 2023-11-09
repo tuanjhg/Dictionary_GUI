@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -51,6 +52,11 @@ public abstract class baseMenu implements Initializable {
     return ret;
   }
 
+  public void setTooltip(Node tmp, String msg) {
+    Tooltip k = new Tooltip(msg); k.setShowDelay(Duration.millis(300));
+    Tooltip.install(tmp, k);
+  }
+
   public void initialize(URL url, ResourceBundle rb) {
     imgSearch.setGraphic(getImage("search"));
     imgBookmark.setGraphic(getImage("bookmark"));
@@ -62,6 +68,9 @@ public abstract class baseMenu implements Initializable {
     setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
     setStyle(imgTranslate, "toHandCursor"); setStyle(imgGame, "toHandCursor");
     transition.setNode(imgToggle);
+    setTooltip(imgSearch, "Tra từ"); setTooltip(imgBookmark, "Bookmark");
+    setTooltip(imgHistory, "Lịch sử"); setTooltip(imgAPI, "API");
+    setTooltip(imgTranslate, "Dịch"); setTooltip(imgGame, "Game");
   }
 
   void toggleMenu(Node img) {
