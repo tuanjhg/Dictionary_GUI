@@ -43,9 +43,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -63,7 +69,7 @@ public class mainController extends baseMenu implements Initializable {
   @FXML
   private Label spelling = new Label();
   @FXML
-  private Label meaning = new Label();
+  private TextFlow meaning = new TextFlow();
   @FXML
   private ListView<String> suggestWord = new ListView<>();
   @FXML
@@ -132,6 +138,7 @@ public class mainController extends baseMenu implements Initializable {
       }
     });
   }
+
   public void buttonFormat() {
     setStyle(bookmarkStar, "imageViewStyle"); setStyle(recycleBin, "imageViewStyle");
     setStyle(imgEditor, "imageViewStyle"); setStyle(imgAdd, "imageViewStyle");
@@ -141,13 +148,46 @@ public class mainController extends baseMenu implements Initializable {
     setEditor(false); transition.setNode(imgToggle);
   }
 
+  void setMeaningOfWord(String mean) {
+    String[] data = mean.split("\n");
+    meaning.getChildren().clear();
+    for (String tmp : data) {
+      if (tmp.isEmpty()) {
+        continue;
+      }
+      Text text = new Text(tmp + "\n");
+      text.setFont(Font.font("Times New Roman", 17));
+      if (tmp.contains("• Example")) {
+        text = new Text("\n" + tmp + "\n\n");
+        text.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 17));
+      }
+      if (tmp.charAt(0) == '☆') {
+        text = new Text("\n" + tmp + "\n");
+        text.setFont(Font.font("Times New Roman", 25));
+        text.setFill(Color.RED);
+      }
+      meaning.getChildren().add(text);
+    }
+    meaning.setPrefWidth(scrollMeaning.getPrefWidth());
+    scrollMeaning.setContent(meaning);
+  }
+
+  String getMeaning() {
+    StringBuilder mean = new StringBuilder();
+    for (Node node : meaning.getChildren()) {
+      if (node instanceof Text) {
+        mean.append(((Text) node).getText());
+      }
+    }
+    return mean.toString();
+  }
+
   void setContent(TrieNode node) {
     apiAudio = node.getAudio(); noSound = apiAudio.isBlank(); setSound();
     searchBar.setText(currentWord);
     lblWord.setText(currentWord);
     spelling.setText(node.getSpelling());
-    meaning.setText(node.getMeaning());
-    scrollMeaning.setContent(meaning);
+    setMeaningOfWord(node.getMeaning());
     imgAdd.setVisible(false);
     if (!node.getBookmarked()) {
       bookmarkStar.setImage(new Image(getImgPath("starUntoggle")));
@@ -249,8 +289,7 @@ public class mainController extends baseMenu implements Initializable {
             apiMeaning.append("\n");
           }
         }
-        meaning.setText(apiMeaning.toString());
-        scrollMeaning.setContent(meaning);
+        setMeaningOfWord(apiMeaning.toString());
       } else {
         infoControl.setPrompt("Không tìm thấy " + word + "trong API từ điển");
         Stage stage = new Stage();
@@ -355,8 +394,8 @@ public class mainController extends baseMenu implements Initializable {
     TrieNode node = Trie.find(word);
     if (!node.getBookmarked()) {
       if (!DictionaryMap.exist(word)) {
-        Trie.add(word, spelling.getText(), meaning.getText(), apiAudio);
-        DictionaryMap.add(word, meaning.getText());
+        Trie.add(word, spelling.getText(), getMeaning(), apiAudio);
+        DictionaryMap.add(word, getMeaning());
         History.add(word);
       }
       bookmarkStar.setImage(new Image(getImgPath("star")));
@@ -400,7 +439,7 @@ public class mainController extends baseMenu implements Initializable {
       case "Bookmark" -> getSuggestion(Bookmark.getList());
       case "History" -> getSuggestion(History.getList());
     }
-    searchBar.setText(""); lblWord.setText(""); spelling.setText(""); meaning.setText("");
+    searchBar.setText(""); lblWord.setText(""); spelling.setText(""); setMeaningOfWord("");
     bookmarkStar.setVisible(false); recycleBin.setVisible(false); imgEditor.setVisible(false);
   }
 
@@ -437,7 +476,7 @@ public class mainController extends baseMenu implements Initializable {
       return;
     }
     setEditor(true);
-    txtEditor.setText(meaning.getText());
+    txtEditor.setText(getMeaning());
     tfPhonetic.setText(spelling.getText());
     suggestWord.setDisable(true);
     iconDisable(true);
@@ -461,7 +500,7 @@ public class mainController extends baseMenu implements Initializable {
   public void saveEditor(MouseEvent e) {
     String newMeaning = txtEditor.getText();
     String newSpelling = tfPhonetic.getText();
-    meaning.setText(newMeaning);
+    setMeaningOfWord(newMeaning);
     spelling.setText(newSpelling);
     Trie.add(lblWord.getText(), newSpelling, newMeaning, "");
     closeEditor();
@@ -481,8 +520,8 @@ public class mainController extends baseMenu implements Initializable {
     stage.setTitle("Thêm từ");
     stage.showAndWait();
     if (addAPIControl.isAdded()) {
-      Trie.add(lblWord.getText(), spelling.getText(), meaning.getText(), apiAudio);
-      DictionaryMap.add(lblWord.getText(), meaning.getText());
+      Trie.add(lblWord.getText(), spelling.getText(), getMeaning(), apiAudio);
+      DictionaryMap.add(lblWord.getText(), getMeaning());
     }
   }
 
