@@ -19,7 +19,6 @@ public class gameSelectionController extends baseMenu implements Initializable {
   @FXML
   private Button quizBtn = new Button();
 
-
   public void initialize(URL url, ResourceBundle rb) {
     super.initialize(url, rb);
     anagramBtn.setGraphic(getGameImg("src/main/resources/Images/anagram.png"));
@@ -27,6 +26,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
     setStyle(anagramBtn, "toHandCursor");
     setStyle(quizBtn, "toHandCursor");
   }
+
   ImageView getGameImg(String path) {
     ImageView ret = new ImageView(new Image(getFile(path)));
     ret.setFitHeight(225);

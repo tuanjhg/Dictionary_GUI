@@ -18,6 +18,7 @@ import Implement.Input.AddFromFile;
 import Implement.Input.SingleWord.Definition;
 import Implement.Input.SingleWord.Meaning;
 import Implement.Input.SingleWord.Phonetic;
+import Implement.Output.ExportToFile;
 import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
@@ -43,7 +44,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.Status;
@@ -155,10 +155,13 @@ public class mainController extends baseMenu implements Initializable {
       if (tmp.isEmpty()) {
         continue;
       }
+      boolean example = false;
       Text text = new Text(tmp + "\n");
       text.setFont(Font.font("Times New Roman", 17));
       if (tmp.contains("• Example")) {
-        text = new Text("\n" + tmp + "\n\n");
+        Text temp = new Text("\n");
+        meaning.getChildren().add(temp);
+        example = true;
         text.setFont(Font.font("Times New Roman", FontPosture.ITALIC, 17));
       }
       if (tmp.charAt(0) == '☆') {
@@ -167,6 +170,10 @@ public class mainController extends baseMenu implements Initializable {
         text.setFill(Color.RED);
       }
       meaning.getChildren().add(text);
+      if (example) {
+        Text temp = new Text("\n");
+        meaning.getChildren().add(temp);
+      }
     }
     meaning.setPrefWidth(scrollMeaning.getPrefWidth());
     scrollMeaning.setContent(meaning);
@@ -176,9 +183,14 @@ public class mainController extends baseMenu implements Initializable {
     StringBuilder mean = new StringBuilder();
     for (Node node : meaning.getChildren()) {
       if (node instanceof Text) {
-        mean.append(((Text) node).getText());
+        String add = ((Text) node).getText();
+        if (add.isBlank()) {
+          continue;
+        }
+        mean.append(add);
       }
     }
+    mean.deleteCharAt(0);
     return mean.toString();
   }
 
@@ -498,9 +510,13 @@ public class mainController extends baseMenu implements Initializable {
   }
 
   public void saveEditor(MouseEvent e) {
-    String newMeaning = txtEditor.getText();
+    String tmp = txtEditor.getText();
+    if (tmp.isEmpty() || tmp.charAt(tmp.length() - 1) != '\n') {
+      tmp += '\n';
+    }
+    setMeaningOfWord(tmp);
+    String newMeaning = tmp;
     String newSpelling = tfPhonetic.getText();
-    setMeaningOfWord(newMeaning);
     spelling.setText(newSpelling);
     Trie.add(lblWord.getText(), newSpelling, newMeaning, "");
     closeEditor();
@@ -535,7 +551,7 @@ public class mainController extends baseMenu implements Initializable {
   public void menuGame(ActionEvent e) throws IOException{
     gameSelectionMenu();
     switchToTranslate();
-    translateControl.switchToGameSelection();
+    translateControl.switchToGameSelection();E
     gameSelectionControl.switchToGameSelection();
   }
 }

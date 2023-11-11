@@ -24,6 +24,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,7 +44,7 @@ public class anagramGameController implements Initializable {
   private Label lblScore;
 
   @FXML
-  private Label timerLabel;
+  private TextFlow timer;
 
   @FXML
   private ImageView btnConfirm;
@@ -94,7 +99,6 @@ public class anagramGameController implements Initializable {
     minLength = min; maxLength = max;
   }
 
-  //Chat GPT
   private void initializeTimer() {
     KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
       if (countdownSeconds > 0) {
@@ -102,7 +106,7 @@ public class anagramGameController implements Initializable {
         updateTimeLabel();
       } else {
         anagramScoreControl.setFinalScore(score + "");
-        Stage stage = (Stage) timerLabel.getScene().getWindow();
+        Stage stage = (Stage) timer.getScene().getWindow();
         stage.setScene(anagramScoreScene);
         timeline.stop();
       }
@@ -116,9 +120,12 @@ public class anagramGameController implements Initializable {
     int minutes = countdownSeconds / 60;
     int seconds = countdownSeconds % 60;
     String timeString = String.format("%02d:%02d", minutes, seconds);
-    timerLabel.setText(timeString);
+    timer.getChildren().clear();
+    Text text = new Text(timeString);
+    text.setFont(Font.font("System", FontWeight.BOLD, 30));
+    text.setFill(Color.WHITE);
+    timer.getChildren().add(text);
   }
-  // End of Chat GPT
 
   String getFile(String path) {
     return new File(path).toURI().toString();

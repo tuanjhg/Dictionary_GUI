@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Game.Anagram.anagramGameController">
   <columnConstraints>
@@ -55,20 +56,23 @@
             <Font name="Arial Black" size="32.0" />
          </font>
       </Label>
-      <Label fx:id="timerLabel" textFill="WHITE" GridPane.columnIndex="1">
-         <font>
-            <Font name="System Bold" size="48.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="295.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <ImageView fitHeight="137.0" fitWidth="193.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <image>
             <Image url="@../../Images/Timer.gif" />
          </image>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="20.0" />
+         </GridPane.margin>
       </ImageView>
       <ImageView fx:id="btnSkip" fitHeight="60.0" fitWidth="60.0" onMouseClicked="#skipRound" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3">
          <image>
             <Image url="@../../Images/skip.png" />
          </image>
       </ImageView>
+      <TextFlow fx:id="timer" prefHeight="164.0" prefWidth="479.0" GridPane.columnIndex="1">
+         <GridPane.margin>
+            <Insets bottom="50.0" top="60.0" />
+         </GridPane.margin>
+      </TextFlow>
    </children>
 </GridPane>
