@@ -7,8 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import static Dictionary.Dictionary.dictionaryApp.*;
@@ -21,17 +19,10 @@ public class gameSelectionController extends baseMenu implements Initializable {
 
   public void initialize(URL url, ResourceBundle rb) {
     super.initialize(url, rb);
-    anagramBtn.setGraphic(getGameImg("src/main/resources/Images/anagram.png"));
-    quizBtn.setGraphic(getGameImg("src/main/resources/Images/Quiz.png"));
+    anagramBtn.setGraphic(getImage("anagram", 225, 225));
+    quizBtn.setGraphic(getImage("Quiz", 225, 225));
     setStyle(anagramBtn, "toHandCursor");
     setStyle(quizBtn, "toHandCursor");
-  }
-
-  ImageView getGameImg(String path) {
-    ImageView ret = new ImageView(new Image(getFile(path)));
-    ret.setFitHeight(225);
-    ret.setFitWidth(225);
-    return ret;
   }
 
   @FXML

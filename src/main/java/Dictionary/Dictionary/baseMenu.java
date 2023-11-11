@@ -44,11 +44,11 @@ public abstract class baseMenu implements Initializable {
     return new File(path).toURI().toString();
   }
 
-  protected ImageView getImage(String img) {
+  protected ImageView getImage(String img, int h, int w) {
     ImageView ret = new ImageView(new Image(getFile(
         "src/main/resources/Images/" + img + ".png")));
-    ret.setFitHeight(40);
-    ret.setFitWidth(40);
+    ret.setFitHeight(h);
+    ret.setFitWidth(w);
     return ret;
   }
 
@@ -58,12 +58,12 @@ public abstract class baseMenu implements Initializable {
   }
 
   public void initialize(URL url, ResourceBundle rb) {
-    imgSearch.setGraphic(getImage("search"));
-    imgBookmark.setGraphic(getImage("bookmark"));
-    imgHistory.setGraphic(getImage("history"));
-    imgAPI.setGraphic(getImage("api"));
-    imgTranslate.setGraphic(getImage("translate"));
-    imgGame.setGraphic(getImage("game"));
+    imgSearch.setGraphic(getImage("search", 40, 40));
+    imgBookmark.setGraphic(getImage("bookmark", 40, 40));
+    imgHistory.setGraphic(getImage("history", 40, 40));
+    imgAPI.setGraphic(getImage("api", 40, 40));
+    imgTranslate.setGraphic(getImage("translate", 40, 40));
+    imgGame.setGraphic(getImage("game", 40, 40));
     setStyle(imgSearch, "toHandCursor"); setStyle(imgBookmark, "toHandCursor");
     setStyle(imgHistory, "toHandCursor"); setStyle(imgAPI, "toHandCursor");
     setStyle(imgTranslate, "toHandCursor"); setStyle(imgGame, "toHandCursor");

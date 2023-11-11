@@ -18,7 +18,6 @@ import Implement.Input.AddFromFile;
 import Implement.Input.SingleWord.Definition;
 import Implement.Input.SingleWord.Meaning;
 import Implement.Input.SingleWord.Phonetic;
-import Implement.Output.ExportToFile;
 import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
@@ -33,6 +32,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -52,6 +52,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -90,6 +91,8 @@ public class mainController extends baseMenu implements Initializable {
   private ImageView imgAdd = new ImageView();
   @FXML
   private ScrollPane scrollMeaning = new ScrollPane();
+  @FXML
+  private Button importBtn = new Button();
   private String currentMenu = "Search";
   private String currentWord;
   final String IMGPath = "src/main/resources/Images/";
@@ -146,6 +149,7 @@ public class mainController extends baseMenu implements Initializable {
     setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle);
+    importBtn.setGraphic(getImage("import", 15,15));
   }
 
   void setMeaningOfWord(String mean) {
@@ -230,7 +234,7 @@ public class mainController extends baseMenu implements Initializable {
   public void initialize(URL url, ResourceBundle rb) {
     super.initialize(url, rb);
     cellFormat(); buttonFormat(); setSound();
-    AddFromFile.add(); getSuggestion(DictionaryMap.getKey());
+    AddFromFile.add(null); getSuggestion(DictionaryMap.getKey());
     menuInit(false); tFieldFormat();
     suggestWord
         .getSelectionModel()
@@ -551,7 +555,15 @@ public class mainController extends baseMenu implements Initializable {
   public void menuGame(ActionEvent e) throws IOException{
     gameSelectionMenu();
     switchToTranslate();
-    translateControl.switchToGameSelection();E
+    translateControl.switchToGameSelection();
     gameSelectionControl.switchToGameSelection();
+  }
+
+  public void importFile(ActionEvent e) {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Import");
+    Stage stage = (Stage) imgAdd.getScene().getWindow();
+    File selected = fileChooser.showOpenDialog(stage);
+    AddFromFile.add(selected);
   }
 }

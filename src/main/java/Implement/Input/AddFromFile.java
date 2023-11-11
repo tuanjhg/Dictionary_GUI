@@ -1,5 +1,6 @@
 package Implement.Input;
 
+import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
 import java.io.BufferedReader;
@@ -7,16 +8,18 @@ import java.io.File;
 import java.io.FileReader;
 
 public class AddFromFile {
-  public static void add() {
+  public static void add(File file) {
     try {
-      String Path = "src/main/resources/dictionaries.txt";
-      File file = new File(Path);
-      file.createNewFile();
+      if (file == null) {
+        String Path = "src/main/resources/dictionaries.txt";
+        file = new File(Path);
+      }
       FileReader fileReader = new FileReader(file);
       BufferedReader bufferedReader = new BufferedReader(fileReader);
       String word, spelling, audio;
       StringBuilder meaning;
       while ((word = bufferedReader.readLine()) != null) {
+        word = WordFormatter.normalize(word);
         spelling = bufferedReader.readLine();
         audio = bufferedReader.readLine();
         meaning = new StringBuilder();
