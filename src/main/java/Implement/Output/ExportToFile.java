@@ -8,11 +8,13 @@ import java.io.File;
 import java.io.FileWriter;
 
 public class ExportToFile {
-  public void export() {
+  public static void export(File file) {
     try {
-      String Path = "src/main/resources/dictionaries.txt";
-      File file = new File(Path);
-      file.createNewFile();
+      if (file == null) {
+        String Path = "src/main/resources/dictionaries.txt";
+        file = new File(Path);
+        file.createNewFile();
+      }
       FileWriter writer = new FileWriter(file);
       BufferedWriter bufferedWriter = new BufferedWriter(writer);
       String[] word = DictionaryMap.getKey();

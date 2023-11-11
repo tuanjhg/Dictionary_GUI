@@ -18,6 +18,7 @@ import Implement.Input.AddFromFile;
 import Implement.Input.SingleWord.Definition;
 import Implement.Input.SingleWord.Meaning;
 import Implement.Input.SingleWord.Phonetic;
+import Implement.Output.ExportToFile;
 import Implement.WordFormatter;
 import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
@@ -92,6 +93,8 @@ public class mainController extends baseMenu implements Initializable {
   private ScrollPane scrollMeaning = new ScrollPane();
   @FXML
   private Button importBtn = new Button();
+  @FXML
+  private Button exportBtn = new Button();
   private String currentMenu = "Search";
   private String currentWord;
   final String IMGPath = "src/main/resources/Images/";
@@ -148,7 +151,8 @@ public class mainController extends baseMenu implements Initializable {
     setStyle(imgSpeaker, "imageViewStyle"); imgAdd.setVisible(false);
     imgSearch.toFront(); imgBookmark.toFront(); imgHistory.toFront(); imgAPI.toFront();
     setEditor(false); transition.setNode(imgToggle);
-    importBtn.setGraphic(getImage("import", 15,15));
+    importBtn.setGraphic(getImage("import", 23,23));
+    exportBtn.setGraphic(getImage("export", 23,23));
   }
 
   void setMeaningOfWord(String mean) {
@@ -560,9 +564,47 @@ public class mainController extends baseMenu implements Initializable {
 
   public void importFile(ActionEvent e) {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Import");
+    fileChooser.setTitle("Select file to import from...");
+    File initLocation = new File("src/main/resources");
+    fileChooser.setInitialDirectory(initLocation);
     Stage stage = (Stage) imgAdd.getScene().getWindow();
     File selected = fileChooser.showOpenDialog(stage);
+    if (selected == null) {
+      return;
+    }
     AddFromFile.add(selected);
+    infoControl.setPrompt("Đã nhập file vào dữ liệu từ điển");
+    Stage stage1 = new Stage();
+    stage1.setScene(infoScene);
+    stage1.setTitle("Thông báo");
+    stage1
+        .getIcons()
+        .add(
+            new Image(
+                new File("src/main/resources/Images/infoIcon.png").toURI().toString()));
+    stage1.showAndWait();
+  }
+
+  public void exportFile(ActionEvent e) {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Select file to export to...");
+    File initLocation = new File("src/main/resources");
+    fileChooser.setInitialDirectory(initLocation);
+    Stage stage = (Stage) imgAdd.getScene().getWindow();
+    File selected = fileChooser.showOpenDialog(stage);
+    if (selected == null) {
+      return;
+    }
+    ExportToFile.export(selected);
+    infoControl.setPrompt("Đã xuất dữ liệu từ điển ra file");
+    Stage stage1 = new Stage();
+    stage1.setScene(infoScene);
+    stage1.setTitle("Thông báo");
+    stage1
+        .getIcons()
+        .add(
+            new Image(
+                new File("src/main/resources/Images/infoIcon.png").toURI().toString()));
+    stage1.showAndWait();
   }
 }
