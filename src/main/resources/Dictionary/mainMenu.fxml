@@ -153,7 +153,7 @@
                   <Image url="@../Images/tick.png" />
                </image>
             </ImageView>
-            <TextArea fx:id="txtEditor" maxHeight="513.0" maxWidth="935.0" minHeight="249.0" minWidth="181.0" prefHeight="427.0" prefWidth="599.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="TOP">
+            <TextArea fx:id="txtEditor" maxHeight="425.0" maxWidth="525.0" minHeight="425.0" minWidth="525.0" prefHeight="425.0" prefWidth="525.0" wrapText="true" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" GridPane.valignment="TOP">
                <GridPane.margin>
                   <Insets bottom="20.0" left="40.0" right="30.0" top="20.0" />
                </GridPane.margin>
