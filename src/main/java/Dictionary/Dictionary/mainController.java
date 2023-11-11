@@ -23,7 +23,6 @@ import Implement.WordStorage.DictionaryMap;
 import Implement.WordStorage.Trie.Trie;
 import Implement.WordStorage.Trie.TrieNode;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -545,14 +544,14 @@ public class mainController extends baseMenu implements Initializable {
     }
   }
 
-  public void menuTranslate(ActionEvent e) throws IOException{
+  public void menuTranslate(ActionEvent e) {
     translateMenu();
     switchToTranslate();
     translateControl.switchToTranslate();
     gameSelectionControl.switchToTranslate();
   }
 
-  public void menuGame(ActionEvent e) throws IOException{
+  public void menuGame(ActionEvent e) {
     gameSelectionMenu();
     switchToTranslate();
     translateControl.switchToGameSelection();

@@ -93,17 +93,17 @@ public abstract class baseMenu implements Initializable {
   public void switchToTranslate() { toggleMenu(imgTranslate); }
   public void switchToGameSelection() { toggleMenu(imgGame); }
 
-  void mainMenu() throws IOException {
+  void mainMenu() {
     Stage stage = (Stage) imgSearch.getScene().getWindow();
     stage.setScene(dictionaryScene);
   }
 
-  void translateMenu() throws IOException {
+  void translateMenu() {
     Stage stage = (Stage) imgSearch.getScene().getWindow();
     stage.setScene(translateScene);
   }
 
-  void gameSelectionMenu() throws IOException {
+  void gameSelectionMenu() {
     Stage stage = (Stage) imgSearch.getScene().getWindow();
     stage.setScene(gameSelectionScene);
   }

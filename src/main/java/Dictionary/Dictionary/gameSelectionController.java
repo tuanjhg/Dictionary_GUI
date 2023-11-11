@@ -1,6 +1,5 @@
 package Dictionary.Dictionary;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,7 +25,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuAPI(ActionEvent event) throws IOException {
+  void menuAPI(ActionEvent event) {
     mainMenu();
     switchToAPI();
     dictionaryControl.switchToAPI();
@@ -34,7 +33,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuBookmark(ActionEvent event) throws IOException {
+  void menuBookmark(ActionEvent event) {
     mainMenu();
     switchToBookmark();
     dictionaryControl.switchToBookmark();
@@ -42,7 +41,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuHistory(ActionEvent event) throws IOException {
+  void menuHistory(ActionEvent event) {
     mainMenu();
     switchToHistory();
     dictionaryControl.switchToHistory();
@@ -50,7 +49,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuSearch(ActionEvent event) throws IOException {
+  void menuSearch(ActionEvent event) {
     mainMenu();
     switchToSearch();
     dictionaryControl.switchToSearch();
@@ -58,7 +57,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuTranslate(ActionEvent event) throws IOException {
+  void menuTranslate(ActionEvent event) {
     translateMenu();
     switchToTranslate();
     dictionaryControl.switchToTranslate();
@@ -66,7 +65,7 @@ public class gameSelectionController extends baseMenu implements Initializable {
   }
 
   @FXML
-  void menuGame(ActionEvent event) throws IOException {
+  void menuGame(ActionEvent event) {
     switchToGameSelection();
     dictionaryControl.switchToGameSelection();
     translateControl.switchToGameSelection();
